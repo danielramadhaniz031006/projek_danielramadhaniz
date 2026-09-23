@@ -2,27 +2,33 @@
 $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $filePath = __DIR__ . '/..' . $uri;
 
-// Cek apakah path yang diminta merupakan folder/direktori
+// 1. Jika path yang diakses adalah folder/direktori
 if (is_dir($filePath)) {
-    // Jika ada index.php di dalam folder tersebut, jalankan (require)
     if (file_exists($filePath . '/index.php')) {
         require $filePath . '/index.php';
         exit;
-    } 
-    // Jika ada index.html di dalam folder tersebut, baca filenya
-    elseif (file_exists($filePath . '/index.html')) {
+    } elseif (file_exists($filePath . '/index.html')) {
         readfile($filePath . '/index.html');
         exit;
     }
 }
 
-// Jika path berupa file langsung yang ada di server
+// 2. Jika path yang diakses adalah file langsung
 if (file_exists($filePath) && !is_dir($filePath)) {
-    // Baris 53 kamu sebelumnya yang memicu eror saat membaca direktori
-    readfile($filePath); 
-    exit;
+    $extension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+    // JIKA FILE PHP: Harus dieksekusi menggunakan require, BUKAN readfile
+    if ($extension === 'php') {
+        require $filePath;
+        exit;
+    } 
+    // JIKA FILE STATIS (CSS, JS, Gambar, HTML): Boleh dibaca langsung
+    else {
+        readfile($filePath);
+        exit;
+    }
 }
 
-// Jika file/folder tidak ditemukan
+// 3. Jika file tidak ditemukan
 http_response_code(404);
 echo "404 - Halaman tidak ditemukan";
