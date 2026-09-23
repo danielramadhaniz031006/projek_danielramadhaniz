@@ -1,69 +1,26 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PunyaFerdy - Portal Jobsheet & Web UMKM</title>
-    
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projek Daniel</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="card">
-  <div>
-    <h2 class="card-title">Jobsheet 02</h2>
-    <p class="card-desc">Tugas dan praktikum untuk Jobsheet 2.</p>
+  <div class="container">
+    <h1>Selamat Datang</h1>
+    <p>Halaman ini dimuat dari index.html</p>
+    <div id="app"></div>
   </div>
-  <a href="/Jobsheet-02" class="btn">Buka Jobsheet</a>
-</div>
 
-<div class="card">
-  <div>
-    <h2 class="card-title">Jobsheet 03</h2>
-    <p class="card-desc">Tugas dan praktikum untuk Jobsheet 3.</p>
-  </div>
-  <a href="/Jobsheet-03" class="btn">Buka Jobsheet</a>
-</div>
-
-<div class="card">
-  <div>
-    <h2 class="card-title">Jobsheet 04</h2>
-    <p class="card-desc">Tugas dan praktikum untuk Jobsheet 4.</p>
-  </div>
-  <a href="/Jobsheet-04" class="btn">Buka Jobsheet</a>
-</div>
-
-<div class="card">
-  <div>
-    <h2 class="card-title">Jobsheet 05</h2>
-    <p class="card-desc">Tugas dan praktikum untuk Jobsheet 5.</p>
-  </div>
-  <a href="/Jobsheet-05" class="btn">Buka Jobsheet</a>
-</div>
-
-<div class="card">
-  <div>
-    <h2 class="card-title">Jobsheet 06</h2>
-    <p class="card-desc">Tugas dan praktikum untuk Jobsheet 6.</p>
-  </div>
-  <a href="/Jobsheet-06" class="btn">Buka Jobsheet</a>
-</div>
-
-<div class="card">
-  <div>
-    <h2 class="card-title">Jobsheet 07</h2>
-    <p class="card-desc">Tugas dan praktikum untuk Jobsheet 7.</p>
-  </div>
-  <a href="/Jobsheet-07" class="btn">Buka Jobsheet</a>
-</div>
-
-<div class="card special">
-  <div>
-    <h2 class="card-title">Web UMKM</h2>
-    <p class="card-desc">Aplikasi Web UMKM (PunyaFerdy / Jobsheet 8).</p>
-  </div>
-  <a href="/WebUMKM/api/index.php" class="btn">Buka Project</a>
-</div>
-
+  <script>
+    // Opsional: Mengambil data dari backend PHP di folder api
+    fetch('/api/index.php')
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById('app').innerHTML = data;
+      })
+      .catch(err => console.error(err));
+  </script>
 </body>
 </html>
