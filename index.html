@@ -4,107 +4,309 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Projek Daniel Ramadhani</title>
-  <link rel="stylesheet" href="style.css">
+  
+  <!-- Font Modern dari Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <style>
-    /* Styling tampilan daftar jobsheet */
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #0f172a;
-      color: #ffffff;
-      margin: 0;
-      padding: 40px 20px;
+    /* Reset & Variabel Warna */
+    :root {
+      --bg-color: #0b0f19;
+      --card-bg: #151c2c;
+      --card-border: #232f48;
+      --card-hover-border: #38bdf8;
+      --text-primary: #f8fafc;
+      --text-secondary: #94a3b8;
+      --accent-color: #38bdf8;
+      --accent-glow: rgba(56, 189, 248, 0.15);
+      --gradient-accent: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
     }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 50px 20px;
+      line-height: 1.5;
+    }
+
+    /* Container Utama */
     .container {
-      max-width: 900px;
+      max-width: 1000px;
       margin: 0 auto;
+      display: block; /* Memastikan alur tata letak dari atas ke bawah */
+    }
+
+    /* Header Section */
+    .header {
+      margin-bottom: 36px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--card-border);
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--accent-color);
+      border: 1px solid rgba(56, 189, 248, 0.25);
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
     h1 {
-      font-size: 2.2rem;
+      font-size: 2.4rem;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      background: var(--gradient-accent);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       margin-bottom: 8px;
     }
 
     p.subtitle {
-      color: #94a3b8;
-      margin-bottom: 32px;
+      color: var(--text-secondary);
+      font-size: 1rem;
     }
 
+    /* Grid Layout Jobsheet */
     .jobsheet-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
     }
 
+    /* Card Jobsheet */
     .jobsheet-card {
-      background-color: #1e293b;
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
       padding: 20px;
-      border-radius: 8px;
-      border: 1px solid #334155;
       text-decoration: none;
-      color: #ffffff;
-      transition: all 0.2s ease-in-out;
-      display: block;
+      color: var(--text-primary);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Garis Aksen Atas saat Hover */
+    .jobsheet-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient-accent);
+      opacity: 0;
+      transition: opacity 0.25s ease;
     }
 
     .jobsheet-card:hover {
-      background-color: #334155;
-      border-color: #38bdf8;
-      transform: translateY(-3px);
+      transform: translateY(-4px);
+      border-color: var(--card-hover-border);
+      box-shadow: 0 10px 25px -5px var(--accent-glow);
+    }
+
+    .jobsheet-card:hover::before {
+      opacity: 1;
+    }
+
+    /* Bagian Dalam Kartu */
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-number {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--accent-color);
+      background: rgba(56, 189, 248, 0.1);
+      padding: 2px 8px;
+      border-radius: 6px;
     }
 
     .jobsheet-card h3 {
-      margin: 0 0 8px 0;
-      font-size: 1.1rem;
-      color: #38bdf8;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 16px;
     }
 
-    .jobsheet-card p {
-      margin: 0;
+    .card-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       font-size: 0.85rem;
-      color: #94a3b8;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: color 0.2s ease;
+    }
+
+    .jobsheet-card:hover .card-action {
+      color: var(--accent-color);
+    }
+
+    .card-action span.arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .jobsheet-card:hover .card-action span.arrow {
+      transform: translateX(4px);
+    }
+
+    /* Penyesuaian Tampilan Mobile */
+    @media (max-width: 640px) {
+      body {
+        padding: 30px 16px;
+      }
+
+      h1 {
+        font-size: 1.8rem;
+      }
+
+      .jobsheet-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Selamat Datang</h1>
-    <p class="subtitle">Pilih jobsheet praktikum di bawah ini untuk melihat hasilnya:</p>
 
-    <div class="jobsheet-grid">
+  <div class="container">
+    <header class="header">
+      <span class="badge">Portofolio Praktikum</span>
+      <h1>Selamat Datang</h1>
+      <p class="subtitle">Pilih modul jobsheet di bawah ini untuk melihat hasil pengerjaan praktikum:</p>
+    </header>
+
+    <main class="jobsheet-grid">
+      
       <a href="/jobsheet-01/" class="jobsheet-card">
-        <h3>Jobsheet 01</h3>
-        <p>Buka Folder &rarr;</p>
+        <div>
+          <div class="card-top">
+            <span class="card-number">01</span>
+          </div>
+          <h3>Jobsheet 01</h3>
+        </div>
+        <div class="card-action">
+          <span>Buka Folder</span>
+          <span class="arrow">&rarr;</span>
+        </div>
       </a>
+
       <a href="/jobsheet-02/" class="jobsheet-card">
-        <h3>Jobsheet 02</h3>
-        <p>Buka Folder &rarr;</p>
+        <div>
+          <div class="card-top">
+            <span class="card-number">02</span>
+          </div>
+          <h3>Jobsheet 02</h3>
+        </div>
+        <div class="card-action">
+          <span>Buka Folder</span>
+          <span class="arrow">&rarr;</span>
+        </div>
       </a>
+
       <a href="/jobsheet-03/" class="jobsheet-card">
-        <h3>Jobsheet 03</h3>
-        <p>Buka Folder &rarr;</p>
+        <div>
+          <div class="card-top">
+            <span class="card-number">03</span>
+          </div>
+          <h3>Jobsheet 03</h3>
+        </div>
+        <div class="card-action">
+          <span>Buka Folder</span>
+          <span class="arrow">&rarr;</span>
+        </div>
       </a>
+
       <a href="/jobsheet-04/" class="jobsheet-card">
-        <h3>Jobsheet 04</h3>
-        <p>Buka Folder &rarr;</p>
+        <div>
+          <div class="card-top">
+            <span class="card-number">04</span>
+          </div>
+          <h3>Jobsheet 04</h3>
+        </div>
+        <div class="card-action">
+          <span>Buka Folder</span>
+          <span class="arrow">&rarr;</span>
+        </div>
       </a>
+
       <a href="/jobsheet-05/" class="jobsheet-card">
-        <h3>Jobsheet 05</h3>
-        <p>Buka Folder &rarr;</p>
+        <div>
+          <div class="card-top">
+            <span class="card-number">05</span>
+          </div>
+          <h3>Jobsheet 05</h3>
+        </div>
+        <div class="card-action">
+          <span>Buka Folder</span>
+          <span class="arrow">&rarr;</span>
+        </div>
       </a>
+
       <a href="/jobsheet-06/" class="jobsheet-card">
-        <h3>Jobsheet 06</h3>
-        <p>Buka Folder &rarr;</p>
+        <div>
+          <div class="card-top">
+            <span class="card-number">06</span>
+          </div>
+          <h3>Jobsheet 06</h3>
+        </div>
+        <div class="card-action">
+          <span>Buka Folder</span>
+          <span class="arrow">&rarr;</span>
+        </div>
       </a>
+
       <a href="/jobsheet-07/" class="jobsheet-card">
-        <h3>Jobsheet 07</h3>
-        <p>Buka Folder &rarr;</p>
+        <div>
+          <div class="card-top">
+            <span class="card-number">07</span>
+          </div>
+          <h3>Jobsheet 07</h3>
+        </div>
+        <div class="card-action">
+          <span>Buka Folder</span>
+          <span class="arrow">&rarr;</span>
+        </div>
       </a>
-<a href="/jobsheet-08/api/index.php" class="jobsheet-card">
-  <h3>Jobsheet 08</h3>
-  <p>Buka Folder &rarr;</p>
-</a>
-    </div>
+
+      <a href="/jobsheet-08/api/index.php" class="jobsheet-card">
+        <div>
+          <div class="card-top">
+            <span class="card-number">08</span>
+          </div>
+          <h3>Jobsheet 08</h3>
+        </div>
+        <div class="card-action">
+          <span>Buka Folder</span>
+          <span class="arrow">&rarr;</span>
+        </div>
+      </a>
+
+    </main>
   </div>
+
 </body>
 </html>
