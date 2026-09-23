@@ -3,23 +3,226 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projek Daniel Ramadhani Zulkarnain</title>
+  <title>Daniel Ramadhani Zulkarnain | Muay Thai Fighter & Developer</title>
   
-  <!-- Font Google Plus Jakarta Sans -->
+  <!-- Google Fonts: Bebas Neue (Fight Poster Font) & Plus Jakarta Sans -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Panggil File CSS Terpisah -->
-  <link rel="stylesheet" href="style.css">
+  <style>
+    /* ==========================================
+       TEMA MUAY THAI ARENA - DANIEL RAMADHANI Z.
+       ========================================== */
+    :root {
+      --bg-color: #08070a;
+      --card-bg: #121118;
+      --card-border: #262332;
+      --red-accent: #ff2a2a;
+      --red-hover: #ff0000;
+      --gold-accent: #ffb703;
+      --red-glow: rgba(255, 42, 42, 0.25);
+      --gold-glow: rgba(255, 183, 3, 0.2);
+      --text-primary: #ffffff;
+      --text-secondary: #a1a1aa;
+      --gradient-fight: linear-gradient(135deg, #ff2a2a 0%, #ffb703 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 50px 20px;
+      line-height: 1.5;
+      /* Background Grid Pattern ala Arena */
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(255, 42, 42, 0.12) 0%, transparent 50%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 100% 100%, 30px 30px, 30px 30px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    /* Header Section */
+    .header {
+      margin-bottom: 40px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid var(--card-border);
+      position: relative;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 14px;
+      background: rgba(255, 42, 42, 0.12);
+      color: var(--red-accent);
+      border: 1px solid rgba(255, 42, 42, 0.4);
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 3.8rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+      background: var(--gradient-fight);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+      text-shadow: 0 0 30px rgba(255, 42, 42, 0.3);
+    }
+
+    p.subtitle {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      max-width: 700px;
+    }
+
+    p.subtitle strong {
+      color: var(--gold-accent);
+    }
+
+    /* Grid Layout Jobsheet (Fight Card Grid) */
+    .jobsheet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    /* Card Jobsheet */
+    .jobsheet-card {
+      background-color: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 22px;
+      text-decoration: none;
+      color: var(--text-primary);
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Garis Merah Menyala di Sisi Kiri Kartu */
+    .jobsheet-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 4px;
+      height: 100%;
+      background: var(--red-accent);
+      opacity: 0.4;
+      transition: all 0.25s ease;
+    }
+
+    .jobsheet-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--red-accent);
+      box-shadow: 0 10px 30px -5px var(--red-glow);
+      background-color: #171520;
+    }
+
+    .jobsheet-card:hover::before {
+      opacity: 1;
+      box-shadow: 0 0 12px var(--red-accent);
+    }
+
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .card-number {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      color: var(--gold-accent);
+      background: rgba(255, 183, 3, 0.1);
+      border: 1px solid rgba(255, 183, 3, 0.25);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    .jobsheet-card h3 {
+      font-family: 'Bebas Neue', cursive;
+      font-size: 1.8rem;
+      letter-spacing: 0.03em;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .card-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      transition: color 0.2s ease;
+    }
+
+    .jobsheet-card:hover .card-action {
+      color: var(--red-accent);
+    }
+
+    .card-action span.arrow {
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .jobsheet-card:hover .card-action span.arrow {
+      transform: translateX(5px);
+    }
+
+    /* Responsif Mobile */
+    @media (max-width: 640px) {
+      body {
+        padding: 30px 16px;
+      }
+
+      h1 {
+        font-size: 2.8rem;
+      }
+
+      .jobsheet-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
 
   <div class="container">
     <header class="header">
-      <span class="badge">Jobsheet Desain & Pemrograman Web</span>
-      <h1>Selamat Datang</h1>
-      <p class="subtitle">Portofolio praktikum oleh <strong>Daniel Ramadhani Zulkarnain</strong>. Pilih jobsheet di bawah ini untuk melihat hasil pengerjaannya:</p>
+      <span class="badge">🥊 MUAY THAI FIGHTER & DEVELOPER</span>
+      <h1>WELCOME TO THE RING</h1>
+      <p class="subtitle">Portofolio Praktikum Pemrograman Web oleh <strong>Daniel Ramadhani Zulkarnain</strong>. Pilih Round / Jobsheet di bawah ini untuk melihat aksi pengerjaannya:</p>
     </header>
 
     <main class="jobsheet-grid">
@@ -27,12 +230,12 @@
       <a href="/jobsheet-01/" class="jobsheet-card">
         <div>
           <div class="card-top">
-            <span class="card-number">01</span>
+            <span class="card-number">ROUND 01</span>
           </div>
           <h3>Jobsheet 01</h3>
         </div>
         <div class="card-action">
-          <span>Buka Folder</span>
+          <span>Masuk Arena</span>
           <span class="arrow">&rarr;</span>
         </div>
       </a>
@@ -40,12 +243,12 @@
       <a href="/jobsheet-02/" class="jobsheet-card">
         <div>
           <div class="card-top">
-            <span class="card-number">02</span>
+            <span class="card-number">ROUND 02</span>
           </div>
           <h3>Jobsheet 02</h3>
         </div>
         <div class="card-action">
-          <span>Buka Folder</span>
+          <span>Masuk Arena</span>
           <span class="arrow">&rarr;</span>
         </div>
       </a>
@@ -53,12 +256,12 @@
       <a href="/jobsheet-03/" class="jobsheet-card">
         <div>
           <div class="card-top">
-            <span class="card-number">03</span>
+            <span class="card-number">ROUND 03</span>
           </div>
           <h3>Jobsheet 03</h3>
         </div>
         <div class="card-action">
-          <span>Buka Folder</span>
+          <span>Masuk Arena</span>
           <span class="arrow">&rarr;</span>
         </div>
       </a>
@@ -66,12 +269,12 @@
       <a href="/jobsheet-04/" class="jobsheet-card">
         <div>
           <div class="card-top">
-            <span class="card-number">04</span>
+            <span class="card-number">ROUND 04</span>
           </div>
           <h3>Jobsheet 04</h3>
         </div>
         <div class="card-action">
-          <span>Buka Folder</span>
+          <span>Masuk Arena</span>
           <span class="arrow">&rarr;</span>
         </div>
       </a>
@@ -79,12 +282,12 @@
       <a href="/jobsheet-05/" class="jobsheet-card">
         <div>
           <div class="card-top">
-            <span class="card-number">05</span>
+            <span class="card-number">ROUND 05</span>
           </div>
           <h3>Jobsheet 05</h3>
         </div>
         <div class="card-action">
-          <span>Buka Folder</span>
+          <span>Masuk Arena</span>
           <span class="arrow">&rarr;</span>
         </div>
       </a>
@@ -92,12 +295,12 @@
       <a href="/jobsheet-06/" class="jobsheet-card">
         <div>
           <div class="card-top">
-            <span class="card-number">06</span>
+            <span class="card-number">ROUND 06</span>
           </div>
           <h3>Jobsheet 06</h3>
         </div>
         <div class="card-action">
-          <span>Buka Folder</span>
+          <span>Masuk Arena</span>
           <span class="arrow">&rarr;</span>
         </div>
       </a>
@@ -105,12 +308,12 @@
       <a href="/jobsheet-07/" class="jobsheet-card">
         <div>
           <div class="card-top">
-            <span class="card-number">07</span>
+            <span class="card-number">ROUND 07</span>
           </div>
           <h3>Jobsheet 07</h3>
         </div>
         <div class="card-action">
-          <span>Buka Folder</span>
+          <span>Masuk Arena</span>
           <span class="arrow">&rarr;</span>
         </div>
       </a>
@@ -118,12 +321,12 @@
       <a href="/jobsheet-08/api/index.php" class="jobsheet-card">
         <div>
           <div class="card-top">
-            <span class="card-number">08</span>
+            <span class="card-number">ROUND 08</span>
           </div>
           <h3>Jobsheet 08</h3>
         </div>
         <div class="card-action">
-          <span>Buka Folder</span>
+          <span>Masuk Arena</span>
           <span class="arrow">&rarr;</span>
         </div>
       </a>
