@@ -3,24 +3,108 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projek Daniel</title>
+  <title>Projek Daniel Ramadhani</title>
   <link rel="stylesheet" href="style.css">
+  <style>
+    /* Styling tampilan daftar jobsheet */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #0f172a;
+      color: #ffffff;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    p.subtitle {
+      color: #94a3b8;
+      margin-bottom: 32px;
+    }
+
+    .jobsheet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+    }
+
+    .jobsheet-card {
+      background-color: #1e293b;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      text-decoration: none;
+      color: #ffffff;
+      transition: all 0.2s ease-in-out;
+      display: block;
+    }
+
+    .jobsheet-card:hover {
+      background-color: #334155;
+      border-color: #38bdf8;
+      transform: translateY(-3px);
+    }
+
+    .jobsheet-card h3 {
+      margin: 0 0 8px 0;
+      font-size: 1.1rem;
+      color: #38bdf8;
+    }
+
+    .jobsheet-card p {
+      margin: 0;
+      font-size: 0.85rem;
+      color: #94a3b8;
+    }
+  </style>
 </head>
 <body>
   <div class="container">
     <h1>Selamat Datang</h1>
-    <p>Halaman ini dimuat dari index.html</p>
-    <div id="app"></div>
-  </div>
+    <p class="subtitle">Pilih jobsheet praktikum di bawah ini untuk melihat hasilnya:</p>
 
-  <script>
-    // Opsional: Mengambil data dari backend PHP di folder api
-    fetch('/api/index.php')
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById('app').innerHTML = data;
-      })
-      .catch(err => console.error(err));
-  </script>
+    <div class="jobsheet-grid">
+      <a href="/jobsheet-01/" class="jobsheet-card">
+        <h3>Jobsheet 01</h3>
+        <p>Buka Folder &rarr;</p>
+      </a>
+      <a href="/jobsheet-02/" class="jobsheet-card">
+        <h3>Jobsheet 02</h3>
+        <p>Buka Folder &rarr;</p>
+      </a>
+      <a href="/jobsheet-03/" class="jobsheet-card">
+        <h3>Jobsheet 03</h3>
+        <p>Buka Folder &rarr;</p>
+      </a>
+      <a href="/jobsheet-04/" class="jobsheet-card">
+        <h3>Jobsheet 04</h3>
+        <p>Buka Folder &rarr;</p>
+      </a>
+      <a href="/jobsheet-05/" class="jobsheet-card">
+        <h3>Jobsheet 05</h3>
+        <p>Buka Folder &rarr;</p>
+      </a>
+      <a href="/jobsheet-06/" class="jobsheet-card">
+        <h3>Jobsheet 06</h3>
+        <p>Buka Folder &rarr;</p>
+      </a>
+      <a href="/jobsheet-07/" class="jobsheet-card">
+        <h3>Jobsheet 07</h3>
+        <p>Buka Folder &rarr;</p>
+      </a>
+      <a href="/jobsheet-08/" class="jobsheet-card">
+        <h3>Jobsheet 08</h3>
+        <p>Buka Folder &rarr;</p>
+      </a>
+    </div>
+  </div>
 </body>
 </html>
