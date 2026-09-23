@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Projek Daniel Ramadhani</title>
+  <title>Projek Daniel Ramadhani Zulkarnain</title>
   
-  <!-- Font Modern dari Google Fonts -->
+  <!-- Font Modern Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
-    /* Reset & Variabel Warna */
+    /* Tema Warna Dark Modern */
     :root {
       --bg-color: #0b0f19;
       --card-bg: #151c2c;
@@ -39,14 +39,12 @@
       line-height: 1.5;
     }
 
-    /* Container Utama */
     .container {
       max-width: 1000px;
       margin: 0 auto;
-      display: block; /* Memastikan alur tata letak dari atas ke bawah */
+      display: block;
     }
 
-    /* Header Section */
     .header {
       margin-bottom: 36px;
       padding-bottom: 20px;
@@ -82,14 +80,16 @@
       font-size: 1rem;
     }
 
-    /* Grid Layout Jobsheet */
+    p.subtitle strong {
+      color: var(--text-primary);
+    }
+
     .jobsheet-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
       gap: 20px;
     }
 
-    /* Card Jobsheet */
     .jobsheet-card {
       background-color: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -105,7 +105,6 @@
       overflow: hidden;
     }
 
-    /* Garis Aksen Atas saat Hover */
     .jobsheet-card::before {
       content: '';
       position: absolute;
@@ -128,7 +127,6 @@
       opacity: 1;
     }
 
-    /* Bagian Dalam Kartu */
     .card-top {
       display: flex;
       justify-content: space-between;
@@ -174,7 +172,6 @@
       transform: translateX(4px);
     }
 
-    /* Penyesuaian Tampilan Mobile */
     @media (max-width: 640px) {
       body {
         padding: 30px 16px;
@@ -194,12 +191,10 @@
 
   <div class="container">
     <header class="header">
-      <span class="badge">Modul Jobsheet Desain dan Pemograman Web</span>
+      <span class="badge">Jobsheet Desain & Pemrograman Web</span>
       <h1>Selamat Datang</h1>
-      <p class="subtitle">
-  Makan kue di rumah Diki, ngopi santai di tepi jalan.<br>
-  Selamat datang di web ini, pilih jobsheet yang mau dijalankan!
-</p>
+      <p class="subtitle">Portofolio praktikum oleh <strong>Daniel Ramadhani Zulkarnain</strong>. Pilih jobsheet di bawah ini untuk melihat hasil pengerjaannya:</p>
+    </header>
 
     <main class="jobsheet-grid">
       
