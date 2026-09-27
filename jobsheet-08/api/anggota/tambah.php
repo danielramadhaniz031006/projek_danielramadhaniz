@@ -3,7 +3,7 @@ session_start();
 require __DIR__ . '/../includes/koneksi.php';
 
 // =========================================================
-// 1. PROSES SIMPAN DATA MEMBER BARU (HARUS DI ATAS HEADER.PHP)
+// 1. PROSES SIMPAN DATA MEMBER BARU (SEBELUM HEADER.PHP)
 // =========================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama       = trim($_POST['nama'] ?? '');
@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'pesan' => 'Member baru berhasil ditambahkan!'
         ];
 
-        // Redirect berhasil tanpa terpental error header
         header('Location: list.php');
         exit;
     }
@@ -60,7 +59,7 @@ if ($last_member && !empty($last_member['no_anggota'])) {
 }
 
 // =========================================================
-// 3. BARU INCLUDE HEADER PHP DI SINI
+// 3. INCLUDE HEADER PHP
 // =========================================================
 $page_title = "Tambah Member";
 include __DIR__ . '/../includes/header.php';
@@ -82,7 +81,7 @@ include __DIR__ . '/../includes/header.php';
         <!-- ID MEMBER / NO. KARTU -->
         <div style="margin-bottom: 20px;">
             <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #fff;">ID MEMBER / NO. KARTU</label>
-            <input type="text" name="no_anggota" value="<?php echo htmlspecialchars($next_no_anggota); ?>" required style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #333; background: #e8f0fe; color: #000; font-weight: bold; box-sizing: border-box;">
+            <input type="text" name="no_anggota" value="<?php echo htmlspecialchars($next_no_anggota); ?>" required style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #333; background: #222; color: #fff; font-weight: bold; box-sizing: border-box;">
             <small style="color: #aaa; font-size: 0.8rem; margin-top: 5px; display: block;">*Otomatis merekomendasikan nomor kartu berikutnya (tetap bisa diedit manual jika diperlukan).</small>
         </div>
 
