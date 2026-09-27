@@ -5,7 +5,7 @@
 | **NIM** | 254107020255 |
 | **Nama** | Daniel Ramadhani Zulkarnain |
 | **Kelas** | TI - 2D |
-| **Repository** | []() |
+| **Repository** | [https://github.com/danielramadhaniz031006/projek_danielramadhaniz/tree/51c6f88c2ae0c6f1ec308411a016082bf8c11b73/jobsheet-10]() |
 
 ## 1. Terapkan Kontrol Akses Berbasis Role
 
