@@ -13,18 +13,18 @@
 }
 
 :root {
-    --primary: #dc2626;        /* Merah tegas khas Martial Arts */
+    --primary: #dc2626;       /* Merah tegas khas Martial Arts */
     --primary-dark: #991b1b;
     --primary-light: #ef4444;
-    --accent: #f59e0b;         /* Aksen Emas/Oranye */
+    --accent: #f59e0b;        /* Aksen Emas/Oranye */
 
-    --bg: #0d0e12;             /* Background Hitam Pekat */
-    --white: #16181e;          /* Kartu / Kontainer Gelap */
+    --bg: #0d0e12;            /* Background Hitam Pekat */
+    --white: #16181e;         /* Kartu / Kontainer Gelap */
     --soft: #21242d;
 
-    --text: #f3f4f6;           /* Teks Putih Terang */
-    --muted: #9ca3af;          /* Teks Abu-abu */
-    --border: #2d313e;         /* Garis Pembatas */
+    --text: #f3f4f6;          /* Teks Putih Terang */
+    --muted: #9ca3af;         /* Teks Abu-abu */
+    --border: #2d313e;        /* Garis Pembatas */
 
     --success-bg: #064e3b;
     --success-text: #6ee7b7;
@@ -72,10 +72,13 @@ header {
     color: #ffffff;
     padding: 1rem 2rem;
     min-height: 70px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 1rem;
+
     box-shadow: 0 4px 20px rgba(220, 38, 38, 0.15);
 }
 
@@ -90,29 +93,37 @@ header h1 {
 
 header nav ul {
     list-style: none;
+
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
     gap: 0.5rem;
     flex-wrap: wrap;
 }
 
 header nav a {
     display: block;
+
     color: var(--muted);
     font-weight: 700;
     font-size: 0.9rem;
+
     padding: 0.6rem 1rem;
     border-radius: 6px;
+
     text-transform: uppercase;
     letter-spacing: 0.5px;
+
     transition: all 0.2s ease;
 }
 
 header nav a:hover {
     color: #ffffff;
     background-color: var(--primary);
+
     transform: translateY(-2px);
+
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
 }
 
@@ -159,7 +170,11 @@ section > p {
 
 .welcome-section {
     padding: 2rem;
-    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, var(--white) 100%);
+    background: linear-gradient(
+        135deg,
+        rgba(220, 38, 38, 0.1) 0%,
+        var(--white) 100%
+    );
     border: 1px solid rgba(220, 38, 38, 0.3);
 }
 
@@ -196,16 +211,21 @@ section > p {
 .stat-card {
     width: 100%;
     min-height: 145px;
+
     background: var(--soft);
     border: 1px solid var(--border);
     border-top: 4px solid var(--primary);
     border-radius: 10px;
+
     padding: 1.5rem 1rem;
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
     text-align: center;
+
     transition: all 0.25s ease;
 }
 
@@ -253,7 +273,8 @@ table {
     background: var(--white);
 }
 
-th, td {
+th,
+td {
     text-align: left;
     padding: 0.9rem 1rem;
     border-bottom: 1px solid var(--border);
@@ -292,13 +313,18 @@ tbody tr:hover {
 td button {
     padding: 0.45rem 0.85rem;
     margin-right: 0.35rem;
+
     border: none;
     border-radius: 6px;
+
     cursor: pointer;
+
     font-family: inherit;
     font-weight: 700;
     font-size: 0.8rem;
+
     text-transform: uppercase;
+
     transition: all 0.2s ease;
 }
 
@@ -340,9 +366,11 @@ form p {
 form label {
     display: block;
     margin: 0 0 0.4rem 0;
+
     font-weight: 700;
     color: #ffffff;
     font-size: 0.9rem;
+
     text-transform: uppercase;
     letter-spacing: 0.3px;
 }
@@ -354,17 +382,24 @@ form label + br {
 form input,
 form select {
     display: block;
+
     width: 100%;
     max-width: 520px;
     height: 48px;
+
     padding: 0.6rem 0.9rem;
+
     border: 1px solid var(--border);
     border-radius: 7px;
+
     background-color: var(--soft);
     color: #ffffff;
+
     font-family: inherit;
     font-size: 0.95rem;
+
     outline: none;
+
     transition: all 0.2s ease;
 }
 
@@ -372,7 +407,9 @@ form input:focus,
 form select:focus,
 .search-box input:focus {
     border-color: var(--primary);
+
     box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25);
+
     background-color: #262933;
 }
 
@@ -393,23 +430,33 @@ form p:last-child {
 form button[type="submit"] {
     background: var(--primary);
     color: #ffffff;
+
     border: none;
+
     padding: 0.75rem 1.5rem;
     min-width: 110px;
+
     border-radius: 6px;
+
     font-family: inherit;
     font-size: 0.9rem;
     font-weight: 800;
+
     text-transform: uppercase;
     letter-spacing: 0.5px;
+
     cursor: pointer;
+
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+
     transition: all 0.2s ease;
 }
 
 form button[type="submit"]:hover {
     background: var(--primary-light);
+
     transform: translateY(-2px);
+
     box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
 }
 
@@ -419,18 +466,24 @@ form button[type="submit"]:hover {
 
 .search-box {
     margin-bottom: 1.25rem;
+
     display: flex;
     align-items: center;
+
     gap: 0.75rem;
+
     flex-wrap: wrap;
 }
 
 .search-box label {
     display: block;
     margin: 0;
+
     font-weight: 700;
     color: #ffffff;
+
     white-space: nowrap;
+
     text-transform: uppercase;
     font-size: 0.85rem;
 }
@@ -439,13 +492,18 @@ form button[type="submit"]:hover {
     width: 100%;
     max-width: 400px;
     height: 48px;
+
     padding: 0.6rem 0.9rem;
+
     border: 1px solid var(--border);
     border-radius: 7px;
+
     background-color: var(--soft);
     color: #ffffff;
+
     font-family: inherit;
     font-size: 0.95rem;
+
     outline: none;
 }
 
@@ -453,25 +511,36 @@ form button[type="submit"]:hover {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+
     min-height: 48px;
+
     padding: 0.65rem 1.25rem;
+
     border: none;
     border-radius: 7px;
+
     background: var(--primary);
     color: #ffffff;
+
     font-family: inherit;
     font-size: 0.85rem;
     font-weight: 800;
+
     text-transform: uppercase;
     letter-spacing: 0.5px;
+
     cursor: pointer;
+
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+
     transition: all 0.2s ease;
 }
 
 .btn-reload:hover {
     background: var(--primary-light);
+
     transform: translateY(-2px);
+
     box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
 }
 
@@ -481,9 +550,13 @@ form button[type="submit"]:hover {
 
 .flash {
     padding: 0.85rem 1.1rem;
+
     border-radius: 7px;
+
     margin-bottom: 1.25rem;
+
     font-weight: 700;
+
     border-left: 4px solid;
 }
 
@@ -501,9 +574,13 @@ form button[type="submit"]:hover {
 
 .error {
     display: block;
+
     color: var(--error-text);
+
     font-size: 0.85rem;
+
     margin-top: 0.35rem;
+
     font-weight: 600;
 }
 
@@ -513,8 +590,11 @@ form button[type="submit"]:hover {
 
 footer {
     text-align: center;
+
     padding: 1.5rem 1rem 2.5rem;
+
     color: var(--muted);
+
     font-size: 0.85rem;
     font-weight: 600;
 }
@@ -525,10 +605,13 @@ footer {
 
 .nav-toggle-label {
     display: none;
+
     font-size: 1.6rem;
     color: #ffffff;
+
     background: transparent;
     border: none;
+
     cursor: pointer;
 }
 
@@ -538,7 +621,10 @@ footer {
 
 @media (max-width: 900px) {
     .summary-section {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns: repeat(
+            2,
+            minmax(0, 1fr)
+        );
     }
 }
 
@@ -554,10 +640,13 @@ footer {
 
     header nav {
         display: none;
+
         width: 100%;
         order: 3;
+
         margin-top: 0.5rem;
         padding-top: 0.5rem;
+
         border-top: 1px solid var(--border);
     }
 
