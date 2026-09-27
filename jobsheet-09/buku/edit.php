@@ -19,7 +19,7 @@ $buku = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$buku) {
     header('Location: list.php');
     exit;
-}
+} 
 ?>
         <section>
             <h2>Edit Buku</h2>

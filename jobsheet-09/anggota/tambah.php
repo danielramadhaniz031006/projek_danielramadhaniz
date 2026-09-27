@@ -3,7 +3,7 @@ $page_title = "Tambah Anggota";
 include __DIR__ . '/../includes/header.php';
 
 $flash = $_SESSION['flash'] ?? null;
-unset($_SESSION['flash']);
+unset($_SESSION['flash']); 
 ?>
         <section>
             <h2>Tambah Anggota</h2>

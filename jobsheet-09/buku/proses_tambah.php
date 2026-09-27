@@ -22,7 +22,7 @@ if (!is_numeric($tahun) || $tahun < 1900 || $tahun > 2026) {
     $errors[] = "Tahun harus di antara 1900-2026.";
 }
 if (!is_numeric($stok) || $stok < 0) {
-    $errors[] = "Stok tidak boleh negatif.";
+    $errors[] = "Stok tidak boleh negatif."; 
 }
 
 if (!empty($errors)) {

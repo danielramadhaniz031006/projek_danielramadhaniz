@@ -20,7 +20,7 @@ if ($judul === '') {
     $errors[] = "Judul wajib diisi.";
 }
 if ($pengarang === '') {
-    $errors[] = "Pengarang wajib diisi.";
+    $errors[] = "Pengarang wajib diisi."; 
 }
 if (!is_numeric($tahun) || $tahun < 1900 || $tahun > 2026) {
     $errors[] = "Tahun harus di antara 1900-2026.";
