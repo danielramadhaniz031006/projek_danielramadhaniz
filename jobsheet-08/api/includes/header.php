@@ -22,7 +22,7 @@ $base = $__rel === '' ? '' : str_repeat('../', substr_count($__rel, '/') + 1);
     <header>
         <h1>ELRAM TRAINING CAMP</h1>
         <button type="button" id="nav-toggle-btn" class="nav-toggle-label" aria-label="Menu">&#9776;</button>
-        <nav id="main-nav">
+        <nav>
             <ul>
                 <li><a href="<?php echo $base; ?>index.php">BERANDA</a></li>
                 <li><a href="<?php echo $base; ?>buku/list.php">JADWAL KELAS</a></li>
@@ -32,19 +32,5 @@ $base = $__rel === '' ? '' : str_repeat('../', substr_count($__rel, '/') + 1);
             </ul>
         </nav>
     </header>
-
-    <!-- Script JavaScript untuk Toggle Menu Mobile -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const toggleBtn = document.getElementById('nav-toggle-btn');
-            const nav = document.getElementById('main-nav');
-
-            if (toggleBtn && nav) {
-                toggleBtn.addEventListener('click', function() {
-                    nav.classList.toggle('active');
-                });
-            }
-        });
-    </script>
 
     <main>
