@@ -46,5 +46,3 @@ if (file_exists($filePath) && !is_dir($filePath)) {
 // 3. Jika file tidak ditemukan
 http_response_code(404);
 echo "404 - Halaman tidak ditemukan";
-
-//
