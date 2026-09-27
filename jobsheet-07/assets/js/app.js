@@ -8,7 +8,7 @@ function initNavToggle() {
     toggleBtn.addEventListener("click", function () {
         nav.classList.toggle("nav-open");
     });
-}
+} 
 
 
 // ===== Konfirmasi hapus (front-end only, belum ke server) =====

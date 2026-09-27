@@ -9,7 +9,7 @@ $stok = $_POST['stok'] ?? '';
 $kategori = trim($_POST['kategori'] ?? '');
 
 // Validasi server-side
-$errors = [];
+$errors = []; 
 
 if ($judul === '') {
     $errors[] = "Judul wajib diisi.";

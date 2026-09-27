@@ -6,7 +6,7 @@ $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 ?>
 
-<section>
+<section> 
     <h2>Tambah Buku</h2>
 
     <?php if ($flash): ?>

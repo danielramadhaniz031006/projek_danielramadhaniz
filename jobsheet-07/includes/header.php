@@ -17,7 +17,7 @@ $base = $__rel === '' ? '' : str_repeat('../', substr_count($__rel, '/') + 1);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>SIMPUS-Mini<?php echo isset($page_title) ? ' | ' . $page_title : ''; ?></title>
     <link rel="stylesheet" href="<?php echo $base; ?>assets/css/style.css">
-</head>
+</head> 
 <body>
     <header>
         <h1>SIMPUS-Mini</h1>

@@ -2,7 +2,7 @@
 $page_title = "Beranda";
 include __DIR__ . '/includes/header.php';
 
-
+ 
 /*
 |--------------------------------------------------------------------------
 | DATA ANGGOTA

@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 
 $nama = trim($_POST['nama'] ?? '');
