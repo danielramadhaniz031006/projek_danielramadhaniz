@@ -8,7 +8,7 @@ function initNavToggle() {
         nav.classList.toggle("nav-open");
     });
 }
-
+ 
 // ===== Konfirmasi hapus (front-end only, belum ke server) =====
 // Memakai event delegation di document karena baris tabel sekarang
 // dirender dinamis via fetch (lihat buku.js/anggota.js) sehingga

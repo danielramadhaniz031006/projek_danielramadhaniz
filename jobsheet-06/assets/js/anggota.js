@@ -6,7 +6,7 @@ async function muatDaftarAnggota() {
 
     loading.style.display = "block";
     tbody.innerHTML = "";
-
+ 
     try {
         await new Promise((resolve) => setTimeout(resolve, 600));
 

@@ -6,7 +6,7 @@ async function muatDaftarBuku() {
 
     loading.style.display = "block";
     tbody.innerHTML = "";
-
+ 
     try {
         // simulasi delay jaringan agar loading indicator terlihat
         await new Promise((resolve) => setTimeout(resolve, 600));
