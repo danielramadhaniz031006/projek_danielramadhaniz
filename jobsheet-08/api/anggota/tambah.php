@@ -111,6 +111,6 @@ include __DIR__ . '/../includes/header.php';
         </div>
 
     </form>
-</section>
+</section> 
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?> 

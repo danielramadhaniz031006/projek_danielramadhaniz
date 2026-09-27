@@ -29,7 +29,7 @@ $base = $__rel === ''
 
 <head>
     <meta charset="UTF-8">
-    <meta
+    <meta 
         name="viewport"
         content="width=device-width, initial-scale=1"
     >
@@ -46,7 +46,7 @@ $base = $__rel === ''
     >
 </head>
 
-<body>
+<body> 
 
     <header>
         <h1>ELRAM TRAINING CAMP</h1>

@@ -19,8 +19,8 @@ $kelas = $stmt->fetch(PDO::FETCH_ASSOC);
 if (!$kelas) {
     header('Location: list.php');
     exit;
-}
-
+} 
+ 
 // Proses Update Data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $judul     = trim($_POST['judul'] ?? '');

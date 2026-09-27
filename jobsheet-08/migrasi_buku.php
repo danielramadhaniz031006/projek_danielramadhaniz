@@ -20,4 +20,4 @@ foreach ($data as $buku) {
     ]);
 }
 
-echo "Migrasi berhasil. Total data: " . count($data);
+echo "Migrasi berhasil. Total data: " . count($data);   

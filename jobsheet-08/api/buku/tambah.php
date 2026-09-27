@@ -1,4 +1,4 @@
-<?php
+<?php 
 $page_title = "Tambah Jadwal Kelas";
 include __DIR__ . '/../includes/header.php';
 
@@ -22,7 +22,7 @@ unset($_SESSION['flash']);
         <p>
             <label for="judul">NAMA KELAS / CABOR</label><br>
             <input 
-                type="text" 
+                type="text"  
                 id="judul" 
                 name="judul" 
                 placeholder="Contoh: Muay Thai Striking" 

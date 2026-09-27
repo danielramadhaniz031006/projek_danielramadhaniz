@@ -1,4 +1,4 @@
-</main>
+</main> 
 
 <footer>
     <p>&copy; ELRAM Traning Camp &mdash; Jobsheet 8</p>
@@ -13,4 +13,4 @@
 <?php endif; ?>
 
 </body>
-</html>
+</html> 

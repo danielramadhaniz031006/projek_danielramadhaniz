@@ -78,8 +78,8 @@ $daftar_kelas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     </tr>
                 <?php endif; ?>
             </tbody>
-        </table>
+        </table> 
     </div>
 </section>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+<?php include __DIR__ . '/../includes/footer.php'; ?> 

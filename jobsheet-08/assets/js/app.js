@@ -143,7 +143,7 @@ function initValidasiForm() {
             e.preventDefault();
         }
     });
-}
+} 
 
 document.addEventListener(
     "DOMContentLoaded",
@@ -152,4 +152,4 @@ document.addEventListener(
         initHapusConfirm();
         initValidasiForm();
     }
-);
+); 

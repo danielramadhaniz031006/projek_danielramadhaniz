@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 $page_title = "Edit Member";
 include __DIR__ . '/../includes/header.php';
@@ -8,7 +8,7 @@ $id = $_GET['id'] ?? null;
 
 if (!$id) {
     header('Location: list.php');
-    exit;
+    exit; 
 }
 
 // Ambil data anggota berdasarkan ID

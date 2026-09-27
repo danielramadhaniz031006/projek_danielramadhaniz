@@ -17,7 +17,7 @@ INSERT INTO buku (judul, pengarang, kategori, tahun, stok) VALUES
 ('Fit Boxing & Cardio', 'Coach Doni', 'Rabu & Minggu', 19, 6);
 
 -- 3. RESET DAN ISI DATA TABEL ANGGOTA (A1 - A30)
-TRUNCATE TABLE anggota RESTART IDENTITY;
+TRUNCATE TABLE anggota RESTART IDENTITY; 
 
 INSERT INTO anggota (no_anggota, nama, cabor, no_hp) VALUES
 ('A1', 'Daniel Ramadhani Zulkarnain', 'Muay Thai Striking', '08123456789'),
@@ -49,4 +49,4 @@ INSERT INTO anggota (no_anggota, nama, cabor, no_hp) VALUES
 ('A27', 'Raden Saleh', 'Brazilian Jiu-Jitsu (BJJ)', '081234567815'),
 ('A28', 'Sari Roti', 'Fit Boxing & Cardio', '081234567816'),
 ('A29', 'Taufik Hidayat', 'Muay Thai Striking', '081234567817'),
-('A30', 'Utama Jaya', 'Boxing Pad Work', '081234567818');
+('A30', 'Utama Jaya', 'Boxing Pad Work', '081234567818'); 

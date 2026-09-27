@@ -1,4 +1,4 @@
-<?php
+<?php 
 session_start();
 require __DIR__ . '/../includes/koneksi.php';
 
@@ -11,7 +11,7 @@ if ($id) {
     $_SESSION['flash'] = [
         'type' => 'success',
         'pesan' => 'Data member berhasil dihapus!'
-    ];
+    ]; 
 }
 
 header('Location: list.php');

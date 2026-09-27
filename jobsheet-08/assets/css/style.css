@@ -661,9 +661,9 @@ footer {
 
     header nav a {
         width: 100%;
-    }
+    } 
 
     .summary-section {
         grid-template-columns: 1fr;
     }
-}
+} 
