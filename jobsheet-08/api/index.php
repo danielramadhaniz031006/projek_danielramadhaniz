@@ -21,10 +21,13 @@ $totalCoach = $pdo
     ->query("SELECT COUNT(DISTINCT pengarang) FROM buku")
     ->fetchColumn();
 
-// Total Akumulasi Sisa Kuota Slot
-$totalKuota = $pdo
+// Total Akumulasi Kapasitas Slot
+$totalKapasitas = $pdo
     ->query("SELECT COALESCE(SUM(stok), 0) FROM buku")
     ->fetchColumn();
+
+// Sisa Kuota Slot = Total Kapasitas Slot dikurangi Total Member Terdaftar
+$totalKuota = max(0, $totalKapasitas - $totalAnggota);
 
 // Daftar Coach dan Cabor yang Dipegang
 $stmtCoach = $pdo->query("SELECT pengarang AS nama_coach, STRING_AGG(judul, ', ') AS daftar_cabor, COUNT(*) AS total_kelas FROM buku GROUP BY pengarang ORDER BY pengarang ASC");
