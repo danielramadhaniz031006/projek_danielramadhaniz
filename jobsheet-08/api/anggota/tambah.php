@@ -1,38 +1,9 @@
 <?php
 session_start();
-$page_title = "Tambah Member";
-include __DIR__ . '/../includes/header.php';
 require __DIR__ . '/../includes/koneksi.php';
 
 // =========================================================
-// LOGIKA OTOMATIS GENERATE / REKOMENDASI NO. KARTU MEMBER
-// =========================================================
-// 1. Ambil data anggota terakhir berdasarkan ID terbesar
-$stmt = $pdo->query("SELECT no_anggota FROM anggota ORDER BY id DESC LIMIT 1");
-$last_member = $stmt->fetch(PDO::FETCH_ASSOC);
-
-$next_no_anggota = 'A1'; // Default jika database masih kosong
-
-if ($last_member && !empty($last_member['no_anggota'])) {
-    $last_no = $last_member['no_anggota'];
-    
-    // 2. Ekstrak angka dari ID member terakhir (misal 'A30' -> 30)
-    preg_match('/\d+/', $last_no, $matches);
-    
-    if (!empty($matches[0])) {
-        $next_number = (int)$matches[0] + 1; // Tambah 1 untuk member berikutnya
-        
-        // 3. Ambil awalan/prefix huruf (misal 'A')
-        $prefix = preg_replace('/\d+/', '', $last_no);
-        $prefix = !empty($prefix) ? $prefix : 'A';
-        
-        // 4. Gabungkan prefix + nomor baru (misal 'A' + 31 = 'A31')
-        $next_no_anggota = $prefix . $next_number;
-    }
-}
-
-// =========================================================
-// PROSES SIMPAN DATA MEMBER BARU
+// 1. PROSES SIMPAN DATA MEMBER BARU (HARUS DI ATAS HEADER.PHP)
 // =========================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama       = trim($_POST['nama'] ?? '');
@@ -56,10 +27,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'pesan' => 'Member baru berhasil ditambahkan!'
         ];
 
+        // Redirect berhasil tanpa terpental error header
         header('Location: list.php');
         exit;
     }
 }
+
+// =========================================================
+// 2. LOGIKA OTOMATIS GENERATE / REKOMENDASI NO. KARTU MEMBER
+// =========================================================
+$stmt = $pdo->query("SELECT no_anggota FROM anggota ORDER BY id DESC LIMIT 1");
+$last_member = $stmt->fetch(PDO::FETCH_ASSOC);
+
+$next_no_anggota = 'A1'; // Default jika database masih kosong
+
+if ($last_member && !empty($last_member['no_anggota'])) {
+    $last_no = $last_member['no_anggota'];
+    
+    // Ekstrak angka dari ID member terakhir (misal 'A30' -> 30)
+    preg_match('/\d+/', $last_no, $matches);
+    
+    if (!empty($matches[0])) {
+        $next_number = (int)$matches[0] + 1; // Tambah 1 untuk member berikutnya
+        
+        // Ambil awalan/prefix huruf (misal 'A')
+        $prefix = preg_replace('/\d+/', '', $last_no);
+        $prefix = !empty($prefix) ? $prefix : 'A';
+        
+        // Gabungkan prefix + nomor baru (misal 'A' + 31 = 'A31')
+        $next_no_anggota = $prefix . $next_number;
+    }
+}
+
+// =========================================================
+// 3. BARU INCLUDE HEADER PHP DI SINI
+// =========================================================
+$page_title = "Tambah Member";
+include __DIR__ . '/../includes/header.php';
 ?>
 
 <section style="max-width: 600px; margin: 0 auto; padding: 20px;">
@@ -75,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="nama" placeholder="Contoh: Daniel Ramadhani Zulkarnain" required style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #333; background: #222; color: #fff; box-sizing: border-box;">
         </div>
 
-        <!-- ID MEMBER / NO. KARTU (OTOMATIS TERISI REKOMENDASI) -->
+        <!-- ID MEMBER / NO. KARTU -->
         <div style="margin-bottom: 20px;">
             <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #fff;">ID MEMBER / NO. KARTU</label>
             <input type="text" name="no_anggota" value="<?php echo htmlspecialchars($next_no_anggota); ?>" required style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #333; background: #e8f0fe; color: #000; font-weight: bold; box-sizing: border-box;">
