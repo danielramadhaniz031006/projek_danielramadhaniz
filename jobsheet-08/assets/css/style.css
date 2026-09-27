@@ -2,10 +2,7 @@
    ELRAM TRAINING CAMP - STYLE.CSS FULL (DARK ATHLETIC TEMA)
    ========================================================= */
 
-/* =========================================================
-   RESET & BASE
-   ========================================================= */
-
+/* RESET & BASE */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -48,10 +45,7 @@ body {
     min-height: 100vh;
 }
 
-/* =========================================================
-   LINK
-   ========================================================= */
-
+/* LINK */
 a {
     color: var(--primary-light);
     text-decoration: none;
@@ -62,10 +56,7 @@ a:hover {
     text-decoration: none;
 }
 
-/* =========================================================
-   HEADER & NAVBAR
-   ========================================================= */
-
+/* HEADER & NAVBAR */
 header {
     background: #090a0d;
     border-bottom: 2px solid var(--primary);
@@ -116,19 +107,13 @@ header nav a:hover {
     box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
 }
 
-/* =========================================================
-   MAIN
-   ========================================================= */
-
+/* MAIN */
 main {
     width: min(1100px, calc(100% - 32px));
     margin: 2rem auto;
 }
 
-/* =========================================================
-   SECTION
-   ========================================================= */
-
+/* SECTION */
 section {
     background-color: var(--white);
     border: 1px solid var(--border);
@@ -153,10 +138,7 @@ section > p {
     color: var(--muted);
 }
 
-/* =========================================================
-   BERANDA
-   ========================================================= */
-
+/* BERANDA */
 .welcome-section {
     padding: 2rem;
     background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, var(--white) 100%);
@@ -173,10 +155,7 @@ section > p {
     font-size: 1.05rem;
 }
 
-/* =========================================================
-   RINGKASAN
-   ========================================================= */
-
+/* RINGKASAN */
 .summary-section {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -189,10 +168,7 @@ section > p {
     margin-bottom: 0.5rem;
 }
 
-/* =========================================================
-   KARTU STATISTIK
-   ========================================================= */
-
+/* KARTU STATISTIK */
 .stat-card {
     width: 100%;
     min-height: 145px;
@@ -215,10 +191,6 @@ section > p {
     box-shadow: var(--shadow-hover);
 }
 
-/* =========================================================
-   TULISAN KARTU
-   ========================================================= */
-
 .stat-card h3 {
     margin: 0 0 0.5rem 0;
     color: var(--muted);
@@ -236,10 +208,7 @@ section > p {
     font-weight: 900;
 }
 
-/* =========================================================
-   TABEL
-   ========================================================= */
-
+/* TABEL */
 .table-responsive {
     width: 100%;
     overflow-x: auto;
@@ -285,10 +254,7 @@ tbody tr:hover {
     background-color: rgba(220, 38, 38, 0.08);
 }
 
-/* =========================================================
-   TOMBOL TABEL
-   ========================================================= */
-
+/* TOMBOL TABEL */
 td button {
     padding: 0.45rem 0.85rem;
     margin-right: 0.35rem;
@@ -324,10 +290,7 @@ td button:last-of-type:hover {
     background-color: var(--primary-dark);
 }
 
-/* =========================================================
-   FORM & INPUTS
-   ========================================================= */
-
+/* FORM & INPUTS */
 form {
     width: 100%;
     max-width: 720px;
@@ -381,10 +344,7 @@ form input::placeholder,
     color: #6b7280;
 }
 
-/* =========================================================
-   TOMBOL SIMPAN / UTAMA
-   ========================================================= */
-
+/* TOMBOL SIMPAN / UTAMA */
 form p:last-child {
     margin-top: 1.25rem;
     margin-bottom: 0;
@@ -413,10 +373,7 @@ form button[type="submit"]:hover {
     box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
 }
 
-/* =========================================================
-   SEARCH BOX & RELOAD
-   ========================================================= */
-
+/* SEARCH BOX & RELOAD */
 .search-box {
     margin-bottom: 1.25rem;
     display: flex;
@@ -475,10 +432,7 @@ form button[type="submit"]:hover {
     box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
 }
 
-/* =========================================================
-   FLASH MESSAGE & ERRORS
-   ========================================================= */
-
+/* FLASH MESSAGE & ERRORS */
 .flash {
     padding: 0.85rem 1.1rem;
     border-radius: 7px;
@@ -507,10 +461,7 @@ form button[type="submit"]:hover {
     font-weight: 600;
 }
 
-/* =========================================================
-   FOOTER
-   ========================================================= */
-
+/* FOOTER */
 footer {
     text-align: center;
     padding: 1.5rem 1rem 2.5rem;
@@ -519,10 +470,7 @@ footer {
     font-weight: 600;
 }
 
-/* =========================================================
-   HAMBURGER MENU
-   ========================================================= */
-
+/* HAMBURGER MENU */
 .nav-toggle-label {
     display: none;
     font-size: 1.6rem;
@@ -532,10 +480,7 @@ footer {
     cursor: pointer;
 }
 
-/* =========================================================
-   RESPONSIVE DESIGN
-   ========================================================= */
-
+/* RESPONSIVE DESIGN (HP & TABLET) */
 @media (max-width: 900px) {
     .summary-section {
         grid-template-columns: repeat(2, minmax(0, 1fr));
