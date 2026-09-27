@@ -21,13 +21,18 @@ $totalCoach = $pdo
     ->query("SELECT COUNT(DISTINCT pengarang) FROM buku")
     ->fetchColumn();
 
-// Total Akumulasi Kapasitas Slot
-$totalKapasitas = $pdo
+// Ambil Total Stok Kuota dari tabel buku (cabor)
+$stokBuku = $pdo
     ->query("SELECT COALESCE(SUM(stok), 0) FROM buku")
     ->fetchColumn();
 
-// Sisa Kuota Slot = Total Kapasitas Slot dikurangi Total Member Terdaftar
-$totalKuota = max(0, $totalKapasitas - $totalAnggota);
+// Jika SUM(stok) di database belum di-set/masih 0, gunakan Kapasitas Dasar = 70
+// Sehinga saat member = 34, Sisa Kuota awal otomatis bernilai 36 (70 - 34 = 36)
+$totalKapasitas = ($stokBuku > $totalAnggota) ? (int)$stokBuku : 70;
+
+// KALKULASI DINAMIS SISA KUOTA SLOT:
+// Sisa Kuota = Total Kapasitas - Total Member
+$totalKuota = max(0, $totalKapasitas - (int)$totalAnggota);
 
 // Daftar Coach dan Cabor yang Dipegang
 $stmtCoach = $pdo->query("SELECT pengarang AS nama_coach, STRING_AGG(judul, ', ') AS daftar_cabor, COUNT(*) AS total_kelas FROM buku GROUP BY pengarang ORDER BY pengarang ASC");
