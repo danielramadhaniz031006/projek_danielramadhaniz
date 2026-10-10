@@ -1,16 +1,29 @@
-</main> 
+</main>
 
 <footer>
-    <p>&copy; ELRAM Traning Camp</p>
+
+    <p>&copy; ELRAM Training Camp</p>
+
 </footer>
 
-<script src="/jobsheet-08/assets/js/app.js"></script>
+<?php
+
+// Memuat JavaScript utama
+$app_js = $base . '/assets/js/app.js';
+
+?>
+
+<script src="<?php echo htmlspecialchars($app_js); ?>"></script>
 
 <?php if (!empty($extra_scripts)): ?>
+
     <?php foreach ($extra_scripts as $src): ?>
-        <script src="<?php echo $src; ?>"></script>
+
+        <script src="<?php echo htmlspecialchars($src); ?>"></script>
+
     <?php endforeach; ?>
+
 <?php endif; ?>
 
 </body>
-</html>  
+</html>

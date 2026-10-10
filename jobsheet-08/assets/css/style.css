@@ -1,444 +1,1323 @@
 /* =========================================================
    ELRAM TRAINING CAMP - STYLE.CSS
-   Tema gelap, merah, dan tata letak Beranda baru
+   Tema Gelap, Merah, Modern, dan Responsif
    ========================================================= */
 
-/* RESET & BASE */
+
+/* =========================================================
+   1. RESET & BASE
+   ========================================================= */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-:root { 
+:root {
     --primary: #dc2626;
     --primary-dark: #991b1b;
     --primary-light: #ef4444;
     --accent: #f59e0b;
+
     --bg: #0d0e12;
     --white: #16181e;
     --soft: #21242d;
+
     --text: #f3f4f6;
     --muted: #9ca3af;
+
     --border: #2d313e;
+
     --success-bg: #064e3b;
     --success-text: #6ee7b7;
+
     --error-bg: #7f1d1d;
     --error-text: #fca5a5;
+
     --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6);
-    --shadow-hover: 0 15px 30px -5px rgba(220, 38, 38, 0.3);
+
+    --shadow-hover:
+        0 15px 30px -5px rgba(220, 38, 38, 0.3);
+
+    --radius: 10px;
 }
 
-html { scroll-behavior: smooth; }
+html {
+    scroll-behavior: smooth;
+}
 
 body {
-    font-family: "Segoe UI", Roboto, -apple-system, sans-serif;
+    font-family:
+        "Segoe UI",
+        Roboto,
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
     color: var(--text);
     background-color: var(--bg);
+
     line-height: 1.6;
     min-height: 100vh;
 }
 
-a { color: var(--primary-light); text-decoration: none; }
-a:hover { color: var(--accent); text-decoration: none; }
+a {
+    color: var(--primary-light);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
 
-/* HEADER & NAVBAR */
+a:hover {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+img {
+    max-width: 100%;
+}
+
+
+/* =========================================================
+   2. HEADER & NAVBAR
+   ========================================================= */
+
 header {
     background: #090a0d;
+
     border-bottom: 2px solid var(--primary);
+
     color: #fff;
+
     padding: 0.8rem 2rem;
-    min-height: 62px;
+    min-height: 70px;
+
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     gap: 1rem;
-    box-shadow: 0 4px 20px rgba(220, 38, 38, 0.15);
+
+    box-shadow:
+        0 4px 20px rgba(220, 38, 38, 0.15);
+
+    position: relative;
+    z-index: 100;
 }
 
 header h1 {
     font-size: 1.4rem;
     font-weight: 800;
+
     text-transform: uppercase;
     letter-spacing: 1.5px;
+
     color: #fff;
+
     white-space: nowrap;
+}
+
+header nav {
+    display: block;
 }
 
 header nav ul {
     list-style: none;
+
     display: flex;
     align-items: center;
     justify-content: flex-end;
+
     gap: 0.5rem;
     flex-wrap: wrap;
 }
 
+header nav li {
+    list-style: none;
+}
+
 header nav a {
     display: block;
+
     color: var(--muted);
+
     font-weight: 700;
     font-size: 0.85rem;
-    padding: 0.5rem 0.8rem;
+
+    padding: 0.6rem 0.9rem;
+
     border-radius: 6px;
+
     text-transform: uppercase;
     letter-spacing: 0.5px;
+
     transition: all 0.2s ease;
 }
 
 header nav a:hover {
     color: #fff;
+
     background-color: var(--primary);
+
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+
+    box-shadow:
+        0 4px 12px rgba(220, 38, 38, 0.4);
 }
 
-/* MAIN */
+/* Tombol hamburger */
+
+.nav-toggle-label {
+    display: none;
+
+    font-size: 1.6rem;
+    line-height: 1;
+
+    color: #fff;
+    background: transparent;
+
+    border: none;
+    border-radius: 6px;
+
+    padding: 0.4rem;
+
+    cursor: pointer;
+}
+
+.nav-toggle-label:hover {
+    color: var(--primary-light);
+}
+
+
+/* =========================================================
+   3. MAIN CONTENT
+   ========================================================= */
+
 main {
     width: min(1100px, calc(100% - 32px));
+
     margin: 2rem auto;
+
+    min-height: 60vh;
 }
 
-/* SECTION UMUM */
 section {
     background-color: var(--white);
+
     border: 1px solid var(--border);
     border-radius: 12px;
+
     padding: 1.75rem;
+
     margin-bottom: 1.5rem;
+
     box-shadow: var(--shadow);
 }
 
 section h2 {
     margin-bottom: 1rem;
+
     color: #fff;
+
     font-size: 1.45rem;
     font-weight: 800;
+
     text-transform: uppercase;
     letter-spacing: 0.5px;
+
     border-left: 4px solid var(--primary);
+
     padding-left: 0.75rem;
 }
 
-section > p { color: var(--muted); }
+section > p {
+    color: var(--muted);
+}
 
-/* BERANDA - aturan dasar */
+
+/* =========================================================
+   4. BERANDA - WELCOME SECTION
+   ========================================================= */
+
 .welcome-section {
     padding: 2rem;
-    background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, var(--white) 100%);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(220, 38, 38, 0.1) 0%,
+            var(--white) 100%
+        );
+
     border: 1px solid rgba(220, 38, 38, 0.3);
 }
 
-.welcome-section h2 { margin-bottom: 0.8rem; color: #fff; }
-.welcome-section p { color: #d1d5db; font-size: 1.05rem; }
+.welcome-section h2 {
+    margin-bottom: 0.8rem;
+
+    color: #fff;
+}
+
+.welcome-section p {
+    color: #d1d5db;
+
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+
+/* =========================================================
+   5. BERANDA - STATISTIK
+   ========================================================= */
 
 .summary-section {
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
     gap: 1.25rem;
+
     align-items: stretch;
 }
 
 .summary-section > h2 {
     grid-column: 1 / -1;
+
     margin-bottom: 0.5rem;
 }
 
 .stat-card {
     width: 100%;
+    min-width: 0;
+
     min-height: 145px;
+
     background: var(--soft);
+
     border: 1px solid var(--border);
     border-top: 4px solid var(--primary);
+
     border-radius: 10px;
+
     padding: 1.5rem 1rem;
+
     display: flex;
     flex-direction: column;
+
     align-items: center;
     justify-content: center;
+
     text-align: center;
+
     transition: all 0.25s ease;
 }
 
 .stat-card:hover {
     transform: translateY(-4px);
+
     border-color: var(--primary);
+
     box-shadow: var(--shadow-hover);
 }
 
 .stat-card h3 {
     margin: 0 0 0.5rem;
+
     color: var(--muted);
+
     font-size: 0.85rem;
     font-weight: 700;
+
     text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
 .stat-card p {
     margin: 0;
+
     color: var(--primary-light);
+
     font-size: 2.5rem;
     line-height: 1;
+
     font-weight: 900;
 }
 
-/* TABEL */
+
+/* =========================================================
+   6. BERANDA - TIM COACH
+   ========================================================= */
+
+.coach-section {
+    margin-top: 35px;
+}
+
+.coach-section > div {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+
+    margin-top: 15px;
+}
+
+.coach-section > div > div {
+    min-width: 0;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1f222a,
+            #14161b
+        );
+
+    padding: 18px;
+
+    border-radius: 8px;
+
+    border: 1px solid var(--border);
+
+    display: flex;
+    flex-direction: column;
+
+    transition: all 0.25s ease;
+}
+
+.coach-section > div > div:hover {
+    border-color: var(--primary);
+
+    transform: translateY(-3px);
+
+    box-shadow: var(--shadow-hover);
+}
+
+.coach-section h4 {
+    overflow-wrap: anywhere;
+}
+
+.coach-section p {
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   7. BERANDA - DAFTAR HARGA
+   ========================================================= */
+
+.pricing-banner-section {
+    grid-column: 1 / -1;
+
+    margin-top: 0 !important;
+
+    padding: 22px;
+
+    border-radius: 9px;
+}
+
+.pricing-banner-section h2 {
+    font-size: 1.35rem;
+
+    margin-bottom: 1rem;
+}
+
+.pricing-banner-wrapper {
+    width: 100%;
+
+    border-radius: 8px;
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.pricing-banner-img {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   8. TABEL DATA
+   Berlaku untuk jadwal kelas dan daftar member
+   ========================================================= */
+
 .table-responsive {
     width: 100%;
+
     overflow-x: auto;
+
     border: 1px solid var(--border);
     border-radius: 9px;
 }
 
-table { width: 100%; border-collapse: collapse; background: var(--white); }
-th, td {
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background: var(--white);
+    color: var(--text);
+
     text-align: left;
+}
+
+th,
+td {
+    text-align: left;
+
     padding: 0.9rem 1rem;
+
     border-bottom: 1px solid var(--border);
+
     vertical-align: middle;
 }
-thead { background-color: #0d0e12; color: #fff; }
+
+thead {
+    background-color: #0d0e12;
+
+    color: #fff;
+}
+
 thead th {
     font-size: 0.85rem;
     font-weight: 800;
+
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    border-bottom: 2px solid var(--primary);
-}
-tbody tr { transition: background-color 0.2s ease; }
-tbody tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.02); }
-tbody tr:hover { background-color: rgba(220, 38, 38, 0.08); }
 
-/* TOMBOL TABEL */
+    border-bottom: 2px solid var(--primary);
+
+    white-space: nowrap;
+}
+
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+tbody tr:hover {
+    background-color: rgba(220, 38, 38, 0.08);
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   9. TOMBOL AKSI DALAM TABEL
+   ========================================================= */
+
 td button {
     padding: 0.45rem 0.85rem;
+
     margin-right: 0.35rem;
+
     border: none;
     border-radius: 6px;
-    cursor: pointer;
+
     font-family: inherit;
+
     font-weight: 700;
     font-size: 0.8rem;
+
     text-transform: uppercase;
+
     transition: all 0.2s ease;
 }
-td button:hover { transform: translateY(-1px); }
-td button:first-of-type { background-color: var(--accent); color: #000; }
-td button:first-of-type:hover { background-color: #d97706; }
-td button:last-of-type { background-color: var(--primary); color: #fff; }
-td button:last-of-type:hover { background-color: var(--primary-dark); }
 
-/* FORM & INPUTS */
-form { width: 100%; max-width: 720px; }
-form p { margin: 0 0 1rem; }
+td button:hover {
+    transform: translateY(-1px);
+}
+
+td button:first-of-type {
+    background-color: var(--accent);
+    color: #000;
+}
+
+td button:first-of-type:hover {
+    background-color: #d97706;
+}
+
+td button:last-of-type {
+    background-color: var(--primary);
+    color: #fff;
+}
+
+td button:last-of-type:hover {
+    background-color: var(--primary-dark);
+}
+
+
+/* =========================================================
+   10. TOMBOL UMUM
+   ========================================================= */
+
+.btn-primary {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 0.5rem;
+
+    padding: 0.7rem 1.2rem;
+
+    background: var(--primary);
+    color: #fff;
+
+    border: none;
+    border-radius: 6px;
+
+    font-weight: 800;
+    font-size: 0.9rem;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+    background: var(--primary-light);
+
+    color: #fff;
+
+    transform: translateY(-2px);
+
+    box-shadow: var(--shadow-hover);
+}
+
+.btn-secondary {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.7rem 1.2rem;
+
+    background: #333742;
+    color: #fff;
+
+    border: 1px solid #444957;
+    border-radius: 6px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.btn-secondary:hover {
+    background: #444957;
+
+    color: #fff;
+}
+
+.btn-danger {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.45rem 0.85rem;
+
+    background: var(--primary);
+    color: #fff;
+
+    border: none;
+    border-radius: 6px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.btn-danger:hover {
+    background: var(--primary-dark);
+
+    color: #fff;
+}
+
+.btn-edit {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 0.45rem 0.85rem;
+
+    background: var(--accent);
+    color: #111;
+
+    border: none;
+    border-radius: 6px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+
+    transition: all 0.2s ease;
+}
+
+.btn-edit:hover {
+    background: #d97706;
+
+    color: #111;
+}
+
+
+/* =========================================================
+   11. FORM & INPUTS
+   ========================================================= */
+
+form {
+    width: 100%;
+    max-width: 720px;
+}
+
+form p {
+    margin: 0 0 1rem;
+}
+
 form label {
     display: block;
+
     margin: 0 0 0.4rem;
+
     font-weight: 700;
+
     color: #fff;
+
     font-size: 0.9rem;
+
     text-transform: uppercase;
     letter-spacing: 0.3px;
 }
-form label + br { display: none; }
-form input, form select {
+
+form label + br {
+    display: none;
+}
+
+form input,
+form select,
+form textarea {
     display: block;
+
     width: 100%;
     max-width: 520px;
-    height: 48px;
-    padding: 0.6rem 0.9rem;
+
+    min-width: 0;
+
+    min-height: 48px;
+
+    padding: 0.7rem 0.9rem;
+
     border: 1px solid var(--border);
     border-radius: 7px;
+
     background-color: var(--soft);
+
     color: #fff;
+
     font-family: inherit;
     font-size: 0.95rem;
+
     outline: none;
-    transition: all 0.2s ease;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
 }
-form input:focus, form select:focus, .search-box input:focus {
+
+form textarea {
+    min-height: 110px;
+
+    resize: vertical;
+}
+
+form select {
+    cursor: pointer;
+}
+
+form select option {
+    background: #21242d;
+    color: #fff;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25);
+
+    box-shadow:
+        0 0 0 3px rgba(220, 38, 38, 0.25);
+
     background-color: #262933;
 }
-form input::placeholder, .search-box input::placeholder { color: #6b7280; }
 
-/* TOMBOL SIMPAN */
-form p:last-child { margin-top: 1.25rem; margin-bottom: 0; }
+form input::placeholder,
+form textarea::placeholder {
+    color: #6b7280;
+}
+
+form input:disabled,
+form select:disabled,
+form textarea:disabled {
+    opacity: 0.6;
+
+    cursor: not-allowed;
+}
+
+form input[type="checkbox"],
+form input[type="radio"] {
+    display: inline-block;
+
+    width: auto;
+    min-height: auto;
+
+    margin-right: 0.4rem;
+}
+
+form input[type="number"] {
+    appearance: textfield;
+}
+
+form input[type="number"]::-webkit-inner-spin-button,
+form input[type="number"]::-webkit-outer-spin-button {
+    margin: 0;
+}
+
 form button[type="submit"] {
     background: var(--primary);
     color: #fff;
+
     border: none;
+
     padding: 0.75rem 1.5rem;
+
     min-width: 110px;
+
     border-radius: 6px;
+
     font-family: inherit;
+
     font-size: 0.9rem;
     font-weight: 800;
+
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+
     transition: all 0.2s ease;
 }
+
 form button[type="submit"]:hover {
     background: var(--primary-light);
+
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
+
+    box-shadow:
+        0 6px 18px rgba(220, 38, 38, 0.45);
 }
 
-/* SEARCH BOX & RELOAD */
+form button[type="submit"]:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+    box-shadow: none;
+}
+
+form button[type="submit"]:disabled:hover {
+    background: var(--primary);
+
+    transform: none;
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   12. FORM TAMBAH DAN EDIT
+   ========================================================= */
+
+#form-tambah,
+.form-data {
+    width: 100%;
+    max-width: 720px;
+}
+
+#form-tambah input,
+#form-tambah select,
+#form-tambah textarea,
+.form-data input,
+.form-data select,
+.form-data textarea {
+    max-width: 100%;
+}
+
+form small {
+    color: var(--muted);
+
+    font-size: 0.8rem;
+    line-height: 1.5;
+}
+
+form a {
+    transition: color 0.2s ease;
+}
+
+
+/* =========================================================
+   13. SEARCH BOX / PENCARIAN
+   ========================================================= */
+
 .search-box {
     margin-bottom: 1.25rem;
+
     display: flex;
     align-items: center;
+
     gap: 0.75rem;
+
     flex-wrap: wrap;
 }
+
 .search-box label {
     display: block;
+
     margin: 0;
+
     font-weight: 700;
+
     color: #fff;
+
     white-space: nowrap;
+
     text-transform: uppercase;
     font-size: 0.85rem;
 }
+
 .search-box input {
     width: 100%;
     max-width: 400px;
+
+    min-width: 0;
+
     height: 48px;
+
     padding: 0.6rem 0.9rem;
+
     border: 1px solid var(--border);
     border-radius: 7px;
+
     background-color: var(--soft);
     color: #fff;
+
     font-family: inherit;
     font-size: 0.95rem;
+
     outline: none;
 }
-.btn-reload {
+
+.search-box input:focus {
+    border-color: var(--primary);
+
+    box-shadow:
+        0 0 0 3px rgba(220, 38, 38, 0.25);
+
+    background-color: #262933;
+}
+
+.search-box input::placeholder {
+    color: #6b7280;
+}
+
+
+/* Form pencarian pada halaman list */
+
+form.search-form {
+    width: 100%;
+    max-width: none;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 20px;
+
+    flex-wrap: wrap;
+}
+
+form.search-form input[type="text"] {
+    width: 100%;
+    max-width: none;
+
+    min-width: 0;
+
+    flex: 1;
+
+    height: 48px;
+}
+
+form.search-form button[type="submit"] {
+    flex-shrink: 0;
+
+    min-width: auto;
+
+    min-height: 48px;
+
+    padding: 0.65rem 1.25rem;
+
+    background: #333742;
+
+    color: #fff;
+
+    border: 1px solid #454957;
+
+    border-radius: 7px;
+
+    box-shadow: none;
+
+    text-transform: none;
+    letter-spacing: 0;
+
+    font-weight: 700;
+}
+
+form.search-form button[type="submit"]:hover {
+    background: var(--primary);
+
+    border-color: var(--primary);
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+form.search-form a {
     display: inline-flex;
+
     align-items: center;
     justify-content: center;
+
     min-height: 48px;
+
     padding: 0.65rem 1.25rem;
+
+    background: #333742;
+
+    color: #fff;
+
+    border-radius: 7px;
+
+    font-weight: 700;
+
+    text-decoration: none;
+}
+
+form.search-form a:hover {
+    background: #454957;
+
+    color: #fff;
+}
+
+
+/* =========================================================
+   14. TOMBOL MUAT ULANG
+   ========================================================= */
+
+.btn-reload {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-height: 48px;
+
+    padding: 0.65rem 1.25rem;
+
     border: none;
     border-radius: 7px;
+
     background: var(--primary);
     color: #fff;
+
     font-family: inherit;
+
     font-size: 0.85rem;
     font-weight: 800;
+
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+
     transition: all 0.2s ease;
 }
+
 .btn-reload:hover {
     background: var(--primary-light);
+
     transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
+
+    box-shadow:
+        0 6px 18px rgba(220, 38, 38, 0.45);
 }
 
-/* FLASH MESSAGE & ERRORS */
+
+/* =========================================================
+   15. FLASH MESSAGE / NOTIFIKASI
+   ========================================================= */
+
 .flash {
     padding: 0.85rem 1.1rem;
-    border-radius: 7px;
-    margin-bottom: 1.25rem;
-    font-weight: 700;
-    border-left: 4px solid;
-}
-.flash-success { background-color: var(--success-bg); color: var(--success-text); border-left-color: #10b981; }
-.flash-error { background-color: var(--error-bg); color: var(--error-text); border-left-color: var(--primary); }
-.error { display: block; color: var(--error-text); font-size: 0.85rem; margin-top: 0.35rem; font-weight: 600; }
 
-/* FOOTER */
-footer {
-    text-align: center;
-    padding: 1.5rem 1rem 2.5rem;
-    color: var(--muted);
+    border-radius: 7px;
+
+    margin-bottom: 1.25rem;
+
+    font-weight: 700;
+
+    border-left: 4px solid;
+
+    overflow-wrap: anywhere;
+}
+
+.flash-success {
+    background-color: var(--success-bg);
+
+    color: var(--success-text);
+
+    border-left-color: #10b981;
+}
+
+.flash-error {
+    background-color: var(--error-bg);
+
+    color: var(--error-text);
+
+    border-left-color: var(--primary);
+}
+
+.error {
+    display: block;
+
+    color: var(--error-text);
+
     font-size: 0.85rem;
+
+    margin-top: 0.35rem;
+
     font-weight: 600;
 }
 
-/* HAMBURGER MENU */
-.nav-toggle-label {
-    display: none;
-    font-size: 1.6rem;
-    color: #fff;
-    background: transparent;
-    border: none;
-    cursor: pointer;
+.js-error {
+    display: block;
+
+    margin-top: 6px;
+
+    color: var(--error-text);
+
+    font-size: 0.85rem;
+
+    font-weight: 600;
 }
 
+
 /* =========================================================
-   BERANDA - TATA LETAK BARU
+   16. FOOTER
    ========================================================= */
+
+footer {
+    text-align: center;
+
+    padding: 1.5rem 1rem 2.5rem;
+
+    color: var(--muted);
+
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.04);
+
+    margin-top: 2rem;
+}
+
+footer p {
+    margin: 0;
+}
+
+
+/* =========================================================
+   17. FOCUS & AKSESIBILITAS
+   ========================================================= */
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid var(--primary-light);
+
+    outline-offset: 3px;
+}
+
+button:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    transform: none;
+}
+
+
+/* =========================================================
+   18. BERANDA - TATA LETAK DESKTOP
+   ========================================================= */
+
 main:has(> .welcome-section) {
     width: calc(100% - 60px);
+
     max-width: 1780px;
+
     margin: 28px auto 20px;
+
     display: grid;
+
     grid-template-columns: 1.15fr 0.85fr;
+
     grid-template-areas:
         "welcome summary"
         "coach coach";
+
     gap: 22px 24px;
+
     align-items: stretch;
 }
 
+
+/* Welcome */
+
 main:has(> .welcome-section) > .welcome-section {
     grid-area: welcome;
+
     margin: 0;
+
+    min-width: 0;
     min-height: 290px;
+
     padding: 30px 34px;
+
     display: flex;
     flex-direction: column;
+
     justify-content: center;
+
     border-radius: 9px;
-    background: linear-gradient(120deg, rgba(220, 38, 38, 0.12), rgba(15, 17, 23, 0.98));
+
+    background:
+        linear-gradient(
+            120deg,
+            rgba(220, 38, 38, 0.12),
+            rgba(15, 17, 23, 0.98)
+        );
 }
 
 main:has(> .welcome-section) > .welcome-section h2 {
     font-size: clamp(1.3rem, 1.8vw, 2rem);
+
     line-height: 1.25;
+
     margin-bottom: 1rem;
 }
 
 main:has(> .welcome-section) > .welcome-section p {
     font-size: 1rem;
+
     line-height: 1.7;
 }
 
+
+/* Statistik */
+
 main:has(> .welcome-section) > .summary-section {
     grid-area: summary;
+
+    min-width: 0;
+
     margin: 0;
+
     padding: 22px;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
     gap: 16px;
+
     align-content: center;
+
     border-radius: 9px;
 }
 
 main:has(> .welcome-section) > .summary-section > h2 {
     grid-column: 1 / -1;
+
     margin-bottom: 2px;
+
     font-size: 1.25rem;
 }
 
 main:has(> .welcome-section) .stat-card {
+    min-width: 0;
+
     min-height: 98px;
+
     padding: 14px 10px;
+
     border-top-width: 3px;
+
     border-radius: 7px;
-    background: linear-gradient(145deg, #191e27, #12151b);
+
+    background:
+        linear-gradient(
+            145deg,
+            #191e27,
+            #12151b
+        );
 }
 
 main:has(> .welcome-section) .stat-card h3 {
     font-size: 0.76rem;
+
     margin-bottom: 0.4rem;
 }
 
@@ -446,159 +1325,482 @@ main:has(> .welcome-section) .stat-card p {
     font-size: 2.2rem;
 }
 
+
+/* Coach */
+
 main:has(> .welcome-section) > .coach-section {
     grid-area: coach;
+
+    min-width: 0;
+
     margin: 0 !important;
+
     padding: 22px;
+
     border-radius: 9px;
 }
 
 main:has(> .welcome-section) > .coach-section h2 {
     font-size: 1.35rem;
+
     margin-bottom: 1rem;
 }
 
 main:has(> .welcome-section) > .coach-section > div {
-    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr)) !important;
+
     gap: 14px !important;
+
     margin-top: 0 !important;
 }
 
 main:has(> .welcome-section) > .coach-section > div > div {
     min-width: 0;
+
     padding: 15px !important;
+
     border-radius: 8px !important;
-    background: linear-gradient(145deg, #1a1d23, #13161b) !important;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1a1d23,
+            #13161b
+        ) !important;
 }
+
+
+/* Banner harga pada beranda */
+
+main:has(> .welcome-section) > .pricing-banner-section {
+    grid-column: 1 / -1;
+
+    margin-top: 0 !important;
+}
+
 
 /* =========================================================
-   STYLE TAMBAHAN: PRICING BANNER SECTION (PNG BANNER)
+   19. RESPONSIVE TABLET
    ========================================================= */
 
-.pricing-banner-section {
-    grid-column: 1 / -1;
-    margin-top: 0 !important;
-    padding: 22px;
-    border-radius: 9px;
-}
-
-.pricing-banner-section h2 {
-    font-size: 1.35rem;
-    margin-bottom: 1rem;
-}
-
-.pricing-banner-wrapper {
-    width: 100%;
-    border-radius: 8px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
-}
-
-.pricing-banner-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: contain;
-}
-
-/* TABLET */
 @media (max-width: 1100px) {
+
     main:has(> .welcome-section) {
         width: calc(100% - 36px);
+
         grid-template-columns: 1fr 1fr;
+
         gap: 16px;
     }
 
-    main:has(> .welcome-section) > .welcome-section { padding: 22px; }
-    main:has(> .welcome-section) > .summary-section { padding: 18px; }
+    main:has(> .welcome-section) > .welcome-section {
+        padding: 22px;
+    }
+
+    main:has(> .welcome-section) > .summary-section {
+        padding: 18px;
+    }
 
     main:has(> .welcome-section) > .coach-section > div {
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr)) !important;
     }
+
+    .summary-section {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
 }
 
+
+/* =========================================================
+   20. RESPONSIVE TABLET KECIL
+   ========================================================= */
+
 @media (max-width: 800px) {
+
     main:has(> .welcome-section) {
         width: calc(100% - 28px);
+
         grid-template-columns: 1fr;
+
         grid-template-areas:
             "welcome"
             "summary"
             "coach";
     }
 
-    main:has(> .welcome-section) > .welcome-section { min-height: auto; }
-    main:has(> .welcome-section) > .coach-section > div {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    main:has(> .welcome-section) > .welcome-section {
+        min-height: auto;
     }
+
+    main:has(> .welcome-section) > .coach-section > div {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .pricing-banner-section {
+        padding: 18px;
+    }
+
 }
 
-/* MOBILE */
+
+/* =========================================================
+   21. RESPONSIVE MOBILE
+   ========================================================= */
+
 @media (max-width: 600px) {
+
+    /* Header */
+
     header {
         position: relative;
+
         flex-wrap: wrap;
+
         padding: 0.8rem 1rem;
+
+        min-height: 60px;
     }
 
-    header h1 { font-size: 1.1rem; }
+    header h1 {
+        font-size: 1.1rem;
+
+        letter-spacing: 1px;
+
+        white-space: normal;
+
+        flex: 1;
+
+        min-width: 0;
+    }
 
     .nav-toggle-label {
         display: block;
+
+        flex-shrink: 0;
     }
+
+
+    /* Navigasi mobile */
 
     header nav {
         display: none;
+
         width: 100%;
+
         order: 3;
+
         margin-top: 0.5rem;
+
         padding-top: 0.5rem;
+
         border-top: 1px solid var(--border);
     }
 
-    header nav.nav-open { display: block; }
-    header nav ul { flex-direction: column; align-items: stretch; }
-    header nav a { width: 100%; }
+    header nav.nav-open {
+        display: block;
+    }
 
-    main { width: calc(100% - 20px); margin: 1rem auto; }
+    header nav ul {
+        flex-direction: column;
 
-    section { padding: 1rem; margin-bottom: 0.85rem; }
-    section h2 { font-size: 1.05rem; }
+        align-items: stretch;
+
+        gap: 0.3rem;
+    }
+
+    header nav a {
+        width: 100%;
+
+        padding: 0.75rem;
+    }
+
+    header nav a:hover {
+        transform: none;
+    }
+
+
+    /* Main dan section */
+
+    main {
+        width: calc(100% - 20px);
+
+        margin: 1rem auto;
+
+        min-height: auto;
+    }
+
+    section {
+        padding: 1rem;
+
+        margin-bottom: 0.85rem;
+
+        border-radius: 9px;
+    }
+
+    section h2 {
+        font-size: 1.05rem;
+
+        line-height: 1.4;
+    }
+
+
+    /* Beranda */
 
     main:has(> .welcome-section) {
         width: calc(100% - 20px);
+
         margin: 14px auto;
+
         gap: 12px;
+
+        grid-template-columns: 1fr;
+
+        grid-template-areas:
+            "welcome"
+            "summary"
+            "coach";
     }
 
     main:has(> .welcome-section) > .welcome-section {
         padding: 18px;
+
         min-height: auto;
     }
 
-    main:has(> .welcome-section) > .welcome-section h2 { font-size: 1.15rem; }
-    main:has(> .welcome-section) > .welcome-section p { font-size: 0.9rem; }
+    main:has(> .welcome-section) > .welcome-section h2 {
+        font-size: 1.15rem;
+    }
+
+    main:has(> .welcome-section) > .welcome-section p {
+        font-size: 0.9rem;
+
+        line-height: 1.7;
+    }
+
+
+    /* Statistik mobile */
 
     main:has(> .welcome-section) > .summary-section {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
         padding: 14px;
+
         gap: 10px;
     }
 
-    main:has(> .welcome-section) > .summary-section > h2 { font-size: 1rem; }
-    main:has(> .welcome-section) .stat-card { min-height: 90px; padding: 10px 5px; }
-    main:has(> .welcome-section) .stat-card h3 { font-size: 0.68rem; }
-    main:has(> .welcome-section) .stat-card p { font-size: 1.8rem; }
+    main:has(> .welcome-section) > .summary-section > h2 {
+        font-size: 1rem;
+    }
 
-    main:has(> .welcome-section) > .coach-section { padding: 14px; }
+    main:has(> .welcome-section) .stat-card {
+        min-height: 90px;
+
+        padding: 10px 5px;
+    }
+
+    main:has(> .welcome-section) .stat-card h3 {
+        font-size: 0.68rem;
+    }
+
+    main:has(> .welcome-section) .stat-card p {
+        font-size: 1.8rem;
+    }
+
+
+    /* Coach mobile */
+
+    main:has(> .welcome-section) > .coach-section {
+        padding: 14px;
+    }
+
     main:has(> .welcome-section) > .coach-section > div {
         grid-template-columns: 1fr !important;
+
         gap: 10px !important;
     }
- 
-    .pricing-banner-section { padding: 14px; }
 
-    .table-responsive { overflow-x: auto; }
-    table { min-width: 600px; }
+    main:has(> .welcome-section) > .coach-section > div > div {
+        padding: 14px !important;
+    }
+
+
+    /* Banner harga */
+
+    .pricing-banner-section {
+        padding: 14px;
+    }
+
+    .pricing-banner-section h2 {
+        font-size: 1.05rem;
+    }
+
+
+    /* Form */
+
+    form {
+        max-width: 100%;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        max-width: 100%;
+
+        font-size: 0.9rem;
+    }
+
+    form button[type="submit"] {
+        min-height: 44px;
+
+        padding: 0.7rem 1rem;
+
+        font-size: 0.8rem;
+    }
+
+
+    /* Pencarian mobile */
+
+    form.search-form {
+        display: flex;
+
+        align-items: stretch;
+
+        gap: 8px;
+    }
+
+    form.search-form input[type="text"] {
+        width: 100%;
+
+        max-width: 100%;
+
+        flex-basis: 100%;
+    }
+
+    form.search-form button[type="submit"],
+    form.search-form a {
+        flex: 1;
+
+        min-width: 0;
+
+        min-height: 44px;
+    }
+
+
+    /* Tabel mobile */
+
+    .table-responsive {
+        overflow-x: auto;
+
+        -webkit-overflow-scrolling: touch;
+    }
+
+    table {
+        min-width: 600px;
+    }
+
+    th,
+    td {
+        padding: 0.75rem;
+    }
+
+    thead th {
+        font-size: 0.75rem;
+    }
+
+
+    /* Tombol */
+
+    .btn-reload {
+        min-height: 44px;
+
+        padding: 0.6rem 1rem;
+
+        font-size: 0.8rem;
+    }
+
+
+    /* Footer */
+
+    footer {
+        padding: 1.25rem 1rem 2rem;
+
+        margin-top: 1rem;
+    }
+
+}
+
+
+/* =========================================================
+   22. RESPONSIVE MOBILE SANGAT KECIL
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    header h1 {
+        font-size: 0.95rem;
+    }
+
+    main:has(> .welcome-section) > .welcome-section {
+        padding: 14px;
+    }
+
+    main:has(> .welcome-section) > .summary-section {
+        padding: 10px;
+
+        gap: 8px;
+    }
+
+    main:has(> .welcome-section) .stat-card {
+        padding: 8px 4px;
+
+        min-height: 82px;
+    }
+
+    main:has(> .welcome-section) .stat-card h3 {
+        font-size: 0.62rem;
+    }
+
+    main:has(> .welcome-section) .stat-card p {
+        font-size: 1.55rem;
+    }
+
+    section h2 {
+        font-size: 0.95rem;
+    }
+
+    .pricing-banner-section {
+        padding: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   23. PENGATURAN REDUCED MOTION
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        transition-duration: 0.01ms !important;
+
+        scroll-behavior: auto !important;
+    }
+
 }

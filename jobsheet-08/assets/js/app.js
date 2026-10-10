@@ -1,155 +1,305 @@
+/* =========================================================
+   ELRAM TRAINING CAMP - APP.JS
+   Navigasi, validasi form, dan konfirmasi hapus
+   ========================================================= */
+
+
+/* =========================================================
+   1. NAVBAR RESPONSIVE
+   ========================================================= */
+
 function initNavToggle() {
     const toggleBtn = document.getElementById("nav-toggle-btn");
     const nav = document.querySelector("header nav");
 
-    if (!toggleBtn || !nav) return;
+    if (!toggleBtn || !nav) {
+        return;
+    }
 
+    function setNavState(isOpen) {
+        nav.classList.toggle("nav-open", isOpen);
+
+        toggleBtn.setAttribute(
+            "aria-expanded",
+            String(isOpen)
+        );
+    }
+
+    // Status awal menu
+    setNavState(false);
+
+    // Buka atau tutup menu
     toggleBtn.addEventListener("click", function () {
-        nav.classList.toggle("nav-open");
+        const isOpen = nav.classList.contains("nav-open");
+
+        setNavState(!isOpen);
+    });
+
+    // Tutup menu setelah tautan dipilih pada perangkat mobile
+    nav.querySelectorAll("a").forEach(function (link) {
+        link.addEventListener("click", function () {
+            if (window.innerWidth <= 600) {
+                setNavState(false);
+            }
+        });
+    });
+
+    // Pastikan navigasi tidak tertinggal dalam mode mobile
+    window.addEventListener("resize", function () {
+        if (window.innerWidth > 600) {
+            setNavState(false);
+        }
     });
 }
 
+
+/* =========================================================
+   2. KONFIRMASI HAPUS
+   ========================================================= */
+
 function initHapusConfirm() {
-    document.addEventListener("click", function (e) {
-        const btn = e.target.closest(".btn-hapus");
 
-        if (!btn) return;
+    // Konfirmasi untuk form penghapusan data
+    document.querySelectorAll(
+        'form[action$="hapus.php"]'
+    ).forEach(function (form) {
 
-        const row = btn.closest("tr");
-
-        const nama = row
-            ? row.querySelector("td")?.textContent
-            : "data ini";
-
-        const yakin = confirm(
-            'Yakin ingin menghapus "' + nama.trim() + '"?'
-        );
-
-        if (yakin && row) {
-            row.remove();
+        /*
+         * Beberapa form lama sudah memiliki atribut onsubmit.
+         * Jangan menambahkan konfirmasi kedua jika atribut itu ada.
+         */
+        if (form.hasAttribute("onsubmit")) {
+            return;
         }
+
+        form.addEventListener("submit", function (event) {
+
+            const pesan =
+                form.dataset.confirm ||
+                "Yakin ingin menghapus data ini?";
+
+            const yakin = window.confirm(pesan);
+
+            if (!yakin) {
+                event.preventDefault();
+            }
+        });
     });
-} 
+}
+
+
+/* =========================================================
+   3. MENAMPILKAN ERROR VALIDASI
+   ========================================================= */
 
 function tampilkanError(input, pesan) {
+
     hapusError(input);
 
     const span = document.createElement("span");
 
-    span.className = "error";
+    span.className = "error js-error";
     span.textContent = pesan;
 
     input.insertAdjacentElement("afterend", span);
 }
 
+
+/* =========================================================
+   4. MENGHAPUS ERROR VALIDASI
+   ========================================================= */
+
 function hapusError(input) {
+
     const next = input.nextElementSibling;
 
-    if (next && next.classList.contains("error")) {
+    if (
+        next &&
+        next.classList.contains("js-error")
+    ) {
         next.remove();
     }
 }
 
+
+/* =========================================================
+   5. VALIDASI FORM TAMBAH DATA
+   ========================================================= */
+
 function initValidasiForm() {
-    const form = document.getElementById("form-tambah");
 
-    if (!form) return;
+    const forms = document.querySelectorAll(
+        "#form-tambah, form[data-validate='true']"
+    );
 
-    form.addEventListener("submit", function (e) {
-        let valid = true;
+    forms.forEach(function (form) {
 
-        const judul = form.querySelector(
-            "[name='judul'], [name='nama']"
-        );
+        form.addEventListener("submit", function (event) {
 
-        if (judul && judul.value.trim() === "") {
-            tampilkanError(
-                judul,
-                "Field ini wajib diisi."
+            let valid = true;
+
+            /* -------------------------------------------------
+               A. VALIDASI FIELD WAJIB DIISI
+               ------------------------------------------------- */
+
+            const requiredFields = form.querySelectorAll(
+                "[required]"
             );
 
-            valid = false;
-        } else if (judul) {
-            hapusError(judul);
-        }
+            requiredFields.forEach(function (input) {
 
-        const pengarang = form.querySelector(
-            "[name='pengarang']"
-        );
+                const nilai = input.value.trim();
 
-        if (pengarang && pengarang.value.trim() === "") {
-            tampilkanError(
-                pengarang,
-                "Pengarang wajib diisi."
+                if (nilai === "") {
+
+                    tampilkanError(
+                        input,
+                        "Field ini wajib diisi."
+                    );
+
+                    valid = false;
+
+                } else {
+
+                    hapusError(input);
+                }
+            });
+
+
+            /* -------------------------------------------------
+               B. VALIDASI JAM LATIHAN ATAU TAHUN
+               ------------------------------------------------- */
+
+            const tahun = form.querySelector(
+                "[name='tahun']"
             );
 
-            valid = false;
-        } else if (pengarang) {
-            hapusError(pengarang);
-        }
+            if (tahun && tahun.value.trim() !== "") {
 
-        const tahun = form.querySelector(
-            "[name='tahun']"
-        );
+                const nilai = Number(tahun.value);
 
-        if (tahun) {
-            const nilai = parseInt(
-                tahun.value,
-                10
+                const min = tahun.min !== ""
+                    ? Number(tahun.min)
+                    : 0;
+
+                const max = tahun.max !== ""
+                    ? Number(tahun.max)
+                    : 23;
+
+                const integerValid = Number.isInteger(nilai);
+
+                if (
+                    !integerValid ||
+                    nilai < min ||
+                    nilai > max
+                ) {
+
+                    let pesan;
+
+                    // Mendukung halaman buku lama jika masih ada
+                    if (min >= 1900) {
+
+                        pesan =
+                            "Tahun harus di antara " +
+                            min +
+                            "-" +
+                            max +
+                            ".";
+
+                    } else {
+
+                        pesan =
+                            "Jam latihan harus berupa angka " +
+                            "antara " +
+                            min +
+                            " sampai " +
+                            max +
+                            ".";
+                    }
+
+                    tampilkanError(tahun, pesan);
+
+                    valid = false;
+
+                } else {
+
+                    hapusError(tahun);
+                }
+            }
+
+
+            /* -------------------------------------------------
+               C. VALIDASI STOK / KUOTA MEMBER
+               ------------------------------------------------- */
+
+            const stok = form.querySelector(
+                "[name='stok']"
             );
 
-            if (
-                isNaN(nilai) ||
-                nilai < 1900 ||
-                nilai > 2026
-            ) {
-                tampilkanError(
-                    tahun,
-                    "Tahun harus di antara 1900-2026."
+            if (stok && stok.value.trim() !== "") {
+
+                const nilai = Number(stok.value);
+
+                if (
+                    !Number.isInteger(nilai) ||
+                    nilai < 0
+                ) {
+
+                    tampilkanError(
+                        stok,
+                        "Kuota harus berupa bilangan bulat nonnegatif."
+                    );
+
+                    valid = false;
+
+                } else {
+
+                    hapusError(stok);
+                }
+            }
+
+
+            /* -------------------------------------------------
+               D. CEGAH PENGIRIMAN JIKA VALIDASI GAGAL
+               ------------------------------------------------- */
+
+            if (!valid) {
+
+                event.preventDefault();
+
+                const errorPertama = form.querySelector(
+                    ".js-error"
                 );
 
-                valid = false;
-            } else {
-                hapusError(tahun);
+                if (errorPertama) {
+
+                    errorPertama.scrollIntoView({
+                        behavior: "smooth",
+                        block: "center"
+                    });
+
+                }
             }
-        }
 
-        const stok = form.querySelector(
-            "[name='stok']"
-        );
+        });
 
-        if (stok) {
-            const nilai = parseInt(
-                stok.value,
-                10
-            );
-
-            if (
-                isNaN(nilai) ||
-                nilai < 0
-            ) {
-                tampilkanError(
-                    stok,
-                    "Stok tidak boleh negatif."
-                );
-
-                valid = false;
-            } else {
-                hapusError(stok);
-            }
-        }
-
-        if (!valid) {
-            e.preventDefault();
-        }
     });
-} 
+}
+
+
+/* =========================================================
+   6. INISIALISASI APLIKASI
+   ========================================================= */
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
+
         initNavToggle();
+
         initHapusConfirm();
+
         initValidasiForm();
+
     }
-); 
+);

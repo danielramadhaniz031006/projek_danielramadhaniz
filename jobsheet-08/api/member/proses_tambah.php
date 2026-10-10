@@ -2,7 +2,7 @@
 
 session_start();
 
-require __DIR__ . '/../includes/koneksi.php';
+require_once __DIR__ . '/../../includes/koneksi.php';
 
 // Ambil data dari form
 $nama       = trim($_POST['nama'] ?? '');
@@ -26,23 +26,24 @@ if ($cabor === '') {
 }
 
 if (!empty($errors)) {
+
     $_SESSION['flash'] = [
-        'type' => 'error',
+        'type'  => 'error',
         'pesan' => implode(' ', $errors)
     ];
- 
+
     header('Location: tambah.php');
     exit;
 }
 
 try {
-    // Mulai transaksi agar penyimpanan member dan pengurangan kuota
-    // berhasil bersama-sama atau dibatalkan bersama-sama.
+
+    // Mulai transaksi
     $pdo->beginTransaction();
 
-    // Periksa kelas dan kurangi kuota jika masih tersedia.
+    // Kurangi kuota kelas jika masih tersedia
     $stmtKelas = $pdo->prepare(
-        "UPDATE buku
+        "UPDATE jadwal_kelas
          SET stok = stok - 1
          WHERE judul = :cabor
            AND stok > 0
@@ -55,12 +56,16 @@ try {
 
     $kelas = $stmtKelas->fetch(PDO::FETCH_ASSOC);
 
+    // Jika kelas tidak ditemukan atau kuota habis
     if (!$kelas) {
+
         $pdo->rollBack();
 
-        // Periksa apakah kelas memang ada.
         $cekKelas = $pdo->prepare(
-            "SELECT id FROM buku WHERE judul = :cabor"
+            "SELECT id
+             FROM jadwal_kelas
+             WHERE judul = :cabor
+             LIMIT 1"
         );
 
         $cekKelas->execute([
@@ -74,7 +79,7 @@ try {
         }
 
         $_SESSION['flash'] = [
-            'type' => 'error',
+            'type'  => 'error',
             'pesan' => $pesan
         ];
 
@@ -82,7 +87,7 @@ try {
         exit;
     }
 
-    // Simpan data member, termasuk kelas yang dipilih.
+    // Simpan data member
     $stmtMember = $pdo->prepare(
         "INSERT INTO anggota
             (nama, no_anggota, cabor, no_hp)
@@ -97,11 +102,11 @@ try {
         'no_hp'      => $no_hp
     ]);
 
-    // Simpan transaksi.
+    // Simpan transaksi
     $pdo->commit();
 
     $_SESSION['flash'] = [
-        'type' => 'success',
+        'type'  => 'success',
         'pesan' => 'Member berhasil ditambahkan dan kuota kelas berhasil diperbarui.'
     ];
 
@@ -110,19 +115,22 @@ try {
 
 } catch (PDOException $e) {
 
-    // Batalkan perubahan jika penyimpanan gagal.
+    // Batalkan transaksi jika terjadi kesalahan
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
 
     if ($e->getCode() === '23505') {
-        $pesan = 'Nomor anggota sudah digunakan. Silakan gunakan nomor lain.';
+
+        $pesan = 'Nomor anggota sudah digunakan. Gunakan nomor lain.';
+
     } else {
-        $pesan = 'Data member gagal disimpan. Silakan periksa kembali.';
+
+        $pesan = 'Data member gagal disimpan. Periksa kembali data dan database.';
     }
 
     $_SESSION['flash'] = [
-        'type' => 'error',
+        'type'  => 'error',
         'pesan' => $pesan
     ];
 
