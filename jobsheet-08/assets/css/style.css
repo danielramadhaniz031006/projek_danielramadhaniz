@@ -376,7 +376,6 @@ footer {
 
 /* =========================================================
    BERANDA - TATA LETAK BARU
-   Tidak mengubah isi HTML/PHP atau data database.
    ========================================================= */
 main:has(> .welcome-section) {
     width: calc(100% - 60px);
@@ -470,6 +469,37 @@ main:has(> .welcome-section) > .coach-section > div > div {
     padding: 15px !important;
     border-radius: 8px !important;
     background: linear-gradient(145deg, #1a1d23, #13161b) !important;
+}
+
+/* =========================================================
+   STYLE TAMBAHAN: PRICING BANNER SECTION (PNG BANNER)
+   ========================================================= */
+
+.pricing-banner-section {
+    grid-column: 1 / -1;
+    margin-top: 0 !important;
+    padding: 22px;
+    border-radius: 9px;
+}
+
+.pricing-banner-section h2 {
+    font-size: 1.35rem;
+    margin-bottom: 1rem;
+}
+
+.pricing-banner-wrapper {
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.pricing-banner-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
 }
 
 /* TABLET */
@@ -566,6 +596,8 @@ main:has(> .welcome-section) > .coach-section > div > div {
         grid-template-columns: 1fr !important;
         gap: 10px !important;
     }
+
+    .pricing-banner-section { padding: 14px; }
 
     .table-responsive { overflow-x: auto; }
     table { min-width: 600px; }
