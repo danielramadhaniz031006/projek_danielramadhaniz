@@ -27,7 +27,7 @@ $base = $__rel === '' ? '' : str_repeat('../', substr_count($__rel, '/') + 1);
 <body> 
     <header>
         <div class="brand-logo-container">
-            <div class="brand-icon">🥊</div>
+            <div class="brand-icon"></div>
             <div><h1 style="margin: 0; font-size: 1.3rem;">ELRAM TRAINING CAMP</h1></div>
             <div class="system-status-badge" style="margin-left: 10px;">
                 <span class="status-dot"></span> OPEN FOR TRAINING
@@ -42,7 +42,6 @@ $base = $__rel === '' ? '' : str_repeat('../', substr_count($__rel, '/') + 1);
                 <li><a href="<?php echo $base; ?>buku/list.php">JADWAL KELAS</a></li>
                 <li><a href="<?php echo $base; ?>anggota/list.php">DAFTAR MEMBER</a></li>
                 <li style="margin-left: 10px;">
-                    <a href="<?php echo $base; ?>anggota/tambah.php" class="btn-header-action">+ DAFTAR SEKARANG</a>
                 </li>
             </ul>
         </nav>

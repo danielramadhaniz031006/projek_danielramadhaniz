@@ -1,7 +1,7 @@
 </main> 
 
 <footer>
-    <p>&copy; ELRAM Traning Camp &mdash; Jobsheet 8</p>
+    <p>&copy; ELRAM Traning Camp &mdash;</p>
 </footer>
 
 <script src="/jobsheet-08/assets/js/app.js"></script>
