@@ -86,7 +86,7 @@ header nav a {
     transition: all 0.2s ease;
 }
 
-header nav a:hover {
+header nav a:hover, header nav a.active {
     color: #fff;
     background-color: var(--primary);
     transform: translateY(-2px);
@@ -122,7 +122,7 @@ section h2 {
 
 section > p { color: var(--muted); }
 
-/* BERANDA - aturan dasar */
+/* BERANDA */
 .welcome-section {
     padding: 2rem;
     background: linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, var(--white) 100%);
@@ -183,178 +183,6 @@ section > p { color: var(--muted); }
     font-weight: 900;
 }
 
-/* TABEL */
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    border: 1px solid var(--border);
-    border-radius: 9px;
-}
-
-table { width: 100%; border-collapse: collapse; background: var(--white); }
-th, td {
-    text-align: left;
-    padding: 0.9rem 1rem;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-}
-thead { background-color: #0d0e12; color: #fff; }
-thead th {
-    font-size: 0.85rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    border-bottom: 2px solid var(--primary);
-}
-tbody tr { transition: background-color 0.2s ease; }
-tbody tr:nth-child(even) { background-color: rgba(255, 255, 255, 0.02); }
-tbody tr:hover { background-color: rgba(220, 38, 38, 0.08); }
-
-/* TOMBOL TABEL */
-td button {
-    padding: 0.45rem 0.85rem;
-    margin-right: 0.35rem;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: inherit;
-    font-weight: 700;
-    font-size: 0.8rem;
-    text-transform: uppercase;
-    transition: all 0.2s ease;
-}
-td button:hover { transform: translateY(-1px); }
-td button:first-of-type { background-color: var(--accent); color: #000; }
-td button:first-of-type:hover { background-color: #d97706; }
-td button:last-of-type { background-color: var(--primary); color: #fff; }
-td button:last-of-type:hover { background-color: var(--primary-dark); }
-
-/* FORM & INPUTS */
-form { width: 100%; max-width: 720px; }
-form p { margin: 0 0 1rem; }
-form label {
-    display: block;
-    margin: 0 0 0.4rem;
-    font-weight: 700;
-    color: #fff;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-}
-form label + br { display: none; }
-form input, form select {
-    display: block;
-    width: 100%;
-    max-width: 520px;
-    height: 48px;
-    padding: 0.6rem 0.9rem;
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    background-color: var(--soft);
-    color: #fff;
-    font-family: inherit;
-    font-size: 0.95rem;
-    outline: none;
-    transition: all 0.2s ease;
-}
-form input:focus, form select:focus, .search-box input:focus {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.25);
-    background-color: #262933;
-}
-form input::placeholder, .search-box input::placeholder { color: #6b7280; }
-
-/* TOMBOL SIMPAN */
-form p:last-child { margin-top: 1.25rem; margin-bottom: 0; }
-form button[type="submit"] {
-    background: var(--primary);
-    color: #fff;
-    border: none;
-    padding: 0.75rem 1.5rem;
-    min-width: 110px;
-    border-radius: 6px;
-    font-family: inherit;
-    font-size: 0.9rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    transition: all 0.2s ease;
-}
-form button[type="submit"]:hover {
-    background: var(--primary-light);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
-}
-
-/* SEARCH BOX & RELOAD */
-.search-box {
-    margin-bottom: 1.25rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-}
-.search-box label {
-    display: block;
-    margin: 0;
-    font-weight: 700;
-    color: #fff;
-    white-space: nowrap;
-    text-transform: uppercase;
-    font-size: 0.85rem;
-}
-.search-box input {
-    width: 100%;
-    max-width: 400px;
-    height: 48px;
-    padding: 0.6rem 0.9rem;
-    border: 1px solid var(--border);
-    border-radius: 7px;
-    background-color: var(--soft);
-    color: #fff;
-    font-family: inherit;
-    font-size: 0.95rem;
-    outline: none;
-}
-.btn-reload {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 48px;
-    padding: 0.65rem 1.25rem;
-    border: none;
-    border-radius: 7px;
-    background: var(--primary);
-    color: #fff;
-    font-family: inherit;
-    font-size: 0.85rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
-    transition: all 0.2s ease;
-}
-.btn-reload:hover {
-    background: var(--primary-light);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 18px rgba(220, 38, 38, 0.45);
-}
-
-/* FLASH MESSAGE & ERRORS */
-.flash {
-    padding: 0.85rem 1.1rem;
-    border-radius: 7px;
-    margin-bottom: 1.25rem;
-    font-weight: 700;
-    border-left: 4px solid;
-}
-.flash-success { background-color: var(--success-bg); color: var(--success-text); border-left-color: #10b981; }
-.flash-error { background-color: var(--error-bg); color: var(--error-text); border-left-color: var(--primary); }
-.error { display: block; color: var(--error-text); font-size: 0.85rem; margin-top: 0.35rem; font-weight: 600; }
-
 /* FOOTER */
 footer {
     text-align: center;
@@ -364,20 +192,7 @@ footer {
     font-weight: 600;
 }
 
-/* HAMBURGER MENU */
-.nav-toggle-label {
-    display: none;
-    font-size: 1.6rem;
-    color: #fff;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-}
-
-/* =========================================================
-   BERANDA - TATA LETAK BARU
-   Tidak mengubah isi HTML/PHP atau data database.
-   ========================================================= */
+/* LAYOUT KHUSUS BERANDA */
 main:has(> .welcome-section) {
     width: calc(100% - 60px);
     max-width: 1780px;
@@ -401,17 +216,6 @@ main:has(> .welcome-section) > .welcome-section {
     justify-content: center;
     border-radius: 9px;
     background: linear-gradient(120deg, rgba(220, 38, 38, 0.12), rgba(15, 17, 23, 0.98));
-}
-
-main:has(> .welcome-section) > .welcome-section h2 {
-    font-size: clamp(1.3rem, 1.8vw, 2rem);
-    line-height: 1.25;
-    margin-bottom: 1rem;
-}
-
-main:has(> .welcome-section) > .welcome-section p {
-    font-size: 1rem;
-    line-height: 1.7;
 }
 
 main:has(> .welcome-section) > .summary-section {
@@ -438,15 +242,6 @@ main:has(> .welcome-section) .stat-card {
     background: linear-gradient(145deg, #191e27, #12151b);
 }
 
-main:has(> .welcome-section) .stat-card h3 {
-    font-size: 0.76rem;
-    margin-bottom: 0.4rem;
-}
-
-main:has(> .welcome-section) .stat-card p {
-    font-size: 2.2rem;
-}
-
 main:has(> .welcome-section) > .coach-section {
     grid-area: coach;
     margin: 0 !important;
@@ -454,119 +249,8 @@ main:has(> .welcome-section) > .coach-section {
     border-radius: 9px;
 }
 
-main:has(> .welcome-section) > .coach-section h2 {
-    font-size: 1.35rem;
-    margin-bottom: 1rem;
-}
-
 main:has(> .welcome-section) > .coach-section > div {
     grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
     gap: 14px !important;
     margin-top: 0 !important;
-}
-
-main:has(> .welcome-section) > .coach-section > div > div {
-    min-width: 0;
-    padding: 15px !important;
-    border-radius: 8px !important;
-    background: linear-gradient(145deg, #1a1d23, #13161b) !important;
-}
-
-/* TABLET */
-@media (max-width: 1100px) {
-    main:has(> .welcome-section) {
-        width: calc(100% - 36px);
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
-    }
-
-    main:has(> .welcome-section) > .welcome-section { padding: 22px; }
-    main:has(> .welcome-section) > .summary-section { padding: 18px; }
-
-    main:has(> .welcome-section) > .coach-section > div {
-        grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    }
-}
-
-@media (max-width: 800px) {
-    main:has(> .welcome-section) {
-        width: calc(100% - 28px);
-        grid-template-columns: 1fr;
-        grid-template-areas:
-            "welcome"
-            "summary"
-            "coach";
-    }
-
-    main:has(> .welcome-section) > .welcome-section { min-height: auto; }
-    main:has(> .welcome-section) > .coach-section > div {
-        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-    }
-}
-
-/* MOBILE */
-@media (max-width: 600px) {
-    header {
-        position: relative;
-        flex-wrap: wrap;
-        padding: 0.8rem 1rem;
-    }
-
-    header h1 { font-size: 1.1rem; }
-
-    .nav-toggle-label {
-        display: block;
-    }
-
-    header nav {
-        display: none;
-        width: 100%;
-        order: 3;
-        margin-top: 0.5rem;
-        padding-top: 0.5rem;
-        border-top: 1px solid var(--border);
-    }
-
-    header nav.nav-open { display: block; }
-    header nav ul { flex-direction: column; align-items: stretch; }
-    header nav a { width: 100%; }
-
-    main { width: calc(100% - 20px); margin: 1rem auto; }
-
-    section { padding: 1rem; margin-bottom: 0.85rem; }
-    section h2 { font-size: 1.05rem; }
-
-    main:has(> .welcome-section) {
-        width: calc(100% - 20px);
-        margin: 14px auto;
-        gap: 12px;
-    }
-
-    main:has(> .welcome-section) > .welcome-section {
-        padding: 18px;
-        min-height: auto;
-    }
-
-    main:has(> .welcome-section) > .welcome-section h2 { font-size: 1.15rem; }
-    main:has(> .welcome-section) > .welcome-section p { font-size: 0.9rem; }
-
-    main:has(> .welcome-section) > .summary-section {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        padding: 14px;
-        gap: 10px;
-    }
-
-    main:has(> .welcome-section) > .summary-section > h2 { font-size: 1rem; }
-    main:has(> .welcome-section) .stat-card { min-height: 90px; padding: 10px 5px; }
-    main:has(> .welcome-section) .stat-card h3 { font-size: 0.68rem; }
-    main:has(> .welcome-section) .stat-card p { font-size: 1.8rem; }
-
-    main:has(> .welcome-section) > .coach-section { padding: 14px; }
-    main:has(> .welcome-section) > .coach-section > div {
-        grid-template-columns: 1fr !important;
-        gap: 10px !important;  
-    }
-
-    .table-responsive { overflow-x: auto; }
-    table { min-width: 600px; }
 }

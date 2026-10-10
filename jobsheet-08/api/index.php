@@ -27,11 +27,9 @@ $stokBuku = $pdo
     ->fetchColumn();
 
 // Jika SUM(stok) di database belum di-set/masih 0, gunakan Kapasitas Dasar = 70
-// Sehinga saat member = 34, Sisa Kuota awal otomatis bernilai 36 (70 - 34 = 36)
 $totalKapasitas = ($stokBuku > $totalAnggota) ? (int)$stokBuku : 70;
 
 // KALKULASI DINAMIS SISA KUOTA SLOT:
-// Sisa Kuota = Total Kapasitas - Total Member
 $totalKuota = max(0, $totalKapasitas - (int)$totalAnggota);
 
 // Daftar Coach dan Cabor yang Dipegang
@@ -112,4 +110,4 @@ include __DIR__ . '/includes/header.php';
 
 <?php 
 include __DIR__ . '/includes/footer.php';
-?> 
+?>
