@@ -74,7 +74,6 @@ header {
     );
 
     color: var(--white);
-
     padding: 18px 32px;
 
     display: flex;
@@ -182,12 +181,11 @@ section p {
 
 /* ===== 8. Kartu Sambutan Beranda ===== */
 main section:first-of-type {
-    background:
-        linear-gradient(
-            135deg,
-            #ffffff 0%,
-            #f0fdf4 100%
-        );
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        #f0fdf4 100%
+    );
 
     border-left: 5px solid var(--primary);
 
@@ -430,15 +428,16 @@ form {
     width: 100%;
 }
 
+/* Jarak antarfield diperkecil */
 form p {
-    margin-bottom: 20px;
+    margin-bottom: 14px;
 }
 
-/* Label */
+/* Label form */
 form label {
     display: block;
 
-    margin-bottom: 8px;
+    margin-bottom: 4px;
 
     color: #374151;
 
@@ -446,12 +445,21 @@ form label {
     font-weight: 650;
 }
 
+/* Menghilangkan jarak tambahan dari tag <br> */
+form p > br {
+    display: none;
+}
+
 /* Input, select, textarea */
 form input,
 form select,
 form textarea {
+    display: block;
+
     width: 100%;
     max-width: 500px;
+
+    margin-top: 0;
 
     padding: 12px 14px;
 
@@ -495,6 +503,12 @@ form button[type="submit"] {
     padding: 12px 24px;
 
     font-size: 0.95rem;
+}
+
+/* Jarak tombol Simpan dari field terakhir */
+form p:last-child {
+    margin-top: 6px;
+    margin-bottom: 0;
 }
 
 /* ===== 13. Kotak Pencarian ===== */
