@@ -4,129 +4,128 @@ session_start();
 
 require __DIR__ . '/../includes/koneksi.php';
 
+// Ambil data dari form
+$nama       = trim($_POST['nama'] ?? '');
+$no_anggota = trim($_POST['no_anggota'] ?? '');
+$cabor      = trim($_POST['cabor'] ?? '');
+$no_hp      = trim($_POST['no_hp'] ?? '');
 
-/* =========================================================
-   AMBIL DATA FORM
-   ========================================================= */
-
-$nama = trim($_POST['nama'] ?? '');
-
-$noAnggota = trim($_POST['no_anggota'] ?? '');
-
-$alamat = trim($_POST['alamat'] ?? '');
-
-$noHp = trim($_POST['no_hp'] ?? '');
-
-
-/* =========================================================
-   VALIDASI
-   ========================================================= */
-
-$errors = [];  
-
+// Validasi
+$errors = [];
 
 if ($nama === '') {
-
-    $errors[] = "Nama wajib diisi.";
-
+    $errors[] = 'Nama member wajib diisi.';
 }
 
-
-if ($noAnggota === '') {
-
-    $errors[] = "No. Anggota wajib diisi.";
-
+if ($no_anggota === '') {
+    $errors[] = 'Nomor anggota wajib diisi.';
 }
 
-
-/* =========================================================
-   JIKA VALIDASI GAGAL
-   ========================================================= */
+if ($cabor === '') {
+    $errors[] = 'Silakan pilih kelas.';
+}
 
 if (!empty($errors)) {
-
     $_SESSION['flash'] = [
         'type' => 'error',
         'pesan' => implode(' ', $errors)
     ];
 
     header('Location: tambah.php');
-
     exit;
 }
 
-
-/* =========================================================
-   SIMPAN DATA KE DATABASE
-   ========================================================= */
-
-$stmt = $pdo->prepare(
-    "INSERT INTO anggota
-        (nama, no_anggota, alamat, no_hp)
-     VALUES
-        (:nama, :no_anggota, :alamat, :no_hp)
-     RETURNING id"
-);
-
-
-/* =========================================================
-   TANGANI ERROR UNIQUE
-   ========================================================= */
-
 try {
+    // Mulai transaksi agar penyimpanan member dan pengurangan kuota
+    // berhasil bersama-sama atau dibatalkan bersama-sama.
+    $pdo->beginTransaction();
 
-    $stmt->execute([
-        'nama' => $nama,
-        'no_anggota' => $noAnggota,
-        'alamat' => $alamat,
-        'no_hp' => $noHp,
+    // Periksa kelas dan kurangi kuota jika masih tersedia.
+    $stmtKelas = $pdo->prepare(
+        "UPDATE buku
+         SET stok = stok - 1
+         WHERE judul = :cabor
+           AND stok > 0
+         RETURNING id"
+    );
+
+    $stmtKelas->execute([
+        'cabor' => $cabor
     ]);
 
+    $kelas = $stmtKelas->fetch(PDO::FETCH_ASSOC);
 
-    /* =====================================================
-       BERHASIL
-       ===================================================== */
+    if (!$kelas) {
+        $pdo->rollBack();
+
+        // Periksa apakah kelas memang ada.
+        $cekKelas = $pdo->prepare(
+            "SELECT id FROM buku WHERE judul = :cabor"
+        );
+
+        $cekKelas->execute([
+            'cabor' => $cabor
+        ]);
+
+        if (!$cekKelas->fetch(PDO::FETCH_ASSOC)) {
+            $pesan = 'Kelas yang dipilih tidak ditemukan.';
+        } else {
+            $pesan = 'Kuota kelas tersebut sudah habis.';
+        }
+
+        $_SESSION['flash'] = [
+            'type' => 'error',
+            'pesan' => $pesan
+        ];
+
+        header('Location: tambah.php');
+        exit;
+    }
+
+    // Simpan data member, termasuk kelas yang dipilih.
+    $stmtMember = $pdo->prepare(
+        "INSERT INTO anggota
+            (nama, no_anggota, cabor, no_hp)
+         VALUES
+            (:nama, :no_anggota, :cabor, :no_hp)"
+    );
+
+    $stmtMember->execute([
+        'nama'       => $nama,
+        'no_anggota' => $no_anggota,
+        'cabor'      => $cabor,
+        'no_hp'      => $no_hp
+    ]);
+
+    // Simpan transaksi.
+    $pdo->commit();
 
     $_SESSION['flash'] = [
         'type' => 'success',
-        'pesan' => 'Anggota berhasil ditambahkan.'
+        'pesan' => 'Member berhasil ditambahkan dan kuota kelas berhasil diperbarui.'
     ];
 
     header('Location: list.php');
-
     exit;
-
 
 } catch (PDOException $e) {
 
-    /*
-     * Jika No. Anggota sudah ada,
-     * PostgreSQL akan menghasilkan error UNIQUE.
-     */
-
-    if ($e->getCode() === '23505') {
-
-        $_SESSION['flash'] = [
-            'type' => 'error',
-            'pesan' => 'No. Anggota sudah dipakai, gunakan nomor lain.'
-        ];
-
-    } else {
-
-        /*
-         * Untuk error database lainnya,
-         * jangan tampilkan error mentah ke pengguna.
-         */
-
-        $_SESSION['flash'] = [
-            'type' => 'error',
-            'pesan' => 'Data anggota gagal disimpan. Silakan coba lagi.'
-        ];
-
+    // Batalkan perubahan jika penyimpanan gagal.
+    if ($pdo->inTransaction()) {
+        $pdo->rollBack();
     }
 
+    if ($e->getCode() === '23505') {
+        $pesan = 'Nomor anggota sudah digunakan. Silakan gunakan nomor lain.';
+    } else {
+        $pesan = 'Data member gagal disimpan. Silakan periksa kembali.';
+    }
+
+    $_SESSION['flash'] = [
+        'type' => 'error',
+        'pesan' => $pesan
+    ];
 
     header('Location: tambah.php');
-
     exit;
 }
