@@ -4,100 +4,66 @@ session_start();
 
 require_once __DIR__ . '/../includes/koneksi.php';
 
-/* =========================================================
-   ELRAM TRAINING CAMP
-   DAFTAR JADWAL KELAS
-   ========================================================= */
+$page_title = 'Daftar Member Gym';
 
-$page_title = "Daftar Jadwal Kelas";
-
-/* =========================================================
-   1. PENCARIAN JADWAL KELAS
-   ========================================================= */
-
+// Kata kunci pencarian
 $keyword = trim($_GET['search'] ?? '');
 
+// Query daftar member beserta kelas yang diikuti
 $sql = "
     SELECT
-        j.id,
+        a.id,
+        a.nomor_member,
+        a.nama,
+        a.level,
+        a.nomor_hp,
         j.nama_kelas,
         j.nama_coach,
         j.hari_latihan,
         j.jam_latihan,
-        j.kode_kelas,
-        j.kapasitas,
-        j.harga,
-
-        COUNT(a.id) AS member_terdaftar,
-
-        GREATEST(
-            j.kapasitas - COUNT(a.id),
-            0
-        ) AS sisa_kuota
-
-    FROM public.jadwal_kelas j
-
-    LEFT JOIN public.anggota a
-        ON a.jadwal_kelas_id = j.id
+        j.kode_kelas
+    FROM public.anggota a
+    LEFT JOIN public.jadwal_kelas j
+        ON j.id = a.jadwal_kelas_id
 ";
 
 $params = [];
 
 if ($keyword !== '') {
-
     $sql .= "
-        WHERE j.nama_kelas ILIKE :cari_kelas
-           OR j.nama_coach ILIKE :cari_coach
-           OR j.hari_latihan ILIKE :cari_hari
-           OR j.kode_kelas ILIKE :cari_kode
+        WHERE a.nama ILIKE :nama
+           OR a.nomor_member ILIKE :nomor
+           OR COALESCE(j.nama_kelas, '') ILIKE :kelas
+           OR COALESCE(a.nomor_hp, '') ILIKE :hp
     ";
 
-    $cari = '%' . $keyword . '%';
+    $term = '%' . $keyword . '%';
 
     $params = [
-        'cari_kelas' => $cari,
-        'cari_coach' => $cari,
-        'cari_hari'  => $cari,
-        'cari_kode'  => $cari
+        'nama'  => $term,
+        'nomor' => $term,
+        'kelas' => $term,
+        'hp'    => $term,
     ];
 }
 
-$sql .= "
-    GROUP BY j.id
-    ORDER BY j.id DESC
-";
+$sql .= ' ORDER BY a.id DESC';
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute($params);
 
-$daftar_kelas = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$daftar_anggota = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
-/* =========================================================
-   2. NOTIFIKASI
-   ========================================================= */
-
+// Ambil flash message satu kali
 $flash = $_SESSION['flash'] ?? null;
-
 unset($_SESSION['flash']);
 
-
-/* =========================================================
-   3. HEADER
-   ========================================================= */
-
+// Header
 include __DIR__ . '/../includes/header.php';
 
 ?>
 
-
-<!-- =========================================================
-     DAFTAR JADWAL KELAS
-     ========================================================= -->
-
 <section>
-
-    <!-- NOTIFIKASI -->
 
     <?php if ($flash): ?>
 
@@ -131,13 +97,10 @@ include __DIR__ . '/../includes/header.php';
         margin-bottom:20px;
     ">
 
-        <h2>DAFTAR JADWAL KELAS</h2>
+        <h2>DAFTAR MEMBER</h2>
 
-        <a
-            href="tambah.php"
-            class="btn-primary"
-        >
-            + Tambah Kelas
+        <a href="tambah.php" class="btn-primary">
+            + Tambah Member
         </a>
 
     </div>
@@ -161,8 +124,8 @@ include __DIR__ . '/../includes/header.php';
                     'UTF-8'
                 );
             ?>"
-            placeholder="Cari kelas, coach, hari, atau kode kelas..."
-            aria-label="Cari jadwal kelas"
+            placeholder="Cari nama, ID member, kelas, atau nomor HP..."
+            aria-label="Cari member"
         >
 
         <button type="submit">
@@ -180,7 +143,7 @@ include __DIR__ . '/../includes/header.php';
     </form>
 
 
-    <!-- TABEL JADWAL -->
+    <!-- TABEL MEMBER -->
 
     <div class="table-responsive">
 
@@ -190,13 +153,12 @@ include __DIR__ . '/../includes/header.php';
 
                 <tr>
                     <th>No</th>
-                    <th>Nama Kelas / Cabor</th>
-                    <th>Coach / Pelatih</th>
-                    <th>Hari Latihan</th>
-                    <th>Jam Latihan</th>
-                    <th>Kode / Level</th>
-                    <th>Kuota</th>
-                    <th>Harga</th>
+                    <th>ID Member</th>
+                    <th>Nama Member</th>
+                    <th>Kelas</th>
+                    <th>Coach</th>
+                    <th>Level</th>
+                    <th>No. HP / WA</th>
                     <th>Aksi</th>
                 </tr>
 
@@ -204,44 +166,23 @@ include __DIR__ . '/../includes/header.php';
 
             <tbody>
 
-                <?php if (!empty($daftar_kelas)): ?>
+                <?php if (!empty($daftar_anggota)): ?>
 
-                    <?php foreach ($daftar_kelas as $index => $kelas): ?>
-
-                        <?php
-
-                        $jam = (string) (
-                            $kelas['jam_latihan'] ?? ''
-                        );
-
-                        $jamTampil = substr($jam, 0, 5);
-
-                        $sisaKuota = (int) (
-                            $kelas['sisa_kuota'] ?? 0
-                        );
-
-                        $kapasitas = (int) (
-                            $kelas['kapasitas'] ?? 0
-                        );
-
-                        ?>
+                    <?php foreach (
+                        $daftar_anggota as $index => $anggota
+                    ): ?>
 
                         <tr>
-
-                            <!-- NOMOR -->
 
                             <td>
                                 <?php echo $index + 1; ?>
                             </td>
 
-
-                            <!-- NAMA KELAS -->
-
                             <td>
                                 <strong>
                                     <?php
                                     echo htmlspecialchars(
-                                        $kelas['nama_kelas'] ?? '-',
+                                        $anggota['nomor_member'] ?? '-',
                                         ENT_QUOTES,
                                         'UTF-8'
                                     );
@@ -249,88 +190,57 @@ include __DIR__ . '/../includes/header.php';
                                 </strong>
                             </td>
 
-
-                            <!-- COACH -->
-
                             <td>
                                 <?php
                                 echo htmlspecialchars(
-                                    $kelas['nama_coach'] ?? '-',
+                                    $anggota['nama'] ?? '-',
                                     ENT_QUOTES,
                                     'UTF-8'
                                 );
                                 ?>
                             </td>
 
-
-                            <!-- HARI -->
-
                             <td>
                                 <?php
                                 echo htmlspecialchars(
-                                    $kelas['hari_latihan'] ?? '-',
+                                    $anggota['nama_kelas']
+                                        ?? 'Kelas tidak tersedia',
                                     ENT_QUOTES,
                                     'UTF-8'
                                 );
                                 ?>
                             </td>
 
-
-                            <!-- JAM -->
-
                             <td>
                                 <?php
                                 echo htmlspecialchars(
-                                    $jamTampil,
-                                    ENT_QUOTES,
-                                    'UTF-8'
-                                );
-                                ?> WIB
-                            </td>
-
-
-                            <!-- KODE KELAS -->
-
-                            <td>
-                                <?php
-                                echo htmlspecialchars(
-                                    $kelas['kode_kelas'] ?? '-',
+                                    $anggota['nama_coach'] ?? '-',
                                     ENT_QUOTES,
                                     'UTF-8'
                                 );
                                 ?>
                             </td>
 
-
-                            <!-- SISA KUOTA -->
-
                             <td>
-
-                                <?php echo $sisaKuota; ?>
-
-                                /
-                                <?php echo $kapasitas; ?>
-
-                                Orang
-
-                            </td>
-
-
-                            <!-- HARGA -->
-
-                            <td>
-                                Rp<?php
-                                echo number_format(
-                                    (float) $kelas['harga'],
-                                    0,
-                                    ',',
-                                    '.'
+                                <?php
+                                echo htmlspecialchars(
+                                    $anggota['level']
+                                        ?? 'Pemula (Beginner)',
+                                    ENT_QUOTES,
+                                    'UTF-8'
                                 );
                                 ?>
                             </td>
 
-
-                            <!-- AKSI -->
+                            <td>
+                                <?php
+                                echo htmlspecialchars(
+                                    $anggota['nomor_hp'] ?? '-',
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                );
+                                ?>
+                            </td>
 
                             <td>
 
@@ -338,23 +248,29 @@ include __DIR__ . '/../includes/header.php';
                                     display:flex;
                                     gap:8px;
                                     align-items:center;
+                                    flex-wrap:wrap;
                                 ">
+
+                                    <!-- EDIT -->
 
                                     <a
                                         href="edit.php?id=<?php
-                                            echo (int) $kelas['id'];
+                                            echo (int) $anggota['id'];
                                         ?>"
                                         class="btn-edit"
                                     >
                                         Edit
                                     </a>
 
+
+                                    <!-- HAPUS -->
+
                                     <form
                                         method="POST"
                                         action="hapus.php"
                                         style="margin:0;"
                                         onsubmit="return confirm(
-                                            'Yakin ingin menghapus jadwal kelas ini?'
+                                            'Yakin ingin menghapus member ini?'
                                         );"
                                     >
 
@@ -362,7 +278,7 @@ include __DIR__ . '/../includes/header.php';
                                             type="hidden"
                                             name="id"
                                             value="<?php
-                                                echo (int) $kelas['id'];
+                                                echo (int) $anggota['id'];
                                             ?>"
                                         >
 
@@ -388,7 +304,7 @@ include __DIR__ . '/../includes/header.php';
                     <tr>
 
                         <td
-                            colspan="9"
+                            colspan="8"
                             style="
                                 padding:25px;
                                 text-align:center;
@@ -398,7 +314,7 @@ include __DIR__ . '/../includes/header.php';
 
                             <?php if ($keyword !== ''): ?>
 
-                                Jadwal kelas dengan kata kunci
+                                Data member untuk pencarian
                                 "<?php
                                 echo htmlspecialchars(
                                     $keyword,
@@ -410,8 +326,8 @@ include __DIR__ . '/../includes/header.php';
 
                             <?php else: ?>
 
-                                Belum ada jadwal kelas.
-                                Silakan tambahkan kelas terlebih dahulu.
+                                Belum ada data member.
+                                Silakan tambahkan member terlebih dahulu.
 
                             <?php endif; ?>
 
@@ -429,13 +345,4 @@ include __DIR__ . '/../includes/header.php';
 
 </section>
 
-
-<?php
-
-/* =========================================================
-   4. FOOTER
-   ========================================================= */
-
-include __DIR__ . '/../includes/footer.php';
-
-?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
