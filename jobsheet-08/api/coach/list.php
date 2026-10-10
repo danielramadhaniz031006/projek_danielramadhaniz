@@ -2,56 +2,125 @@
 
 session_start();
 
-$page_title = "Jadwal Kelas Gym";
-
 require_once __DIR__ . '/../includes/koneksi.php';
 
-// Ambil kata kunci pencarian
+/* =========================================================
+   ELRAM TRAINING CAMP
+   DAFTAR JADWAL KELAS
+   ========================================================= */
+
+$page_title = "Daftar Jadwal Kelas";
+
+/* =========================================================
+   1. PENCARIAN JADWAL KELAS
+   ========================================================= */
+
 $keyword = trim($_GET['search'] ?? '');
 
-// Ambil data jadwal kelas
+$sql = "
+    SELECT
+        j.id,
+        j.nama_kelas,
+        j.nama_coach,
+        j.hari_latihan,
+        j.jam_latihan,
+        j.kode_kelas,
+        j.kapasitas,
+        j.harga,
+
+        COUNT(a.id) AS member_terdaftar,
+
+        GREATEST(
+            j.kapasitas - COUNT(a.id),
+            0
+        ) AS sisa_kuota
+
+    FROM public.jadwal_kelas j
+
+    LEFT JOIN public.anggota a
+        ON a.jadwal_kelas_id = j.id
+";
+
+$params = [];
+
 if ($keyword !== '') {
-    $stmt = $pdo->prepare(
-        "SELECT *
-         FROM jadwal_kelas
-         WHERE judul ILIKE :search
-            OR pengarang ILIKE :search
-            OR kategori ILIKE :search
-            OR isbn ILIKE :search
-         ORDER BY id DESC"
-    );
 
-    $stmt->execute([
-        'search' => '%' . $keyword . '%'
-    ]);
+    $sql .= "
+        WHERE j.nama_kelas ILIKE :cari_kelas
+           OR j.nama_coach ILIKE :cari_coach
+           OR j.hari_latihan ILIKE :cari_hari
+           OR j.kode_kelas ILIKE :cari_kode
+    ";
 
-} else {
-    $stmt = $pdo->query(
-        "SELECT *
-         FROM jadwal_kelas
-         ORDER BY id DESC"
-    );
+    $cari = '%' . $keyword . '%';
+
+    $params = [
+        'cari_kelas' => $cari,
+        'cari_coach' => $cari,
+        'cari_hari'  => $cari,
+        'cari_kode'  => $cari
+    ];
 }
+
+$sql .= "
+    GROUP BY j.id
+    ORDER BY j.id DESC
+";
+
+$stmt = $pdo->prepare($sql);
+$stmt->execute($params);
 
 $daftar_kelas = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-include __DIR__ . '/../includes/header.php';
+
+/* =========================================================
+   2. NOTIFIKASI
+   ========================================================= */
 
 $flash = $_SESSION['flash'] ?? null;
+
 unset($_SESSION['flash']);
+
+
+/* =========================================================
+   3. HEADER
+   ========================================================= */
+
+include __DIR__ . '/../includes/header.php';
 
 ?>
 
+
+<!-- =========================================================
+     DAFTAR JADWAL KELAS
+     ========================================================= -->
+
 <section>
 
+    <!-- NOTIFIKASI -->
+
     <?php if ($flash): ?>
-        <div
-            class="flash flash-<?php echo htmlspecialchars($flash['type']); ?>"
-            style="padding:12px; margin-bottom:20px;"
-        >
-            <?php echo htmlspecialchars($flash['pesan']); ?>
+
+        <div class="flash <?php
+            echo ($flash['type'] ?? '') === 'success'
+                ? 'flash-success'
+                : 'flash-error';
+        ?>">
+
+            <?php
+            echo htmlspecialchars(
+                $flash['pesan'] ?? '',
+                ENT_QUOTES,
+                'UTF-8'
+            );
+            ?>
+
         </div>
+
     <?php endif; ?>
+
+
+    <!-- JUDUL DAN TOMBOL TAMBAH -->
 
     <div style="
         display:flex;
@@ -66,104 +135,71 @@ unset($_SESSION['flash']);
 
         <a
             href="tambah.php"
-            style="
-                background:#e50914;
-                color:#fff;
-                padding:10px 18px;
-                border-radius:4px;
-                text-decoration:none;
-                font-weight:bold;
-            "
+            class="btn-primary"
         >
             + Tambah Kelas
         </a>
 
     </div>
 
-    <!-- Pencarian -->
+
+    <!-- PENCARIAN -->
+
     <form
         method="GET"
         action="list.php"
-        style="
-            margin-bottom:20px;
-            display:flex;
-            gap:10px;
-            flex-wrap:wrap;
-        "
+        class="search-form"
     >
 
         <input
             type="text"
             name="search"
-            value="<?php echo htmlspecialchars($keyword); ?>"
-            placeholder="Cari kelas, pelatih, hari, atau kode kelas..."
-            style="
-                flex:1;
-                min-width:200px;
-                padding:10px 12px;
-                border-radius:4px;
-                border:1px solid #444;
-                background:#222;
-                color:#fff;
-            "
+            value="<?php
+                echo htmlspecialchars(
+                    $keyword,
+                    ENT_QUOTES,
+                    'UTF-8'
+                );
+            ?>"
+            placeholder="Cari kelas, coach, hari, atau kode kelas..."
+            aria-label="Cari jadwal kelas"
         >
 
-        <button
-            type="submit"
-            style="
-                background:#333;
-                color:#fff;
-                padding:10px 16px;
-                border:1px solid #555;
-                border-radius:4px;
-                cursor:pointer;
-            "
-        >
-            Cari
+        <button type="submit">
+            CARI
         </button>
 
         <?php if ($keyword !== ''): ?>
-            <a
-                href="list.php"
-                style="
-                    background:#555;
-                    color:#fff;
-                    padding:10px 16px;
-                    border-radius:4px;
-                    text-decoration:none;
-                "
-            >
-                Reset
+
+            <a href="list.php">
+                RESET
             </a>
+
         <?php endif; ?>
 
     </form>
 
-    <!-- Tabel jadwal -->
-    <div style="overflow-x:auto;">
 
-        <table style="
-            width:100%;
-            border-collapse:collapse;
-            background:#181818;
-            color:#fff;
-            text-align:left;
-        ">
+    <!-- TABEL JADWAL -->
+
+    <div class="table-responsive">
+
+        <table>
 
             <thead>
-                <tr style="
-                    background:#252525;
-                    border-bottom:2px solid #333;
-                ">
-                    <th style="padding:12px;">No</th>
-                    <th style="padding:12px;">Nama Kelas / Cabor</th>
-                    <th style="padding:12px;">Coach / Pelatih</th>
-                    <th style="padding:12px;">Hari Latihan</th>
-                    <th style="padding:12px;">Jam Latihan</th>
-                    <th style="padding:12px;">Kode / Level</th>
-                    <th style="padding:12px;">Kuota</th>
-                    <th style="padding:12px; text-align:center;">Aksi</th>
+
+                <tr>
+                    <th>No</th>
+                    <th>Nama Kelas / Cabor</th>
+                    <th>Coach / Pelatih</th>
+                    <th>Hari Latihan</th>
+                    <th>Jam Latihan</th>
+                    <th>Kode / Level</th>
+                    <th>Kuota</th>
+                    <th>Harga</th>
+                    <th>Aksi</th>
                 </tr>
+
             </thead>
 
             <tbody>
@@ -172,62 +208,143 @@ unset($_SESSION['flash']);
 
                     <?php foreach ($daftar_kelas as $index => $kelas): ?>
 
-                        <tr style="border-bottom:1px solid #2a2a2a;">
+                        <?php
 
-                            <td style="padding:12px;">
+                        $jam = (string) (
+                            $kelas['jam_latihan'] ?? ''
+                        );
+
+                        $jamTampil = substr($jam, 0, 5);
+
+                        $sisaKuota = (int) (
+                            $kelas['sisa_kuota'] ?? 0
+                        );
+
+                        $kapasitas = (int) (
+                            $kelas['kapasitas'] ?? 0
+                        );
+
+                        ?>
+
+                        <tr>
+
+                            <!-- NOMOR -->
+
+                            <td>
                                 <?php echo $index + 1; ?>
                             </td>
 
-                            <td style="padding:12px; font-weight:bold;">
-                                <?php echo htmlspecialchars($kelas['judul']); ?>
+
+                            <!-- NAMA KELAS -->
+
+                            <td>
+                                <strong>
+                                    <?php
+                                    echo htmlspecialchars(
+                                        $kelas['nama_kelas'] ?? '-',
+                                        ENT_QUOTES,
+                                        'UTF-8'
+                                    );
+                                    ?>
+                                </strong>
                             </td>
 
-                            <td style="padding:12px;">
-                                <?php echo htmlspecialchars($kelas['pengarang']); ?>
-                            </td>
 
-                            <td style="padding:12px;">
-                                <?php echo htmlspecialchars($kelas['kategori'] ?? '-'); ?>
-                            </td>
+                            <!-- COACH -->
 
-                            <td style="padding:12px;">
+                            <td>
                                 <?php
-                                echo str_pad(
-                                    (string) $kelas['tahun'],
-                                    2,
-                                    '0',
-                                    STR_PAD_LEFT
+                                echo htmlspecialchars(
+                                    $kelas['nama_coach'] ?? '-',
+                                    ENT_QUOTES,
+                                    'UTF-8'
                                 );
-                                ?>:00 WIB
+                                ?>
                             </td>
 
-                            <td style="padding:12px;">
-                                <?php echo htmlspecialchars($kelas['isbn'] ?? '-'); ?>
+
+                            <!-- HARI -->
+
+                            <td>
+                                <?php
+                                echo htmlspecialchars(
+                                    $kelas['hari_latihan'] ?? '-',
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                );
+                                ?>
                             </td>
 
-                            <td style="padding:12px;">
-                                <?php echo htmlspecialchars((string) $kelas['stok']); ?>
+
+                            <!-- JAM -->
+
+                            <td>
+                                <?php
+                                echo htmlspecialchars(
+                                    $jamTampil,
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                );
+                                ?> WIB
+                            </td>
+
+
+                            <!-- KODE KELAS -->
+
+                            <td>
+                                <?php
+                                echo htmlspecialchars(
+                                    $kelas['kode_kelas'] ?? '-',
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                );
+                                ?>
+                            </td>
+
+
+                            <!-- SISA KUOTA -->
+
+                            <td>
+
+                                <?php echo $sisaKuota; ?>
+
+                                /
+                                <?php echo $kapasitas; ?>
+
                                 Orang
+
                             </td>
 
-                            <td style="padding:12px; text-align:center;">
+
+                            <!-- HARGA -->
+
+                            <td>
+                                Rp<?php
+                                echo number_format(
+                                    (float) $kelas['harga'],
+                                    0,
+                                    ',',
+                                    '.'
+                                );
+                                ?>
+                            </td>
+
+
+                            <!-- AKSI -->
+
+                            <td>
 
                                 <div style="
                                     display:flex;
                                     gap:8px;
-                                    justify-content:center;
+                                    align-items:center;
                                 ">
 
                                     <a
-                                        href="edit.php?id=<?php echo (int) $kelas['id']; ?>"
-                                        style="
-                                            background:#f39c12;
-                                            color:#fff;
-                                            padding:6px 14px;
-                                            border-radius:4px;
-                                            text-decoration:none;
-                                            font-weight:bold;
-                                        "
+                                        href="edit.php?id=<?php
+                                            echo (int) $kelas['id'];
+                                        ?>"
+                                        class="btn-edit"
                                     >
                                         Edit
                                     </a>
@@ -235,27 +352,23 @@ unset($_SESSION['flash']);
                                     <form
                                         method="POST"
                                         action="hapus.php"
-                                        onsubmit="return confirm('Yakin ingin menghapus jadwal kelas ini?');"
                                         style="margin:0;"
+                                        onsubmit="return confirm(
+                                            'Yakin ingin menghapus jadwal kelas ini?'
+                                        );"
                                     >
 
                                         <input
                                             type="hidden"
                                             name="id"
-                                            value="<?php echo (int) $kelas['id']; ?>"
+                                            value="<?php
+                                                echo (int) $kelas['id'];
+                                            ?>"
                                         >
 
                                         <button
                                             type="submit"
-                                            style="
-                                                background:#e50914;
-                                                color:#fff;
-                                                padding:6px 14px;
-                                                border:none;
-                                                border-radius:4px;
-                                                cursor:pointer;
-                                                font-weight:bold;
-                                            "
+                                            class="btn-danger"
                                         >
                                             Hapus
                                         </button>
@@ -273,16 +386,37 @@ unset($_SESSION['flash']);
                 <?php else: ?>
 
                     <tr>
+
                         <td
-                            colspan="8"
+                            colspan="9"
                             style="
-                                padding:20px;
+                                padding:25px;
                                 text-align:center;
-                                color:#888;
+                                color:#9ca3af;
                             "
                         >
-                            Tidak ada jadwal kelas yang ditemukan.
+
+                            <?php if ($keyword !== ''): ?>
+
+                                Jadwal kelas dengan kata kunci
+                                "<?php
+                                echo htmlspecialchars(
+                                    $keyword,
+                                    ENT_QUOTES,
+                                    'UTF-8'
+                                );
+                                ?>"
+                                tidak ditemukan.
+
+                            <?php else: ?>
+
+                                Belum ada jadwal kelas.
+                                Silakan tambahkan kelas terlebih dahulu.
+
+                            <?php endif; ?>
+
                         </td>
+
                     </tr>
 
                 <?php endif; ?>
@@ -295,4 +429,13 @@ unset($_SESSION['flash']);
 
 </section>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+
+<?php
+
+/* =========================================================
+   4. FOOTER
+   ========================================================= */
+
+include __DIR__ . '/../includes/footer.php';
+
+?>
