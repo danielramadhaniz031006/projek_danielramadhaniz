@@ -1,199 +1,149 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <title>SIMPUS-Mini | Daftar Buku</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Daftar Buku | SIMPUS-Mini</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-
-<body>
- 
-    <header>
-        <h1>SIMPUS-Mini</h1>
-
-        <nav>
-            <ul>
-                <li><a href="../index.html">Beranda</a></li>
-                <li><a href="list.html">Daftar Buku</a></li>
-                <li><a href="tambah.html">Tambah Buku</a></li>
-                <li><a href="../anggota/list.html">Daftar Anggota</a></li>
-                <li><a href="../anggota/tambah.html">Tambah Anggota</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-
-        <section>
-            <h2>Daftar Buku</h2>
-
-            <table>
-                <thead>
-                    <tr>
-                        <th>Judul</th>
-                        <th>Pengarang</th>
-                        <th>Tahun</th>
-                        <th>Stok</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-
+<body><header class="site-header">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-3 px-lg-4">
+            <a class="navbar-brand" href="../index.html">SIMPUS-Mini</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Buka navigasi">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto gap-lg-1"><li class="nav-item"><a class="nav-link" href="../index.html">Beranda</a></li><li class="nav-item"><a class="nav-link active" aria-current="page" href="../buku/list.html">Daftar Buku</a></li><li class="nav-item"><a class="nav-link" href="../buku/tambah.html">Tambah Buku</a></li><li class="nav-item"><a class="nav-link" href="../anggota/list.html">Daftar Anggota</a></li><li class="nav-item"><a class="nav-link" href="../anggota/tambah.html">Tambah Anggota</a></li></ul>
+            </div>
+        </div>
+    </nav>
+</header>
+<main class="page-main">
+    <section class="panel">
+        <div class="toolbar">
+            <h1 class="panel-title mb-0">Daftar Buku</h1>
+        </div>
+        <div class="toolbar">
+            <form class="search-form" role="search" onsubmit="return false;">
+                <input class="form-control" type="search" id="tableSearch" placeholder="Cari judul buku..." aria-label="Cari judul buku...">
+                <button class="btn btn-success" type="submit">⌕ Cari</button>
+            </form>
+            <a class="btn btn-success" href="tambah.html">+ Tambah Buku</a>
+        </div>
+        <div class="table-wrap">
+            <table class="table table-hover align-middle" id="dataTable">
+                <thead><tr><th scope="col">No</th><th scope="col">Judul</th><th scope="col">Pengarang</th><th scope="col">Tahun</th><th scope="col">Stok</th><th scope="col">Aksi</th></tr></thead>
                 <tbody>
-
                     <tr>
-                        <td>Championship Fighting: Explosive Punching and Aggressive Defense</td>
-                        <td>Jack Dempsey</td>
-                        <td>1950</td>
-                        <td>5</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Fighting Strategies of Muay Thai</td>
-                        <td>Mark Van Schuyver & Pedro Villalobos</td>
-                        <td>2002</td>
-                        <td>4</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Kodokan Judo</td>
-                        <td>Jigoro Kano</td>
-                        <td>1986</td>
-                        <td>3</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>A Killing Art: The Untold History of Tae Kwon Do</td>
-                        <td>Alex Gillis</td>
-                        <td>2016</td>
-                        <td>6</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Jiu-Jitsu University</td>
-                        <td>Saulo Ribeiro</td>
-                        <td>2008</td>
-                        <td>4</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Mastering Jujitsu</td>
-                        <td>Renzo Gracie & John Danaher</td>
-                        <td>2003</td>
-                        <td>5</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Brazilian Jiu-Jitsu: Theory and Technique</td>
-                        <td>Renzo Gracie, Royler Gracie, Kid Peligro & John Danaher</td>
-                        <td>2001</td>
-                        <td>3</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Drill to Win: 12 Months to Better Brazilian Jiu-Jitsu</td>
-                        <td>Andre Galvao & Kevin Howell</td>
-                        <td>2010</td>
-                        <td>7</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>The Guard: Brazilian Jiu-Jitsu Details and Techniques</td>
-                        <td>Joe Moreira & Ed Beneville</td>
-                        <td>2005</td>
-                        <td>4</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>Wrestling for Fighting: The Natural Way</td>
-                        <td>Randy Couture, Erich Krauss & Glen Cordoza</td>
-                        <td>2007</td>
-                        <td>6</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>A Fighter's Heart: One Man's Journey Through the World of Fighting</td>
-                        <td>Sam Sheridan</td>
-                        <td>2006</td>
-                        <td>3</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>The Fighter's Mind: Inside the Mental Game</td>
-                        <td>Sam Sheridan</td>
-                        <td>2010</td>
-                        <td>5</td>
-                        <td>
-                            <button type="button">Edit</button>
-                            <button type="button">Detail</button>
-                            <button type="button">Hapus</button>
-                        </td>
-                    </tr>
-
+            <td>1</td><td>Championship Fighting: Explosive Punching and Aggressive Defense</td><td>Jack Dempsey</td><td>1950</td><td>5</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>2</td><td>Fighting Strategies of Muay Thai</td><td>Mark Van Schuyver & Pedro Villalobos</td><td>2002</td><td>4</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>3</td><td>Kodokan Judo</td><td>Jigoro Kano</td><td>1986</td><td>3</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>4</td><td>A Killing Art: The Untold History of Tae Kwon Do</td><td>Alex Gillis</td><td>2016</td><td>6</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>5</td><td>Jiu-Jitsu University</td><td>Saulo Ribeiro</td><td>2008</td><td>4</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>6</td><td>Mastering Jujitsu</td><td>Renzo Gracie & John Danaher</td><td>2003</td><td>5</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>7</td><td>Brazilian Jiu-Jitsu: Theory and Technique</td><td>Renzo Gracie, Royler Gracie, Kid Peligro & John Danaher</td><td>2001</td><td>3</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>8</td><td>Drill to Win: 12 Months to Better Brazilian Jiu-Jitsu</td><td>Andre Galvao & Kevin Howell</td><td>2010</td><td>7</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>9</td><td>The Guard: Brazilian Jiu-Jitsu Details and Techniques</td><td>Joe Moreira & Ed Beneville</td><td>2005</td><td>4</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>10</td><td>Wrestling for Fighting: The Natural Way</td><td>Randy Couture, Erich Krauss & Glen Cordoza</td><td>2007</td><td>6</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>11</td><td>A Fighter's Heart: One Man's Journey Through the World of Fighting</td><td>Sam Sheridan</td><td>2006</td><td>3</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr><tr>
+            <td>12</td><td>The Fighter's Mind: Inside the Mental Game</td><td>Sam Sheridan</td><td>2010</td><td>5</td>
+            <td><div class="action-buttons">
+                <button type="button" class="btn btn-edit">Edit</button>
+                <button type="button" class="btn btn-detail">Detail</button>
+                <button type="button" class="btn btn-delete">Hapus</button>
+            </div></td>
+        </tr>
                 </tbody>
             </table>
-
-        </section>
-
-    </main>
-
-    <footer>
-        <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 1</p>
-    </footer>
-
+        </div>
+        <p class="text-secondary small mt-3 mb-0">Jumlah data: <span id="rowCount">12</span></p>
+    </section>
+</main>
+<script>
+document.getElementById('tableSearch').addEventListener('input', function () {
+    const query = this.value.toLowerCase().trim();
+    const rows = document.querySelectorAll('#dataTable tbody tr');
+    let visible = 0;
+    rows.forEach(row => {
+        const match = row.textContent.toLowerCase().includes(query);
+        row.hidden = !match;
+        if (match) visible++;
+    });
+    document.getElementById('rowCount').textContent = visible;
+});
+</script>
+<footer class="site-footer">
+    <p class="mb-0">&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 4</p>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
