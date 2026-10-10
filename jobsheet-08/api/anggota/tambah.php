@@ -3,7 +3,25 @@ session_start();
 require __DIR__ . '/../includes/koneksi.php';
 
 // =========================================================
-// 1. PROSES SIMPAN DATA MEMBER BARU (SEBELUM HEADER.PHP)
+// 1. AMBIL DAFTAR CABOR / KELAS DARI DATABASE (DINAMIS)
+// =========================================================
+$stmtCabor = $pdo->query("SELECT DISTINCT judul FROM buku ORDER BY judul ASC");
+$daftarCabor = $stmtCabor->fetchAll(PDO::FETCH_COLUMN);
+
+// Jika database kelas/buku masih kosong, gunakan pilihan default
+if (empty($daftarCabor)) {
+    $daftarCabor = [
+        'Muay Thai Striking',
+        'Boxing Pad Work',
+        'Fit Boxing & Cardio',
+        'Brazilian Jiu-Jitsu (BJJ)',
+        'Strength & Conditioning',
+        'Wrestling & Takedown'
+    ];
+}
+
+// =========================================================
+// 2. PROSES SIMPAN DATA MEMBER BARU (SEBELUM HEADER.PHP)
 // =========================================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nama       = trim($_POST['nama'] ?? '');
@@ -33,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 // =========================================================
-// 2. LOGIKA OTOMATIS GENERATE / REKOMENDASI NO. KARTU MEMBER
+// 3. LOGIKA OTOMATIS GENERATE / REKOMENDASI NO. KARTU MEMBER
 // =========================================================
 $stmt = $pdo->query("SELECT no_anggota FROM anggota ORDER BY id DESC LIMIT 1");
 $last_member = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -59,58 +77,110 @@ if ($last_member && !empty($last_member['no_anggota'])) {
 }
 
 // =========================================================
-// 3. INCLUDE HEADER PHP
+// 4. INCLUDE HEADER PHP
 // =========================================================
 $page_title = "Tambah Member";
 include __DIR__ . '/../includes/header.php';
 ?>
 
-<section style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    <div style="border-left: 4px solid #e50914; padding-left: 12px; margin-bottom: 25px;">
-        <h2 style="margin: 0; font-size: 1.8rem; font-weight: 800; text-transform: uppercase; color: #fff;">TAMBAH MEMBER</h2>
+<section style="max-width: 650px; margin: 2rem auto; padding: 0 15px;">
+    <!-- TITLE HEADER -->
+    <div style="border-left: 4px solid #dc2626; padding-left: 14px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between;">
+        <div>
+            <h2 style="margin: 0; font-size: 1.6rem; font-weight: 800; text-transform: uppercase; color: #fff; letter-spacing: 0.5px;">TAMBAH MEMBER BARU</h2>
+            <p style="margin: 4px 0 0 0; color: #9ca3af; font-size: 0.85rem;">Isi formulir pendaftaran anggota ELRAM Training Camp</p>
+        </div>
+        <span style="background: rgba(220, 38, 38, 0.15); color: #ef4444; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 20px; border: 1px solid rgba(220, 38, 38, 0.3);">
+            🔥 REGISTRATION
+        </span>
     </div>
 
-    <form method="POST" style="background: #181818; padding: 25px; border-radius: 8px; border: 1px solid #282828;">
+    <!-- FORM CONTAINER -->
+    <form method="POST" style="background: linear-gradient(145deg, #16181e 0%, #0e0f13 100%); padding: 30px; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         
         <!-- NAMA MEMBER -->
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #fff;">NAMA MEMBER</label>
-            <input type="text" name="nama" placeholder="Contoh: Daniel Ramadhani Zulkarnain" required style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #333; background: #222; color: #fff; box-sizing: border-box;">
+        <div style="margin-bottom: 22px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: #fff; letter-spacing: 0.5px;">
+                NAMA MEMBER <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="text" name="nama" placeholder="Contoh: Daniel Ramadhani Zulkarnain" required style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #2a2e39; background: #090a0d; color: #fff; font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.2s;" onfocus="this.style.borderColor='#dc2626';" onblur="this.style.borderColor='#2a2e39';">
         </div>
 
         <!-- ID MEMBER / NO. KARTU -->
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #fff;">ID MEMBER / NO. KARTU</label>
-            <input type="text" name="no_anggota" value="<?php echo htmlspecialchars($next_no_anggota); ?>" required style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #333; background: #222; color: #fff; font-weight: bold; box-sizing: border-box;">
-            <small style="color: #aaa; font-size: 0.8rem; margin-top: 5px; display: block;">*Otomatis merekomendasikan nomor kartu berikutnya (tetap bisa diedit manual jika diperlukan).</small>
+        <div style="margin-bottom: 22px;">
+            <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: #fff; letter-spacing: 0.5px;">
+                ID MEMBER / NO. KARTU <span style="color: #ef4444;">*</span>
+            </label>
+            <input type="text" name="no_anggota" value="<?php echo htmlspecialchars($next_no_anggota); ?>" required style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #2a2e39; background: #090a0d; color: #ef4444; font-weight: 800; font-size: 1rem; outline: none; box-sizing: border-box; transition: border-color 0.2s;" onfocus="this.style.borderColor='#dc2626';" onblur="this.style.borderColor='#2a2e39';">
+            <small style="color: #9ca3af; font-size: 0.78rem; margin-top: 6px; display: block; line-height: 1.4;">
+                *Rekomendasi ID otomatis berdasarkan urutan pendaftaran (dapat diedit manual).
+            </small>
         </div>
 
-        <!-- CABOR / PILIHAN KELAS -->
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #fff;">CABOR / PILIHAN KELAS</label>
-            <select name="cabor" style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #333; background: #222; color: #fff; box-sizing: border-box;">
-                <option value="Muay Thai Striking">Muay Thai Striking</option>
-                <option value="Boxing Pad Work">Boxing Pad Work</option>
-                <option value="Fit Boxing & Cardio">Fit Boxing & Cardio</option>
-                <option value="Brazilian Jiu-Jitsu (BJJ)">Brazilian Jiu-Jitsu (BJJ)</option>
-                <option value="Strength & Conditioning">Strength & Conditioning</option>
-                <option value="Wrestling & Takedown">Wrestling & Takedown</option>
-            </select>
+        <!-- CABOR & LEVEL KEAHLIAN (GRID 2 KOLOM) -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 22px;">
+            <!-- CABOR / PILIHAN KELAS -->
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: #fff; letter-spacing: 0.5px;">
+                    CABOR / KELAS LATIHAN
+                </label>
+                <select name="cabor" style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #2a2e39; background: #090a0d; color: #fff; font-size: 0.9rem; outline: none; box-sizing: border-box; cursor: pointer;">
+                    <?php foreach ($daftarCabor as $caborItem): ?>
+                        <option value="<?php echo htmlspecialchars($caborItem); ?>">
+                            <?php echo htmlspecialchars($caborItem); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+
+            <!-- LEVEL KEAHLIAN MEMBER -->
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: #fff; letter-spacing: 0.5px;">
+                    LEVEL KEAHLIAN
+                </label>
+                <select name="level" style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #2a2e39; background: #090a0d; color: #fff; font-size: 0.9rem; outline: none; box-sizing: border-box; cursor: pointer;">
+                    <option value="Pemula">Pemula (Beginner)</option>
+                    <option value="Menengah">Menengah (Intermediate)</option>
+                    <option value="Mahir">Mahir (Advanced)</option>
+                </select>
+            </div>
         </div>
 
-        <!-- NO. HP / WHATSAPP -->
-        <div style="margin-bottom: 20px;">
-            <label style="display: block; margin-bottom: 8px; font-weight: bold; font-size: 0.9rem; text-transform: uppercase; color: #fff;">NO. HP / WHATSAPP</label>
-            <input type="text" name="no_hp" placeholder="Contoh: 08123456789" style="width: 100%; padding: 12px; border-radius: 4px; border: 1px solid #333; background: #222; color: #fff; box-sizing: border-box;">
+        <!-- PAKET MEMBERSHIP & NO HP (GRID 2 KOLOM) -->
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 22px;">
+            <!-- PAKET MEMBERSHIP -->
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: #fff; letter-spacing: 0.5px;">
+                    PAKET MEMBERSHIP
+                </label>
+                <select name="paket" style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #2a2e39; background: #090a0d; color: #f59e0b; font-weight: 700; font-size: 0.9rem; outline: none; box-sizing: border-box; cursor: pointer;">
+                    <option value="Regular 1 Bulan">Regular (1 Bulan)</option>
+                    <option value="Hemat 3 Bulan">Hemat (3 Bulan)</option>
+                    <option value="VIP Unlimited">VIP Unlimited (All Access)</option>
+                </select>
+            </div>
+
+            <!-- NO. HP / WHATSAPP -->
+            <div>
+                <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: #fff; letter-spacing: 0.5px;">
+                    NO. HP / WHATSAPP
+                </label>
+                <input type="text" name="no_hp" placeholder="Contoh: 08123456789" style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #2a2e39; background: #090a0d; color: #fff; font-size: 0.95rem; outline: none; box-sizing: border-box; transition: border-color 0.2s;" onfocus="this.style.borderColor='#dc2626';" onblur="this.style.borderColor='#2a2e39';">
+            </div>
         </div>
 
-        <!-- TOMBOL AKSI -->
-        <div style="margin-top: 25px;">
-            <button type="submit" style="background: #e50914; color: #fff; padding: 12px 30px; border: none; border-radius: 4px; font-weight: bold; text-transform: uppercase; cursor: pointer; font-size: 1rem;">SIMPAN</button>
-            <a href="list.php" style="color: #aaa; margin-left: 15px; text-decoration: none; font-size: 0.9rem;">Batal</a>
+        <!-- TOMBOL AKSI (SIMPAN & BATAL) -->
+        <div style="margin-top: 30px; display: flex; align-items: center; gap: 12px;">
+            <button type="submit" style="background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff; padding: 12px 28px; border: none; border-radius: 8px; font-weight: 800; text-transform: uppercase; cursor: pointer; font-size: 0.9rem; letter-spacing: 0.5px; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4); transition: all 0.2s ease;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(220, 38, 38, 0.6)';" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(220, 38, 38, 0.4)';">
+                ✓ SIMPAN MEMBER
+            </button>
+            
+            <a href="list.php" style="background: #21242d; color: #9ca3af; padding: 12px 22px; border-radius: 8px; text-decoration: none; font-size: 0.9rem; font-weight: 700; text-transform: uppercase; transition: all 0.2s ease; border: 1px solid #2a2e39;" onmouseover="this.style.color='#fff'; this.style.backgroundColor='#2a2e39';" onmouseout="this.style.color='#9ca3af'; this.style.backgroundColor='#21242d';">
+                BATAL
+            </a>
         </div>
 
     </form>
 </section> 
 
-<?php include __DIR__ . '/../includes/footer.php'; ?> 
+<?php include __DIR__ . '/../includes/footer.php'; ?>
