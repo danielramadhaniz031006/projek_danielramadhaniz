@@ -31,7 +31,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     </title>
 
     <!-- CSS UTAMA menggunakan dinamis base path -->
-    <link rel="stylesheet" href="<?php echo $base; ?>assets/css/style.css">
+   <link rel="stylesheet" href="/assets/css/style.css">
 </head>
 
 <body> 
