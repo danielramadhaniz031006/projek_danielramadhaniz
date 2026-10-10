@@ -142,12 +142,13 @@ include __DIR__ . '/includes/header.php';
 
 <section class="pricing-banner-section" style="margin-top: 35px;">
     <h2>Daftar Harga Kelas</h2>
+
     <div class="pricing-banner-wrapper">
         <img
-    src="../assets/images/DAFTAR%20HARGA.png"
-    alt="Daftar Harga Kelas ELRAM Training Camp"
-    class="pricing-banner-img"
->
+            src="/jobsheet-08/assets/images/DAFTAR%20HARGA.png"
+            alt="Daftar Harga Kelas ELRAM Training Camp"
+            class="pricing-banner-img"
+        >
     </div>
 </section>
 
