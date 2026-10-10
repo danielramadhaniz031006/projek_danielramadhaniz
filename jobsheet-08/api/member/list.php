@@ -4,12 +4,35 @@ session_start();
 
 require_once __DIR__ . '/../includes/koneksi.php';
 
+
+/* =========================================================
+   ELRAM TRAINING CAMP
+   DAFTAR MEMBER
+   ========================================================= */
+
+
+/* =========================================================
+   1. TOKEN KEAMANAN UNTUK RESET
+   ========================================================= */
+
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
+
+/* =========================================================
+   2. JUDUL HALAMAN
+   ========================================================= */
+
 $page_title = 'Daftar Member Gym';
 
-// Kata kunci pencarian
+
+/* =========================================================
+   3. PENCARIAN MEMBER
+   ========================================================= */
+
 $keyword = trim($_GET['search'] ?? '');
 
-// Query daftar member beserta kelas yang diikuti
 $sql = "
     SELECT
         a.id,
@@ -20,9 +43,10 @@ $sql = "
         j.nama_kelas,
         j.nama_coach,
         j.hari_latihan,
-        j.jam_latihan,
-        j.kode_kelas
+        j.jam_latihan
+
     FROM public.anggota a
+
     LEFT JOIN public.jadwal_kelas j
         ON j.id = a.jadwal_kelas_id
 ";
@@ -30,6 +54,7 @@ $sql = "
 $params = [];
 
 if ($keyword !== '') {
+
     $sql .= "
         WHERE a.nama ILIKE :nama
            OR a.nomor_member ILIKE :nomor
@@ -43,7 +68,7 @@ if ($keyword !== '') {
         'nama'  => $term,
         'nomor' => $term,
         'kelas' => $term,
-        'hp'    => $term,
+        'hp'    => $term
     ];
 }
 
@@ -54,16 +79,39 @@ $stmt->execute($params);
 
 $daftar_anggota = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Ambil flash message satu kali
+
+/* =========================================================
+   4. JUMLAH MEMBER
+   ========================================================= */
+
+$totalMember = count($daftar_anggota);
+
+
+/* =========================================================
+   5. NOTIFIKASI
+   ========================================================= */
+
 $flash = $_SESSION['flash'] ?? null;
+
 unset($_SESSION['flash']);
 
-// Header
+
+/* =========================================================
+   6. HEADER
+   ========================================================= */
+
 include __DIR__ . '/../includes/header.php';
 
 ?>
 
+
+<!-- =========================================================
+     DAFTAR MEMBER
+     ========================================================= -->
+
 <section>
+
+    <!-- NOTIFIKASI -->
 
     <?php if ($flash): ?>
 
@@ -86,7 +134,9 @@ include __DIR__ . '/../includes/header.php';
     <?php endif; ?>
 
 
-    <!-- JUDUL DAN TOMBOL TAMBAH -->
+    <!-- =====================================================
+         JUDUL DAN TOMBOL AKSI
+         ===================================================== -->
 
     <div style="
         display:flex;
@@ -97,16 +147,109 @@ include __DIR__ . '/../includes/header.php';
         margin-bottom:20px;
     ">
 
-        <h2>DAFTAR MEMBER</h2>
+        <div>
 
-        <a href="tambah.php" class="btn-primary">
-            + Tambah Member
-        </a>
+            <h2>DAFTAR MEMBER</h2>
+
+            <p style="
+                color:#9ca3af;
+                font-size:.85rem;
+                margin-top:8px;
+            ">
+
+                Total member:
+                <strong style="color:#fff;">
+                    <?php echo $totalMember; ?>
+                </strong>
+
+                <?php if ($keyword !== ''): ?>
+
+                    <span>hasil pencarian</span>
+
+                <?php endif; ?>
+
+            </p>
+
+        </div>
+
+
+        <div style="
+            display:flex;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:10px;
+        ">
+
+
+            <!-- TOMBOL RESET MINGGUAN -->
+
+            <form
+                method="POST"
+                action="reset_mingguan.php"
+                style="
+                    width:auto;
+                    max-width:none;
+                    margin:0;
+                "
+                onsubmit="return confirm(
+                    'PERINGATAN! Semua data member akan dihapus. ' +
+                    'Jadwal kelas, coach, dan harga tidak akan dihapus. ' +
+                    'Yakin ingin melanjutkan reset mingguan?'
+                );"
+            >
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="<?php
+                        echo htmlspecialchars(
+                            $_SESSION['csrf_token'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
+                    ?>"
+                >
+
+                <button
+                    type="submit"
+                    style="
+                        background:#991b1b;
+                        color:#fff;
+                        padding:10px 16px;
+                        border:1px solid #dc2626;
+                        border-radius:6px;
+                        font-weight:bold;
+                        cursor:pointer;
+                        white-space:nowrap;
+                    "
+                >
+
+                    RESET MINGGUAN
+
+                </button>
+
+            </form>
+
+
+            <!-- TOMBOL TAMBAH MEMBER -->
+
+            <a
+                href="tambah.php"
+                class="btn-primary"
+            >
+
+                + Tambah Member
+
+            </a>
+
+        </div>
 
     </div>
 
 
-    <!-- PENCARIAN -->
+    <!-- =====================================================
+         FORM PENCARIAN
+         ===================================================== -->
 
     <form
         method="GET"
@@ -135,7 +278,7 @@ include __DIR__ . '/../includes/header.php';
         <?php if ($keyword !== ''): ?>
 
             <a href="list.php">
-                RESET
+                RESET PENCARIAN
             </a>
 
         <?php endif; ?>
@@ -143,7 +286,9 @@ include __DIR__ . '/../includes/header.php';
     </form>
 
 
-    <!-- TABEL MEMBER -->
+    <!-- =====================================================
+         TABEL MEMBER
+         ===================================================== -->
 
     <div class="table-responsive">
 
@@ -152,17 +297,27 @@ include __DIR__ . '/../includes/header.php';
             <thead>
 
                 <tr>
+
                     <th>No</th>
+
                     <th>ID Member</th>
+
                     <th>Nama Member</th>
+
                     <th>Kelas</th>
+
                     <th>Coach</th>
+
                     <th>Level</th>
+
                     <th>No. HP / WA</th>
+
                     <th>Aksi</th>
+
                 </tr>
 
             </thead>
+
 
             <tbody>
 
@@ -174,12 +329,19 @@ include __DIR__ . '/../includes/header.php';
 
                         <tr>
 
+                            <!-- NOMOR -->
+
                             <td>
                                 <?php echo $index + 1; ?>
                             </td>
 
+
+                            <!-- ID MEMBER -->
+
                             <td>
+
                                 <strong>
+
                                     <?php
                                     echo htmlspecialchars(
                                         $anggota['nomor_member'] ?? '-',
@@ -187,10 +349,16 @@ include __DIR__ . '/../includes/header.php';
                                         'UTF-8'
                                     );
                                     ?>
+
                                 </strong>
+
                             </td>
 
+
+                            <!-- NAMA MEMBER -->
+
                             <td>
+
                                 <?php
                                 echo htmlspecialchars(
                                     $anggota['nama'] ?? '-',
@@ -198,9 +366,14 @@ include __DIR__ . '/../includes/header.php';
                                     'UTF-8'
                                 );
                                 ?>
+
                             </td>
 
+
+                            <!-- KELAS -->
+
                             <td>
+
                                 <?php
                                 echo htmlspecialchars(
                                     $anggota['nama_kelas']
@@ -209,9 +382,14 @@ include __DIR__ . '/../includes/header.php';
                                     'UTF-8'
                                 );
                                 ?>
+
                             </td>
 
+
+                            <!-- COACH -->
+
                             <td>
+
                                 <?php
                                 echo htmlspecialchars(
                                     $anggota['nama_coach'] ?? '-',
@@ -219,9 +397,14 @@ include __DIR__ . '/../includes/header.php';
                                     'UTF-8'
                                 );
                                 ?>
+
                             </td>
 
+
+                            <!-- LEVEL -->
+
                             <td>
+
                                 <?php
                                 echo htmlspecialchars(
                                     $anggota['level']
@@ -230,9 +413,14 @@ include __DIR__ . '/../includes/header.php';
                                     'UTF-8'
                                 );
                                 ?>
+
                             </td>
 
+
+                            <!-- NOMOR HP -->
+
                             <td>
+
                                 <?php
                                 echo htmlspecialchars(
                                     $anggota['nomor_hp'] ?? '-',
@@ -240,16 +428,23 @@ include __DIR__ . '/../includes/header.php';
                                     'UTF-8'
                                 );
                                 ?>
+
                             </td>
+
+
+                            <!-- AKSI -->
 
                             <td>
 
                                 <div style="
                                     display:flex;
-                                    gap:8px;
                                     align-items:center;
-                                    flex-wrap:wrap;
+                                    justify-content:flex-start;
+                                    flex-direction:row;
+                                    flex-wrap:nowrap;
+                                    gap:8px;
                                 ">
+
 
                                     <!-- EDIT -->
 
@@ -259,16 +454,22 @@ include __DIR__ . '/../includes/header.php';
                                         ?>"
                                         class="btn-edit"
                                     >
-                                        Edit
+
+                                        EDIT
+
                                     </a>
 
 
-                                    <!-- HAPUS -->
+                                    <!-- HAPUS SATU MEMBER -->
 
                                     <form
                                         method="POST"
                                         action="hapus.php"
-                                        style="margin:0;"
+                                        style="
+                                            width:auto;
+                                            max-width:none;
+                                            margin:0;
+                                        "
                                         onsubmit="return confirm(
                                             'Yakin ingin menghapus member ini?'
                                         );"
@@ -286,10 +487,13 @@ include __DIR__ . '/../includes/header.php';
                                             type="submit"
                                             class="btn-danger"
                                         >
-                                            Hapus
+
+                                            HAPUS
+
                                         </button>
 
                                     </form>
+
 
                                 </div>
 
@@ -314,19 +518,19 @@ include __DIR__ . '/../includes/header.php';
 
                             <?php if ($keyword !== ''): ?>
 
-                                Data member untuk pencarian
+                                Member tidak ditemukan dengan kata kunci
                                 "<?php
                                 echo htmlspecialchars(
                                     $keyword,
                                     ENT_QUOTES,
                                     'UTF-8'
                                 );
-                                ?>"
-                                tidak ditemukan.
+                                ?>".
 
                             <?php else: ?>
 
                                 Belum ada data member.
+
                                 Silakan tambahkan member terlebih dahulu.
 
                             <?php endif; ?>
@@ -345,4 +549,13 @@ include __DIR__ . '/../includes/header.php';
 
 </section>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?>
+
+<?php
+
+/* =========================================================
+   7. FOOTER
+   ========================================================= */
+
+include __DIR__ . '/../includes/footer.php';
+
+?>

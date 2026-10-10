@@ -1,6 +1,8 @@
 /* =========================================================
    ELRAM TRAINING CAMP - STYLE.CSS
-   Tema Gelap, Merah, Modern, dan Responsif
+   Tema Gelap Merah
+   Responsive Layout
+   Tabel Horizontal dengan Scrollbar
    ========================================================= */
 
 
@@ -176,7 +178,10 @@ header nav a:hover {
         0 4px 12px rgba(220, 38, 38, 0.4);
 }
 
-/* Tombol hamburger */
+
+/* =========================================================
+   3. HAMBURGER MENU
+   ========================================================= */
 
 .nav-toggle-label {
     display: none;
@@ -201,7 +206,7 @@ header nav a:hover {
 
 
 /* =========================================================
-   3. MAIN CONTENT
+   4. MAIN CONTENT
    ========================================================= */
 
 main {
@@ -247,7 +252,7 @@ section > p {
 
 
 /* =========================================================
-   4. BERANDA - WELCOME SECTION
+   5. WELCOME SECTION
    ========================================================= */
 
 .welcome-section {
@@ -278,7 +283,7 @@ section > p {
 
 
 /* =========================================================
-   5. BERANDA - STATISTIK
+   6. STATISTIK BERANDA
    ========================================================= */
 
 .summary-section {
@@ -357,7 +362,7 @@ section > p {
 
 
 /* =========================================================
-   6. BERANDA - TIM COACH
+   7. TIM COACH
    ========================================================= */
 
 .coach-section {
@@ -415,7 +420,7 @@ section > p {
 
 
 /* =========================================================
-   7. BERANDA - DAFTAR HARGA
+   8. DAFTAR HARGA KELAS
    ========================================================= */
 
 .pricing-banner-section {
@@ -457,48 +462,79 @@ section > p {
 
 
 /* =========================================================
-   8. TABEL DATA
-   Berlaku untuk jadwal kelas dan daftar member
+   9. TABEL RESPONSIVE
+   TULISAN MENDATAR DAN SCROLLBAR HORIZONTAL
    ========================================================= */
 
+/* Wadah tabel */
+
 .table-responsive {
+    display: block;
+
     width: 100%;
+    max-width: 100%;
 
     overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
 
     border: 1px solid var(--border);
     border-radius: 9px;
+
+    scrollbar-width: auto;
+
+    scrollbar-color:
+        #50525c
+        #111217;
 }
 
-table {
+
+/* Ukuran tabel */
+
+.table-responsive table {
     width: 100%;
+
+    min-width: 1100px;
 
     border-collapse: collapse;
 
+    table-layout: auto;
+
     background: var(--white);
+
     color: var(--text);
 
     text-align: left;
 }
 
-th,
-td {
+
+/* Judul kolom dan isi tabel */
+
+.table-responsive th,
+.table-responsive td {
     text-align: left;
 
-    padding: 0.9rem 1rem;
+    padding: 12px 16px;
 
     border-bottom: 1px solid var(--border);
 
     vertical-align: middle;
+
+    /* MENCEGAH TULISAN TURUN BARIS */
+    white-space: nowrap;
 }
 
-thead {
+
+/* Header tabel */
+
+.table-responsive thead {
     background-color: #0d0e12;
 
     color: #fff;
 }
 
-thead th {
+.table-responsive thead th {
     font-size: 0.85rem;
     font-weight: 800;
 
@@ -508,27 +544,131 @@ thead th {
     border-bottom: 2px solid var(--primary);
 
     white-space: nowrap;
+
+    height: 48px;
 }
 
-tbody tr {
+
+/* Baris tabel */
+
+.table-responsive tbody tr {
     transition: background-color 0.2s ease;
 }
 
-tbody tr:nth-child(even) {
+.table-responsive tbody tr:nth-child(even) {
     background-color: rgba(255, 255, 255, 0.02);
 }
 
-tbody tr:hover {
+.table-responsive tbody tr:hover {
     background-color: rgba(220, 38, 38, 0.08);
 }
 
-tbody tr:last-child td {
+.table-responsive tbody tr:last-child td {
     border-bottom: none;
 }
 
 
+/* Nama kelas */
+
+.table-responsive td:nth-child(2) {
+    white-space: nowrap;
+}
+
+
+/* Nama member */
+
+.table-responsive td:nth-child(3) {
+    white-space: nowrap;
+}
+
+
+/* Nama coach */
+
+.table-responsive td:nth-child(4) {
+    white-space: nowrap;
+}
+
+
+/* Kolom aksi */
+
+.table-responsive td:last-child {
+    min-width: 170px;
+
+    white-space: nowrap;
+}
+
+
+/* Tombol aksi dalam satu baris */
+
+.table-responsive td:last-child > div {
+    display: flex !important;
+
+    align-items: center;
+    justify-content: flex-start;
+
+    flex-direction: row;
+
+    flex-wrap: nowrap;
+
+    gap: 8px;
+
+    white-space: nowrap;
+}
+
+
+/* Form tombol hapus tidak memenuhi seluruh lebar */
+
+.table-responsive td:last-child form {
+    display: inline-flex;
+
+    align-items: center;
+
+    width: auto;
+    max-width: none;
+
+    margin: 0;
+
+    flex: 0 0 auto;
+}
+
+
+/* Tombol tidak mengecil */
+
+.table-responsive td:last-child a,
+.table-responsive td:last-child button {
+    flex-shrink: 0;
+
+    white-space: nowrap;
+}
+
+
 /* =========================================================
-   9. TOMBOL AKSI DALAM TABEL
+   10. SCROLLBAR TABEL
+   ========================================================= */
+
+.table-responsive::-webkit-scrollbar {
+    height: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+    background: #111217;
+
+    border-radius: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #50525c;
+
+    border-radius: 10px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+    background: var(--primary);
+}
+
+
+/* =========================================================
+   11. TOMBOL AKSI TABEL
    ========================================================= */
 
 td button {
@@ -553,6 +693,14 @@ td button:hover {
     transform: translateY(-1px);
 }
 
+td button:disabled {
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+}
+
 td button:first-of-type {
     background-color: var(--accent);
     color: #000;
@@ -573,7 +721,7 @@ td button:last-of-type:hover {
 
 
 /* =========================================================
-   10. TOMBOL UMUM
+   12. TOMBOL UMUM
    ========================================================= */
 
 .btn-primary {
@@ -598,6 +746,8 @@ td button:last-of-type:hover {
     text-decoration: none;
 
     transition: all 0.2s ease;
+
+    white-space: nowrap;
 }
 
 .btn-primary:hover {
@@ -609,6 +759,7 @@ td button:last-of-type:hover {
 
     box-shadow: var(--shadow-hover);
 }
+
 
 .btn-secondary {
     display: inline-flex;
@@ -637,6 +788,7 @@ td button:last-of-type:hover {
     color: #fff;
 }
 
+
 .btn-danger {
     display: inline-flex;
 
@@ -663,6 +815,7 @@ td button:last-of-type:hover {
 
     color: #fff;
 }
+
 
 .btn-edit {
     display: inline-flex;
@@ -693,7 +846,7 @@ td button:last-of-type:hover {
 
 
 /* =========================================================
-   11. FORM & INPUTS
+   13. FORM & INPUT
    ========================================================= */
 
 form {
@@ -723,6 +876,7 @@ form label {
 form label + br {
     display: none;
 }
+
 
 form input,
 form select,
@@ -771,6 +925,7 @@ form select option {
     color: #fff;
 }
 
+
 form input:focus,
 form select:focus,
 form textarea:focus {
@@ -781,6 +936,7 @@ form textarea:focus {
 
     background-color: #262933;
 }
+
 
 form input::placeholder,
 form textarea::placeholder {
@@ -814,6 +970,11 @@ form input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
+
+/* =========================================================
+   14. TOMBOL SIMPAN FORM
+   ========================================================= */
+
 form button[type="submit"] {
     background: var(--primary);
     color: #fff;
@@ -823,6 +984,7 @@ form button[type="submit"] {
     padding: 0.75rem 1.5rem;
 
     min-width: 110px;
+    min-height: 44px;
 
     border-radius: 6px;
 
@@ -852,6 +1014,7 @@ form button[type="submit"]:disabled {
     cursor: not-allowed;
 
     transform: none;
+
     box-shadow: none;
 }
 
@@ -859,12 +1022,13 @@ form button[type="submit"]:disabled:hover {
     background: var(--primary);
 
     transform: none;
+
     box-shadow: none;
 }
 
 
 /* =========================================================
-   12. FORM TAMBAH DAN EDIT
+   15. FORM TAMBAH DAN EDIT
    ========================================================= */
 
 #form-tambah,
@@ -889,13 +1053,9 @@ form small {
     line-height: 1.5;
 }
 
-form a {
-    transition: color 0.2s ease;
-}
-
 
 /* =========================================================
-   13. SEARCH BOX / PENCARIAN
+   16. SEARCH BOX
    ========================================================= */
 
 .search-box {
@@ -921,6 +1081,7 @@ form a {
     white-space: nowrap;
 
     text-transform: uppercase;
+
     font-size: 0.85rem;
 }
 
@@ -960,7 +1121,9 @@ form a {
 }
 
 
-/* Form pencarian pada halaman list */
+/* =========================================================
+   17. FORM PENCARIAN LIST
+   ========================================================= */
 
 form.search-form {
     width: 100%;
@@ -992,7 +1155,6 @@ form.search-form button[type="submit"] {
     flex-shrink: 0;
 
     min-width: auto;
-
     min-height: 48px;
 
     padding: 0.65rem 1.25rem;
@@ -1052,7 +1214,7 @@ form.search-form a:hover {
 
 
 /* =========================================================
-   14. TOMBOL MUAT ULANG
+   18. TOMBOL RELOAD
    ========================================================= */
 
 .btn-reload {
@@ -1093,7 +1255,7 @@ form.search-form a:hover {
 
 
 /* =========================================================
-   15. FLASH MESSAGE / NOTIFIKASI
+   19. FLASH MESSAGE
    ========================================================= */
 
 .flash {
@@ -1152,7 +1314,7 @@ form.search-form a:hover {
 
 
 /* =========================================================
-   16. FOOTER
+   20. FOOTER
    ========================================================= */
 
 footer {
@@ -1176,7 +1338,7 @@ footer p {
 
 
 /* =========================================================
-   17. FOCUS & AKSESIBILITAS
+   21. FOCUS & AKSESIBILITAS
    ========================================================= */
 
 a:focus-visible,
@@ -1189,19 +1351,9 @@ textarea:focus-visible {
     outline-offset: 3px;
 }
 
-button:disabled {
-    opacity: 0.5;
-
-    cursor: not-allowed;
-}
-
-button:disabled:hover {
-    transform: none;
-}
-
 
 /* =========================================================
-   18. BERANDA - TATA LETAK DESKTOP
+   22. BERANDA - LAYOUT DESKTOP
    ========================================================= */
 
 main:has(> .welcome-section) {
@@ -1326,7 +1478,7 @@ main:has(> .welcome-section) .stat-card p {
 }
 
 
-/* Coach */
+/* Tim coach */
 
 main:has(> .welcome-section) > .coach-section {
     grid-area: coach;
@@ -1371,7 +1523,7 @@ main:has(> .welcome-section) > .coach-section > div > div {
 }
 
 
-/* Banner harga pada beranda */
+/* Banner harga */
 
 main:has(> .welcome-section) > .pricing-banner-section {
     grid-column: 1 / -1;
@@ -1381,7 +1533,7 @@ main:has(> .welcome-section) > .pricing-banner-section {
 
 
 /* =========================================================
-   19. RESPONSIVE TABLET
+   23. RESPONSIVE TABLET
    ========================================================= */
 
 @media (max-width: 1100px) {
@@ -1416,7 +1568,7 @@ main:has(> .welcome-section) > .pricing-banner-section {
 
 
 /* =========================================================
-   20. RESPONSIVE TABLET KECIL
+   24. RESPONSIVE TABLET KECIL
    ========================================================= */
 
 @media (max-width: 800px) {
@@ -1449,7 +1601,7 @@ main:has(> .welcome-section) > .pricing-banner-section {
 
 
 /* =========================================================
-   21. RESPONSIVE MOBILE
+   25. RESPONSIVE MOBILE
    ========================================================= */
 
 @media (max-width: 600px) {
@@ -1485,7 +1637,7 @@ main:has(> .welcome-section) > .pricing-banner-section {
     }
 
 
-    /* Navigasi mobile */
+    /* Navbar mobile */
 
     header nav {
         display: none;
@@ -1630,7 +1782,7 @@ main:has(> .welcome-section) > .pricing-banner-section {
     }
 
 
-    /* Banner harga */
+    /* Harga */
 
     .pricing-banner-section {
         padding: 14px;
@@ -1664,7 +1816,7 @@ main:has(> .welcome-section) > .pricing-banner-section {
     }
 
 
-    /* Pencarian mobile */
+    /* Form pencarian mobile */
 
     form.search-form {
         display: flex;
@@ -1697,24 +1849,26 @@ main:has(> .welcome-section) > .pricing-banner-section {
     .table-responsive {
         overflow-x: auto;
 
+        overflow-y: hidden;
+
         -webkit-overflow-scrolling: touch;
     }
 
-    table {
-        min-width: 600px;
+    .table-responsive table {
+        min-width: 1100px;
     }
 
-    th,
-    td {
-        padding: 0.75rem;
+    .table-responsive th,
+    .table-responsive td {
+        padding: 10px 14px;
+
+        font-size: 0.85rem;
+
+        white-space: nowrap;
     }
 
-    thead th {
-        font-size: 0.75rem;
-    }
 
-
-    /* Tombol */
+    /* Tombol reload */
 
     .btn-reload {
         min-height: 44px;
@@ -1737,7 +1891,7 @@ main:has(> .welcome-section) > .pricing-banner-section {
 
 
 /* =========================================================
-   22. RESPONSIVE MOBILE SANGAT KECIL
+   26. RESPONSIVE MOBILE SANGAT KECIL
    ========================================================= */
 
 @media (max-width: 380px) {
@@ -1782,7 +1936,7 @@ main:has(> .welcome-section) > .pricing-banner-section {
 
 
 /* =========================================================
-   23. PENGATURAN REDUCED MOTION
+   27. REDUCED MOTION
    ========================================================= */
 
 @media (prefers-reduced-motion: reduce) {

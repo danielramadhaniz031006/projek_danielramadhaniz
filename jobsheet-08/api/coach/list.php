@@ -4,12 +4,7 @@ session_start();
 
 require_once __DIR__ . '/../includes/koneksi.php';
 
-/* =========================================================
-   ELRAM TRAINING CAMP
-   DAFTAR JADWAL KELAS
-   ========================================================= */
-
-$page_title = "Daftar Jadwal Kelas";
+$page_title = 'Daftar Jadwal Kelas';
 
 /* =========================================================
    1. PENCARIAN JADWAL KELAS
@@ -24,12 +19,9 @@ $sql = "
         j.nama_coach,
         j.hari_latihan,
         j.jam_latihan,
-        j.kode_kelas,
         j.kapasitas,
         j.harga,
-
         COUNT(a.id) AS member_terdaftar,
-
         GREATEST(
             j.kapasitas - COUNT(a.id),
             0
@@ -49,16 +41,14 @@ if ($keyword !== '') {
         WHERE j.nama_kelas ILIKE :cari_kelas
            OR j.nama_coach ILIKE :cari_coach
            OR j.hari_latihan ILIKE :cari_hari
-           OR j.kode_kelas ILIKE :cari_kode
     ";
 
-    $cari = '%' . $keyword . '%';
+    $term = '%' . $keyword . '%';
 
     $params = [
-        'cari_kelas' => $cari,
-        'cari_coach' => $cari,
-        'cari_hari'  => $cari,
-        'cari_kode'  => $cari
+        'cari_kelas' => $term,
+        'cari_coach' => $term,
+        'cari_hari'  => $term
     ];
 }
 
@@ -90,10 +80,6 @@ include __DIR__ . '/../includes/header.php';
 
 ?>
 
-
-<!-- =========================================================
-     DAFTAR JADWAL KELAS
-     ========================================================= -->
 
 <section>
 
@@ -133,10 +119,7 @@ include __DIR__ . '/../includes/header.php';
 
         <h2>DAFTAR JADWAL KELAS</h2>
 
-        <a
-            href="tambah.php"
-            class="btn-primary"
-        >
+        <a href="tambah.php" class="btn-primary">
             + Tambah Kelas
         </a>
 
@@ -161,7 +144,7 @@ include __DIR__ . '/../includes/header.php';
                     'UTF-8'
                 );
             ?>"
-            placeholder="Cari kelas, coach, hari, atau kode kelas..."
+            placeholder="Cari kelas, coach, atau hari latihan..."
             aria-label="Cari jadwal kelas"
         >
 
@@ -180,7 +163,10 @@ include __DIR__ . '/../includes/header.php';
     </form>
 
 
-    <!-- TABEL JADWAL -->
+    <!-- =====================================================
+         TABEL JADWAL KELAS
+         KODE / LEVEL SUDAH DIHAPUS
+         ===================================================== -->
 
     <div class="table-responsive">
 
@@ -194,7 +180,6 @@ include __DIR__ . '/../includes/header.php';
                     <th>Coach / Pelatih</th>
                     <th>Hari Latihan</th>
                     <th>Jam Latihan</th>
-                    <th>Kode / Level</th>
                     <th>Kuota</th>
                     <th>Harga</th>
                     <th>Aksi</th>
@@ -209,21 +194,15 @@ include __DIR__ . '/../includes/header.php';
                     <?php foreach ($daftar_kelas as $index => $kelas): ?>
 
                         <?php
-
-                        $jam = (string) (
-                            $kelas['jam_latihan'] ?? ''
+                        $jam = substr(
+                            (string) $kelas['jam_latihan'],
+                            0,
+                            5
                         );
 
-                        $jamTampil = substr($jam, 0, 5);
+                        $sisaKuota = (int) $kelas['sisa_kuota'];
 
-                        $sisaKuota = (int) (
-                            $kelas['sisa_kuota'] ?? 0
-                        );
-
-                        $kapasitas = (int) (
-                            $kelas['kapasitas'] ?? 0
-                        );
-
+                        $kapasitas = (int) $kelas['kapasitas'];
                         ?>
 
                         <tr>
@@ -241,7 +220,7 @@ include __DIR__ . '/../includes/header.php';
                                 <strong>
                                     <?php
                                     echo htmlspecialchars(
-                                        $kelas['nama_kelas'] ?? '-',
+                                        $kelas['nama_kelas'],
                                         ENT_QUOTES,
                                         'UTF-8'
                                     );
@@ -255,7 +234,7 @@ include __DIR__ . '/../includes/header.php';
                             <td>
                                 <?php
                                 echo htmlspecialchars(
-                                    $kelas['nama_coach'] ?? '-',
+                                    $kelas['nama_coach'],
                                     ENT_QUOTES,
                                     'UTF-8'
                                 );
@@ -263,12 +242,12 @@ include __DIR__ . '/../includes/header.php';
                             </td>
 
 
-                            <!-- HARI -->
+                            <!-- HARI LATIHAN -->
 
                             <td>
                                 <?php
                                 echo htmlspecialchars(
-                                    $kelas['hari_latihan'] ?? '-',
+                                    $kelas['hari_latihan'],
                                     ENT_QUOTES,
                                     'UTF-8'
                                 );
@@ -276,12 +255,12 @@ include __DIR__ . '/../includes/header.php';
                             </td>
 
 
-                            <!-- JAM -->
+                            <!-- JAM LATIHAN -->
 
                             <td>
                                 <?php
                                 echo htmlspecialchars(
-                                    $jamTampil,
+                                    $jam,
                                     ENT_QUOTES,
                                     'UTF-8'
                                 );
@@ -289,30 +268,13 @@ include __DIR__ . '/../includes/header.php';
                             </td>
 
 
-                            <!-- KODE KELAS -->
-
-                            <td>
-                                <?php
-                                echo htmlspecialchars(
-                                    $kelas['kode_kelas'] ?? '-',
-                                    ENT_QUOTES,
-                                    'UTF-8'
-                                );
-                                ?>
-                            </td>
-
-
                             <!-- SISA KUOTA -->
 
                             <td>
-
                                 <?php echo $sisaKuota; ?>
-
                                 /
                                 <?php echo $kapasitas; ?>
-
                                 Orang
-
                             </td>
 
 
@@ -388,7 +350,7 @@ include __DIR__ . '/../includes/header.php';
                     <tr>
 
                         <td
-                            colspan="9"
+                            colspan="8"
                             style="
                                 padding:25px;
                                 text-align:center;
@@ -398,15 +360,7 @@ include __DIR__ . '/../includes/header.php';
 
                             <?php if ($keyword !== ''): ?>
 
-                                Jadwal kelas dengan kata kunci
-                                "<?php
-                                echo htmlspecialchars(
-                                    $keyword,
-                                    ENT_QUOTES,
-                                    'UTF-8'
-                                );
-                                ?>"
-                                tidak ditemukan.
+                                Jadwal kelas tidak ditemukan.
 
                             <?php else: ?>
 
@@ -430,12 +384,4 @@ include __DIR__ . '/../includes/header.php';
 </section>
 
 
-<?php
-
-/* =========================================================
-   4. FOOTER
-   ========================================================= */
-
-include __DIR__ . '/../includes/footer.php';
-
-?>
+<?php include __DIR__ . '/../includes/footer.php'; ?>
