@@ -4,24 +4,19 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Prefix relatif ke root proyek ini supaya /assets, /index.php, dst
-// tetap benar walau proyek diakses lewat subfolder.
-$__jobsheetRoot = dirname(__DIR__);
-$__scriptDir = dirname($_SERVER['SCRIPT_FILENAME']);
+// Menentukan base URL secara dinamis agar aman diakses dari root maupun subfolder api/
+$script_path = dirname($_SERVER['PHP_SELF']);
+$base = (str_contains($script_path, '/coach') || str_contains($script_path, '/member') || str_contains($script_path, '/buku')) ? '../' : '';
 
-$__rel = ltrim(
-    str_replace(
-        '\\',
-        '/',
-        substr($__scriptDir, strlen($__jobsheetRoot))
-    ),
-    '/'
-);
+// Jika berada lebih dalam (misal di dalam subfolder api/member/)
+if (str_contains($script_path, '/api/member') || str_contains($script_path, '/api/coach') || str_contains($script_path, '/api/buku')) {
+    $base = '../';
+} else if (str_contains($script_path, '/api')) {
+    $base = '../';
+}
 
-$base = $__rel === ''
-    ? ''
-    : str_repeat('../', substr_count($__rel, '/') + 1);
-
+$page_title = $page_title ?? 'ELRAM Training Camp';
+$current_page = basename($_SERVER['PHP_SELF']);
 ?>
 
 <!DOCTYPE html>
@@ -29,21 +24,14 @@ $base = $__rel === ''
 
 <head>
     <meta charset="UTF-8">
-    <meta 
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title> 
-        ELRAM Training Camp<?php
-        echo isset($page_title) ? ' | ' . $page_title : '';
-        ?>
+        ELRAM Training Camp<?php echo isset($page_title) ? ' | ' . $page_title : ''; ?>
     </title>
 
-    <link
-        rel="stylesheet"
-        href="/jobsheet-08/assets/css/style.css"
-    >
+    <!-- CSS UTAMA menggunakan dinamis base path -->
+    <link rel="stylesheet" href="<?php echo $base; ?>assets/css/style.css">
 </head>
 
 <body> 
@@ -69,12 +57,13 @@ $base = $__rel === ''
                 </li>
 
                 <li>
-                    <a href="<?php echo $base; ?>buku/list.php">
+                    <a href="<?php echo $base; ?>api/coach/list.php">
                         JADWAL KELAS
                     </a>
                 </li>
+                
                 <li>
-                    <a href="<?php echo $base; ?>anggota/list.php">
+                    <a href="<?php echo $base; ?>api/member/list.php">
                         DAFTAR MEMBER
                     </a>
                 </li>
