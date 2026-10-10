@@ -1,115 +1,72 @@
-// ===== Toggle Menu =====
+// SIMPUS-Mini Jobsheet 5 — interaksi antarmuka
 function initNavToggle() {
-    const toggleBtn = document.getElementById("nav-toggle-btn");
-    const nav = document.querySelector("header nav");
-    if (!toggleBtn || !nav) return;
-
-    nav.classList.add("transition");
-
-    toggleBtn.addEventListener("click", function () {
-        nav.classList.toggle("nav-open");
-    });
-}
- 
-
-// ===== Konfirmasi Hapus =====
-function initHapusConfirm() {
-    const tombolHapus = document.querySelectorAll(".btn-hapus");
-
-    tombolHapus.forEach(function (button) {
-        button.addEventListener("click", function () {
-            const yakin = confirm("Apakah Anda yakin ingin menghapus buku ini?");
-            const row = button.closest("tr");
-
-            if (yakin && row) {
-                const table = row.closest("table");
-                row.remove();
-
-                // Memperbarui counter setelah data dihapus
-                updateTableCounter(table);
-            }
-        });
+    const button = document.getElementById("nav-toggle-btn");
+    const nav = document.getElementById("mainNav");
+    if (!button || !nav) return;
+    button.addEventListener("click", () => {
+        const opened = nav.classList.toggle("show");
+        button.setAttribute("aria-expanded", String(opened));
     });
 }
 
-
-// ===== Counter Jumlah Buku =====
-function updateTableCounter(table) {
-    const counter = document.getElementById("table-counter");
-    if (!counter || !table) return;
-
-    const rows = table.querySelectorAll("tbody tr");
-    const total = rows.length;
-
-    let tampil = 0;
-
-    rows.forEach(function (row) {
-        if (row.style.display !== "none") {
-            tampil++;
-        }
-    });
-
-    counter.textContent =
-        "Menampilkan " + tampil + " dari " + total + " buku";
-}
-
-
-// ===== Filter Tabel Berdasarkan Judul =====
 function initTableFilter() {
     const input = document.getElementById("search-input");
-    const table = document.querySelector(".table-responsive table");
+    const table = document.querySelector("#dataTable");
     if (!input || !table) return;
-
-    input.addEventListener("keyup", function () {
-        const keyword = input.value.toLowerCase();
-        const rows = table.querySelectorAll("tbody tr");
-
-        rows.forEach(function (row) {
-            // Mengambil kolom pertama, yaitu Judul
-            const kolomJudul = row.querySelector("td");
-
-            const teks = kolomJudul
-                ? kolomJudul.textContent.toLowerCase()
-                : "";
-
-            row.style.display =
-                teks.includes(keyword) ? "" : "none";
+    const rows = Array.from(table.querySelectorAll("tbody tr"));
+    const counter = document.getElementById("table-counter");
+    const noun = table.dataset.kind === "anggota" ? "anggota" : "buku";
+    function filterRows() {
+        const keyword = input.value.toLocaleLowerCase("id").trim();
+        let visible = 0;
+        rows.forEach(row => {
+            const firstCell = row.querySelector("td");
+            const matches = (firstCell?.textContent || "").toLocaleLowerCase("id").includes(keyword);
+            row.hidden = !matches;
+            if (matches) visible++;
         });
-
-        // Memperbarui counter setelah filter
-        updateTableCounter(table);
-    });
-
-    // Menampilkan counter saat halaman pertama kali dibuka
-    updateTableCounter(table);
+        if (counter) counter.textContent = `Menampilkan ${visible} dari ${rows.length} ${noun}`;
+    }
+    input.addEventListener("input", filterRows);
+    filterRows();
 }
 
-
-// ===== Validasi Form =====
-function initValidasiForm() {
-    const form = document.querySelector("form");
-    if (!form) return;
-
-    const fieldWajib = ["judul", "pengarang", "tahun", "stok"];
-
-    form.addEventListener("submit", function (event) {
-        fieldWajib.forEach(function (namaField) {
-            const field = document.getElementById(namaField);
-
-            if (field && field.value.trim() === "") {
-                field.setCustomValidity("Field ini wajib diisi.");
-            } else if (field) {
-                field.setCustomValidity("");
+function initDeleteButtons() {
+    document.querySelectorAll(".btn-hapus").forEach(button => {
+        button.addEventListener("click", () => {
+            if (!confirm("Yakin ingin menghapus data ini dari tampilan?")) return;
+            const row = button.closest("tr");
+            const table = button.closest("table");
+            if (row) row.remove();
+            if (table) {
+                const kind = table.dataset.kind;
+                const input = document.getElementById("search-input");
+                if (input) input.dispatchEvent(new Event("input"));
             }
         });
     });
 }
 
+function initFormValidation() {
+    const form = document.querySelector("form[data-validate]");
+    if (!form) return;
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+        const isbn = document.getElementById("isbn");
+        if (isbn && isbn.value && !/^[0-9-]+$/.test(isbn.value)) {
+            isbn.setCustomValidity("ISBN hanya boleh berisi angka dan tanda hubung (-).");
+            isbn.reportValidity();
+            isbn.setCustomValidity("");
+            return;
+        }
+        alert("Validasi berhasil. Form ini masih berupa Jobsheet 5 dan belum terhubung ke penyimpanan data.");
+    });
+}
 
-// ===== Jalankan Semua Fungsi =====
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     initNavToggle();
-    initHapusConfirm();
     initTableFilter();
-    initValidasiForm();
+    initDeleteButtons();
+    initFormValidation();
 });
