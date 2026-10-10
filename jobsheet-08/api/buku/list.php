@@ -25,7 +25,7 @@ $daftar_kelas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 unset($_SESSION['flash']);
             ?>
         </div>
-    <?php endif; ?>  
+    <?php endif; ?>
 
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h2>DAFTAR JADWAL KELAS</h2>

@@ -41,7 +41,7 @@ unset($_SESSION['flash']);
                 required
             >
         </p>
-  s
+
         <!-- 3. JAM LATIHAN (name="tahun") -->
         <p>
             <label for="tahun">JAM LATIHAN (FORMAT 24 JAM)</label><br>

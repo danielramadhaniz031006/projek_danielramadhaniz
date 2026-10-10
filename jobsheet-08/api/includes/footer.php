@@ -1,7 +1,7 @@
 </main> 
 
 <footer>
-    <p>&copy; ELRAM Traning Camp &mdash;</p>
+    <p>&copy; ELRAM Traning Camp</p>
 </footer>
 
 <script src="/jobsheet-08/assets/js/app.js"></script>
@@ -13,4 +13,4 @@
 <?php endif; ?>
 
 </body>
-</html>   
+</html> 

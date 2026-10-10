@@ -1,53 +1,85 @@
 <?php
-// =========================================================
-// HEADER ELRAM TRAINING CAMP
-// =========================================================
 
-$page_title = $page_title ?? 'ELRAM Training Camp';
-$current_page = basename($_SERVER['PHP_SELF']);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Prefix relatif ke root proyek ini supaya /assets, /index.php, dst
+// tetap benar walau proyek diakses lewat subfolder.
+$__jobsheetRoot = dirname(__DIR__);
+$__scriptDir = dirname($_SERVER['SCRIPT_FILENAME']);
+
+$__rel = ltrim(
+    str_replace(
+        '\\',
+        '/',
+        substr($__scriptDir, strlen($__jobsheetRoot))
+    ),
+    '/'
+);
+
+$base = $__rel === ''
+    ? ''
+    : str_repeat('../', substr_count($__rel, '/') + 1);
+
 ?>
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo htmlspecialchars($page_title); ?> | ELRAM Training Camp</title>
+    <meta 
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
 
-    <!-- CSS UTAMA -->
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <title>
+        ELRAM Training Camp<?php
+        echo isset($page_title) ? ' | ' . $page_title : '';
+        ?>
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="/jobsheet-08/assets/css/style.css"
+    >
 </head>
-<body>
 
-<header class="main-header">
-    <div class="brand">
-        <a href="/index.php" class="brand-link" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-            <span class="brand-icon" style="background: var(--primary); color: #fff; width: 35px; height: 35px; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 4px;">E</span>
-            <span class="brand-text" style="color: #fff;">
-                <strong>ELRAM</strong> TRAINING CAMP
-            </span>
-        </a>
-    </div>
+<body> 
 
-    <nav class="main-nav">
-        <ul>
-            <li>
-                <a href="/index.php" class="<?php echo $current_page === 'index.php' ? 'active' : ''; ?>">
-                    Beranda
-                </a>
-            </li>
-            <li>
-                <a href="/buku/list.php" class="<?php echo $current_page === 'list.php' && str_contains($_SERVER['PHP_SELF'], '/buku/') ? 'active' : ''; ?>">
-                    Jadwal Kelas
-                </a>
-            </li>
-            <li>
-                <a href="/anggota/list.php" class="<?php echo $current_page === 'list.php' && str_contains($_SERVER['PHP_SELF'], '/anggota/') ? 'active' : ''; ?>">
-                    Daftar Member
-                </a>
-            </li>
-        </ul>  
-    </nav>
-</header>
+    <header>
+        <h1>ELRAM TRAINING CAMP</h1>
 
-<main>
+        <button
+            type="button"
+            id="nav-toggle-btn"
+            class="nav-toggle-label"
+            aria-label="Menu"
+        >
+            &#9776;
+        </button>
+
+        <nav>
+            <ul>
+                <li>
+                    <a href="<?php echo $base; ?>index.php">
+                        BERANDA
+                    </a>
+                </li>
+
+                <li>
+                    <a href="<?php echo $base; ?>buku/list.php">
+                        JADWAL KELAS
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $base; ?>anggota/list.php">
+                        DAFTAR MEMBER
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
