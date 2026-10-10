@@ -148,15 +148,15 @@ include __DIR__ . '/../includes/header.php';
 
         <!-- PAKET MEMBERSHIP & NO HP (GRID 2 KOLOM) -->
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 22px;">
-            <!-- PAKET MEMBERSHIP -->
+            <!-- PAKET MEMBERSHIP DENGAN HARGA -->
             <div>
                 <label style="display: block; margin-bottom: 8px; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; color: #fff; letter-spacing: 0.5px;">
-                    PAKET MEMBERSHIP
+                    PAKET MEMBERSHIP & BIAYA
                 </label>
-                <select name="paket" style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #2a2e39; background: #090a0d; color: #f59e0b; font-weight: 700; font-size: 0.9rem; outline: none; box-sizing: border-box; cursor: pointer;">
-                    <option value="Regular 1 Bulan">Regular (1 Bulan)</option>
-                    <option value="Hemat 3 Bulan">Hemat (3 Bulan)</option>
-                    <option value="VIP Unlimited">VIP Unlimited (All Access)</option>
+                <select name="paket" style="width: 100%; padding: 12px 14px; border-radius: 8px; border: 1px solid #2a2e39; background: #090a0d; color: #f59e0b; font-weight: 700; font-size: 0.88rem; outline: none; box-sizing: border-box; cursor: pointer;">
+                    <option value="Regular (1 Bulan) - Rp 150.000">Regular (1 Bulan) — Rp 150.000</option>
+                    <option value="Hemat (3 Bulan) - Rp 400.000">Hemat (3 Bulan) — Rp 400.000</option>
+                    <option value="VIP Unlimited - Rp 750.000">VIP Unlimited (All Access) — Rp 750.000</option>
                 </select>
             </div>
 
