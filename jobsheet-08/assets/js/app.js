@@ -29,7 +29,7 @@ function initHapusConfirm() {
             row.remove();
         }
     });
-}
+} 
 
 function tampilkanError(input, pesan) {
     hapusError(input);

@@ -596,7 +596,7 @@ main:has(> .welcome-section) > .coach-section > div > div {
         grid-template-columns: 1fr !important;
         gap: 10px !important;
     }
-
+ 
     .pricing-banner-section { padding: 14px; }
 
     .table-responsive { overflow-x: auto; }

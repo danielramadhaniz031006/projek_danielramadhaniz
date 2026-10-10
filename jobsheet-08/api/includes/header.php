@@ -34,7 +34,7 @@ $base = $__rel === ''
         content="width=device-width, initial-scale=1"
     >
 
-    <title>
+    <title> 
         ELRAM Training Camp<?php
         echo isset($page_title) ? ' | ' . $page_title : '';
         ?>

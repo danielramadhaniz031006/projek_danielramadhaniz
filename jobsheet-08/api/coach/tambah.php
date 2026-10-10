@@ -40,7 +40,7 @@ unset($_SESSION['flash']);
                 placeholder="Contoh: Coach Alex" 
                 required
             >
-        </p>
+        </p> 
 
         <!-- 3. JAM LATIHAN (name="tahun") -->
         <p>

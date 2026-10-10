@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'stok'      => $stok,
                 'id'        => $id
             ]);
-
+ 
             // Pesan berhasil
             $_SESSION['flash'] = [
                 'type'  => 'success',

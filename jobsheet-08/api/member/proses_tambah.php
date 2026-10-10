@@ -30,7 +30,7 @@ if (!empty($errors)) {
         'type' => 'error',
         'pesan' => implode(' ', $errors)
     ];
-
+ 
     header('Location: tambah.php');
     exit;
 }

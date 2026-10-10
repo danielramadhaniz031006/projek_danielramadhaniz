@@ -31,7 +31,7 @@ $daftar_anggota = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <h2>DAFTAR MEMBER</h2>
         <a href="tambah.php" style="background: #e50914; color: #fff; padding: 10px 18px; border-radius: 4px; text-decoration: none; font-weight: bold;">+ Tambah Member</a>
     </div>
-
+ 
     <!-- Form Pencarian -->
     <form method="GET" style="margin-bottom: 20px; display: flex; gap: 10px;">
         <input type="text" name="search" value="<?php echo htmlspecialchars($keyword); ?>" placeholder="Cari nama, ID member, atau cabor..." style="flex: 1; padding: 8px 12px; border-radius: 4px; border: 1px solid #444; background: #222; color: #fff;">

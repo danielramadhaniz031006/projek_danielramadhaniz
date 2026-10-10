@@ -15,7 +15,7 @@ if ($keyword !== '') {
 }
 
 $daftar_kelas = $stmt->fetchAll(PDO::FETCH_ASSOC);
-?>
+?> 
 
 <section>
     <?php if (isset($_SESSION['flash'])): ?>
