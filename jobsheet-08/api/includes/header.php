@@ -75,20 +75,8 @@ $base = $__rel === ''
                 </li>
 
                 <li>
-                    <a href="<?php echo $base; ?>buku/tambah.php">
-                        TAMBAH JADWAL KELAS
-                    </a>
-                </li>
-
-                <li>
                     <a href="<?php echo $base; ?>anggota/list.php">
                         DAFTAR MEMBER
-                    </a>
-                </li>
-
-                <li>
-                    <a href="<?php echo $base; ?>anggota/tambah.php">
-                        TAMBAH MEMBER
                     </a>
                 </li>
             </ul>
