@@ -344,7 +344,7 @@ include __DIR__ . '/includes/header.php';
         <!-- Kotak Sambutan Utama -->
         <article class="bento-welcome">
             <span style="display: inline-block; color: #ef4444; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px;">ELRAM TRAINING CAMP</span>
-            <h2>Pusat Latihan Bela Diri Premium</h2>
+            <h2>Pusat Latihan Bela Diri Terbaik SeIndonesia</h2>
             <p>
                 Tempat terbaik untuk menempa fisik, disiplin, dan kemampuan bela diri kamu! 
                 Kami menyediakan berbagai cabang olahraga pilihan seperti <strong>Muay Thai, Boxing, 
