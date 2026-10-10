@@ -2,101 +2,94 @@
 
 session_start();
 
-require_once __DIR__ . '/../../includes/koneksi.php';
+require_once __DIR__ . '/../includes/koneksi.php';
 
-// Hanya izinkan penghapusan melalui POST
+
+// =========================================================
+// 1. PASTIKAN REQUEST MENGGUNAKAN POST
+// =========================================================
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+
     header('Location: list.php');
+
     exit;
 }
+
+
+// =========================================================
+// 2. VALIDASI ID
+// =========================================================
 
 $id = $_POST['id'] ?? '';
 
-if (!ctype_digit((string) $id) || (int) $id < 1) {
+if (
+    !ctype_digit((string) $id)
+    || (int) $id < 1
+) {
 
     $_SESSION['flash'] = [
         'type' => 'error',
-        'pesan' => 'ID member tidak valid.'
+        'pesan' => 'ID member tidak valid.',
     ];
 
     header('Location: list.php');
+
     exit;
 }
 
+
+// =========================================================
+// 3. HAPUS MEMBER
+// =========================================================
+
 try {
 
-    $pdo->beginTransaction();
+    $stmt = $pdo->prepare("
+        DELETE FROM public.anggota
+        WHERE id = :id
+    ");
 
-    // Ambil data member
-    $stmtMember = $pdo->prepare(
-        "SELECT cabor
-         FROM anggota
-         WHERE id = :id
-         FOR UPDATE"
-    );
-
-    $stmtMember->execute([
-        'id' => (int) $id
+    $stmt->execute([
+        'id' => (int) $id,
     ]);
 
-    $anggota = $stmtMember->fetch(PDO::FETCH_ASSOC);
 
-    if (!$anggota) {
+    // Periksa hasil penghapusan
+    if ($stmt->rowCount() > 0) {
 
-        $pdo->rollBack();
+        $_SESSION['flash'] = [
+            'type' => 'success',
+            'pesan' => 'Data member berhasil dihapus.',
+        ];
+
+    } else {
 
         $_SESSION['flash'] = [
             'type' => 'error',
-            'pesan' => 'Data member tidak ditemukan.'
+            'pesan' => 'Data member tidak ditemukan.',
         ];
-
-        header('Location: list.php');
-        exit;
     }
 
-    // Kembalikan kuota kelas sebelumnya
-    if (!empty($anggota['cabor'])) {
-
-        $stmtKuota = $pdo->prepare(
-            "UPDATE jadwal_kelas
-             SET stok = stok + 1
-             WHERE judul = :cabor"
-        );
-
-        $stmtKuota->execute([
-            'cabor' => $anggota['cabor']
-        ]);
-    }
-
-    // Hapus member
-    $stmtHapus = $pdo->prepare(
-        "DELETE FROM anggota
-         WHERE id = :id"
-    );
-
-    $stmtHapus->execute([
-        'id' => (int) $id
-    ]);
-
-    // Simpan transaksi
-    $pdo->commit();
-
-    $_SESSION['flash'] = [
-        'type' => 'success',
-        'pesan' => 'Data member berhasil dihapus dan kuota kelas diperbarui.'
-    ];
 
 } catch (PDOException $e) {
 
-    if ($pdo->inTransaction()) {
-        $pdo->rollBack();
-    }
+    error_log(
+        'Gagal menghapus member: '
+        . $e->getMessage()
+    );
 
     $_SESSION['flash'] = [
         'type' => 'error',
-        'pesan' => 'Gagal menghapus data member.'
+        'pesan' => 'Gagal menghapus data member.',
     ];
 }
 
+
+// =========================================================
+// 4. KEMBALI KE DAFTAR MEMBER
+// =========================================================
+
 header('Location: list.php');
+
 exit;

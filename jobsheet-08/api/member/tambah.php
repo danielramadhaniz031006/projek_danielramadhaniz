@@ -2,88 +2,136 @@
 
 session_start();
 
-require_once __DIR__ . '/../../includes/koneksi.php';
+require_once __DIR__ . '/../includes/koneksi.php';
 
-$page_title = "Tambah Member";
+$page_title = 'Tambah Member';
 
-// Ambil rekomendasi nomor member terakhir
-$stmt = $pdo->query(
-    "SELECT no_anggota
-     FROM anggota
-     ORDER BY id DESC
-     LIMIT 1"
-);
 
-$last_member = $stmt->fetch(PDO::FETCH_ASSOC);
+// =========================================================
+// 1. GENERATE NOMOR MEMBER OTOMATIS
+// =========================================================
 
-$next_no_anggota = 'A1';
+$stmtNomor = $pdo->query("
+    SELECT nomor_member
+    FROM public.anggota
+    WHERE nomor_member ~ '[0-9]+$'
+    ORDER BY
+        substring(
+            nomor_member from '([0-9]+)$'
+        )::BIGINT DESC,
+        id DESC
+    LIMIT 1
+");
 
-if ($last_member && !empty($last_member['no_anggota'])) {
+$lastMember = $stmtNomor->fetch(PDO::FETCH_ASSOC);
 
-    $last_no = $last_member['no_anggota'];
+$nextNomor = 'A1';
 
-    if (preg_match('/^(.*?)(\d+)$/', $last_no, $matches)) {
-
-        $prefix = $matches[1];
-        $last_number = (int) $matches[2];
-
-        $next_no_anggota = $prefix . ($last_number + 1);
-
-    } else {
-        $next_no_anggota = 'A1';
-    }
+if (
+    $lastMember &&
+    preg_match(
+        '/^(.*?)(\d+)$/',
+        $lastMember['nomor_member'],
+        $matches
+    )
+) {
+    $nextNomor = $matches[1]
+        . ((int) $matches[2] + 1);
 }
 
-// Ambil pilihan kelas dari tabel jadwal_kelas
-$stmtPilihan = $pdo->query(
-    "SELECT judul, stok
-     FROM jadwal_kelas
-     ORDER BY judul ASC"
-);
 
-$pilihanKelas = $stmtPilihan->fetchAll(PDO::FETCH_ASSOC);
+// =========================================================
+// 2. AMBIL DAFTAR KELAS DAN SISA KUOTA
+// =========================================================
 
-// Ambil notifikasi
+$stmtKelas = $pdo->query("
+    SELECT
+        j.id,
+        j.nama_kelas,
+        j.nama_coach,
+        j.hari_latihan,
+        j.jam_latihan,
+        j.kapasitas,
+        j.harga,
+
+        COUNT(a.id) AS jumlah_member,
+
+        GREATEST(
+            j.kapasitas - COUNT(a.id),
+            0
+        ) AS sisa_kuota
+
+    FROM public.jadwal_kelas j
+
+    LEFT JOIN public.anggota a
+        ON a.jadwal_kelas_id = j.id
+
+    GROUP BY j.id
+
+    ORDER BY j.nama_kelas ASC
+");
+
+$pilihanKelas = $stmtKelas->fetchAll(PDO::FETCH_ASSOC);
+
+
+// =========================================================
+// 3. NOTIFIKASI
+// =========================================================
+
 $flash = $_SESSION['flash'] ?? null;
+
 unset($_SESSION['flash']);
 
-// Tampilkan header setelah proses PHP selesai
-include __DIR__ . '/../../includes/header.php';
+
+// =========================================================
+// 4. HEADER
+// =========================================================
+
+include __DIR__ . '/../includes/header.php';
 
 ?>
 
-<section style="max-width:600px; margin:0 auto; padding:20px;">
 
-    <div style="border-left:4px solid #e50914; padding-left:12px; margin-bottom:25px;">
+<section style="
+    max-width:700px;
+    margin:0 auto;
+    padding:20px;
+">
 
-        <h2 style="
-            margin:0;
-            font-size:1.8rem;
-            font-weight:800;
-            text-transform:uppercase;
-            color:#fff;
-        ">
-            TAMBAH MEMBER
-        </h2>
+    <h2>TAMBAH MEMBER</h2>
 
-    </div>
 
     <!-- NOTIFIKASI -->
+
     <?php if ($flash): ?>
 
-        <div class="flash <?php echo $flash['type'] === 'success' ? 'flash-success' : 'flash-error'; ?>">
+        <div class="flash <?php
+            echo ($flash['type'] ?? '') === 'success'
+                ? 'flash-success'
+                : 'flash-error';
+        ?>">
 
-            <?php echo htmlspecialchars($flash['pesan']); ?>
+            <?php
+            echo htmlspecialchars(
+                $flash['pesan'] ?? '',
+                ENT_QUOTES,
+                'UTF-8'
+            );
+            ?>
 
         </div>
 
     <?php endif; ?>
 
+
     <!-- FORM TAMBAH MEMBER -->
+
     <form
+        id="form-tambah"
         method="POST"
         action="proses_tambah.php"
         style="
+            max-width:100%;
             background:#181818;
             padding:25px;
             border-radius:8px;
@@ -91,123 +139,129 @@ include __DIR__ . '/../../includes/header.php';
         "
     >
 
+
         <!-- NAMA MEMBER -->
+
         <div style="margin-bottom:20px;">
 
-            <label
-                for="nama"
-                style="
-                    display:block;
-                    margin-bottom:8px;
-                    font-weight:bold;
-                    font-size:0.9rem;
-                    color:#fff;
-                "
-            >
-                NAMA MEMBER
+            <label for="nama">
+                Nama Member
             </label>
 
             <input
                 type="text"
                 id="nama"
                 name="nama"
-                placeholder="Masukkan nama member"
+                maxlength="100"
+                placeholder="Masukkan nama lengkap member"
                 required
-                style="
-                    width:100%;
-                    padding:12px;
-                    border-radius:4px;
-                    border:1px solid #333;
-                    background:#222;
-                    color:#fff;
-                    box-sizing:border-box;
-                "
             >
 
         </div>
 
-        <!-- ID MEMBER -->
+
+        <!-- NOMOR MEMBER -->
+
         <div style="margin-bottom:20px;">
 
-            <label
-                for="no_anggota"
-                style="
-                    display:block;
-                    margin-bottom:8px;
-                    font-weight:bold;
-                    font-size:0.9rem;
-                    color:#fff;
-                "
-            >
-                ID MEMBER / NO. KARTU
+            <label for="nomor_member">
+                ID Member / Nomor Kartu
             </label>
 
             <input
                 type="text"
-                id="no_anggota"
-                name="no_anggota"
-                value="<?php echo htmlspecialchars($next_no_anggota); ?>"
+                id="nomor_member"
+                name="nomor_member"
+                maxlength="20"
+                value="<?php
+                    echo htmlspecialchars(
+                        $nextNomor,
+                        ENT_QUOTES,
+                        'UTF-8'
+                    );
+                ?>"
                 required
-                style="
-                    width:100%;
-                    padding:12px;
-                    border-radius:4px;
-                    border:1px solid #333;
-                    background:#222;
-                    color:#fff;
-                    box-sizing:border-box;
-                "
             >
 
-            <small style="color:#aaa; display:block; margin-top:5px;">
-                Nomor member dibuat otomatis dan masih bisa diedit.
+            <small>
+                Nomor member disarankan otomatis dan bisa diubah.
             </small>
 
         </div>
 
+
         <!-- PILIHAN KELAS -->
+
         <div style="margin-bottom:20px;">
 
-            <label
-                for="cabor"
-                style="
-                    display:block;
-                    margin-bottom:8px;
-                    font-weight:bold;
-                    font-size:0.9rem;
-                    color:#fff;
-                "
-            >
-                CABOR / PILIHAN KELAS
+            <label for="jadwal_kelas_id">
+                Cabor / Pilihan Kelas
             </label>
 
             <select
-                id="cabor"
-                name="cabor"
+                id="jadwal_kelas_id"
+                name="jadwal_kelas_id"
                 required
-                style="
-                    width:100%;
-                    padding:12px;
-                    border-radius:4px;
-                    border:1px solid #333;
-                    background:#222;
-                    color:#fff;
-                    box-sizing:border-box;
-                "
             >
 
-                <option value="">-- Pilih Kelas --</option>
+                <option value="">
+                    -- Pilih Kelas --
+                </option>
 
                 <?php foreach ($pilihanKelas as $kelas): ?>
 
+                    <?php
+
+                    $jam = substr(
+                        (string) $kelas['jam_latihan'],
+                        0,
+                        5
+                    );
+
+                    $sisa = (int) $kelas['sisa_kuota'];
+
+                    ?>
+
                     <option
-                        value="<?php echo htmlspecialchars($kelas['judul']); ?>"
-                        <?php echo (int) $kelas['stok'] <= 0 ? 'disabled' : ''; ?>
+                        value="<?php echo (int) $kelas['id']; ?>"
+                        <?php echo $sisa <= 0 ? 'disabled' : ''; ?>
                     >
 
-                        <?php echo htmlspecialchars($kelas['judul']); ?>
+                        <?php
 
-                        (Sisa kuota: <?php echo (int) $kelas['stok']; ?>)
+                        echo htmlspecialchars(
+                            $kelas['nama_kelas'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
+
+                        echo ' — ';
+
+                        echo htmlspecialchars(
+                            $kelas['nama_coach'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
+
+                        echo ' — ';
+
+                        echo htmlspecialchars(
+                            $kelas['hari_latihan'],
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
+
+                        echo ' ';
+
+                        echo htmlspecialchars(
+                            $jam,
+                            ENT_QUOTES,
+                            'UTF-8'
+                        );
+
+                        echo ' — Sisa kuota: ' . $sisa;
+
+                        ?>
 
                     </option>
 
@@ -215,80 +269,93 @@ include __DIR__ . '/../../includes/header.php';
 
             </select>
 
+
             <?php if (empty($pilihanKelas)): ?>
 
-                <small style="color:#e50914; display:block; margin-top:8px;">
-                    Belum ada jadwal kelas. Tambahkan kelas terlebih dahulu.
+                <small style="
+                    display:block;
+                    margin-top:8px;
+                    color:#fca5a5;
+                ">
+                    Belum ada jadwal kelas.
+                    Tambahkan jadwal kelas terlebih dahulu.
                 </small>
 
             <?php endif; ?>
 
         </div>
 
-        <!-- NOMOR HP -->
+
+        <!-- LEVEL MEMBER -->
+
         <div style="margin-bottom:20px;">
 
-            <label
-                for="no_hp"
-                style="
-                    display:block;
-                    margin-bottom:8px;
-                    font-weight:bold;
-                    font-size:0.9rem;
-                    color:#fff;
-                "
+            <label for="level">
+                Level Member
+            </label>
+
+            <select
+                id="level"
+                name="level"
             >
-                NO. HP / WHATSAPP
+
+                <option value="Pemula (Beginner)">
+                    Pemula (Beginner)
+                </option>
+
+                <option value="Menengah (Intermediate)">
+                    Menengah (Intermediate)
+                </option>
+
+                <option value="Mahir (Advanced)">
+                    Mahir (Advanced)
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <!-- NOMOR HP -->
+
+        <div style="margin-bottom:20px;">
+
+            <label for="nomor_hp">
+                No. HP / WhatsApp
             </label>
 
             <input
-                type="text"
-                id="no_hp"
-                name="no_hp"
+                type="tel"
+                id="nomor_hp"
+                name="nomor_hp"
+                maxlength="20"
                 placeholder="Contoh: 08123456789"
-                style="
-                    width:100%;
-                    padding:12px;
-                    border-radius:4px;
-                    border:1px solid #333;
-                    background:#222;
-                    color:#fff;
-                    box-sizing:border-box;
-                "
             >
 
         </div>
 
+
         <!-- TOMBOL -->
-        <div style="margin-top:25px;">
+
+        <div style="
+            display:flex;
+            flex-wrap:wrap;
+            gap:12px;
+            margin-top:25px;
+        ">
 
             <button
                 type="submit"
                 <?php echo empty($pilihanKelas) ? 'disabled' : ''; ?>
-                style="
-                    background:#e50914;
-                    color:#fff;
-                    padding:12px 30px;
-                    border:none;
-                    border-radius:4px;
-                    font-weight:bold;
-                    cursor:pointer;
-                    font-size:1rem;
-                "
             >
                 SIMPAN MEMBER
             </button>
 
             <a
                 href="list.php"
-                style="
-                    color:#aaa;
-                    margin-left:15px;
-                    text-decoration:none;
-                    font-size:0.9rem;
-                "
+                class="btn-secondary"
             >
-                Batal
+                BATAL
             </a>
 
         </div>
@@ -297,4 +364,5 @@ include __DIR__ . '/../../includes/header.php';
 
 </section>
 
-<?php include __DIR__ . '/../../includes/footer.php'; ?>
+
+<?php include __DIR__ . '/../includes/footer.php'; ?>

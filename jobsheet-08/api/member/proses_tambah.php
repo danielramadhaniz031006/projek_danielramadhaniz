@@ -2,138 +2,259 @@
 
 session_start();
 
-require_once __DIR__ . '/../../includes/koneksi.php';
+require_once __DIR__ . '/../includes/koneksi.php';
 
-// Ambil data dari form
-$nama       = trim($_POST['nama'] ?? '');
-$no_anggota = trim($_POST['no_anggota'] ?? '');
-$cabor      = trim($_POST['cabor'] ?? '');
-$no_hp      = trim($_POST['no_hp'] ?? '');
 
-// Validasi
+// =========================================================
+// 1. PASTIKAN REQUEST BERASAL DARI FORM POST
+// =========================================================
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+
+    header('Location: tambah.php');
+
+    exit;
+}
+
+
+// =========================================================
+// 2. AMBIL DATA FORM
+// =========================================================
+
+$nama = trim($_POST['nama'] ?? '');
+
+$nomorMember = trim(
+    $_POST['nomor_member']
+    ?? $_POST['no_anggota']
+    ?? ''
+);
+
+$jadwalKelasId = trim(
+    (string) ($_POST['jadwal_kelas_id'] ?? '')
+);
+
+$level = trim(
+    $_POST['level'] ?? 'Pemula (Beginner)'
+);
+
+$nomorHp = trim(
+    $_POST['nomor_hp']
+    ?? $_POST['no_hp']
+    ?? ''
+);
+
+
+// =========================================================
+// 3. VALIDASI INPUT
+// =========================================================
+
 $errors = [];
 
 if ($nama === '') {
     $errors[] = 'Nama member wajib diisi.';
 }
 
-if ($no_anggota === '') {
-    $errors[] = 'Nomor anggota wajib diisi.';
+if (mb_strlen($nama) > 100) {
+    $errors[] = 'Nama member maksimal 100 karakter.';
 }
 
-if ($cabor === '') {
-    $errors[] = 'Silakan pilih kelas.';
+if ($nomorMember === '') {
+    $errors[] = 'Nomor member wajib diisi.';
 }
 
+if (mb_strlen($nomorMember) > 20) {
+    $errors[] = 'Nomor member maksimal 20 karakter.';
+}
+
+if (
+    !ctype_digit($jadwalKelasId)
+    || (int) $jadwalKelasId < 1
+) {
+    $errors[] = 'Silakan pilih jadwal kelas yang valid.';
+}
+
+if (mb_strlen($nomorHp) > 20) {
+    $errors[] = 'Nomor HP maksimal 20 karakter.';
+}
+
+
+// Pilihan level yang diizinkan
+$levelValid = [
+    'Pemula (Beginner)',
+    'Menengah (Intermediate)',
+    'Mahir (Advanced)',
+];
+
+if (!in_array($level, $levelValid, true)) {
+    $level = 'Pemula (Beginner)';
+}
+
+
+// Jika validasi gagal
 if (!empty($errors)) {
 
     $_SESSION['flash'] = [
-        'type'  => 'error',
-        'pesan' => implode(' ', $errors)
+        'type' => 'error',
+        'pesan' => implode(' ', $errors),
     ];
 
     header('Location: tambah.php');
+
     exit;
 }
 
+
+// =========================================================
+// 4. SIMPAN MEMBER DAN PERIKSA KUOTA
+// =========================================================
+
 try {
 
-    // Mulai transaksi
     $pdo->beginTransaction();
 
-    // Kurangi kuota kelas jika masih tersedia
-    $stmtKelas = $pdo->prepare(
-        "UPDATE jadwal_kelas
-         SET stok = stok - 1
-         WHERE judul = :cabor
-           AND stok > 0
-         RETURNING id"
-    );
+
+    // Kunci baris kelas agar pemeriksaan kuota
+    // dilakukan sebelum member baru disimpan.
+
+    $stmtKelas = $pdo->prepare("
+        SELECT
+            id,
+            nama_kelas,
+            kapasitas
+        FROM public.jadwal_kelas
+        WHERE id = :id
+        FOR UPDATE
+    ");
 
     $stmtKelas->execute([
-        'cabor' => $cabor
+        'id' => (int) $jadwalKelasId,
     ]);
 
     $kelas = $stmtKelas->fetch(PDO::FETCH_ASSOC);
 
-    // Jika kelas tidak ditemukan atau kuota habis
+
+    // Kelas tidak ditemukan
     if (!$kelas) {
 
         $pdo->rollBack();
 
-        $cekKelas = $pdo->prepare(
-            "SELECT id
-             FROM jadwal_kelas
-             WHERE judul = :cabor
-             LIMIT 1"
-        );
-
-        $cekKelas->execute([
-            'cabor' => $cabor
-        ]);
-
-        if (!$cekKelas->fetch(PDO::FETCH_ASSOC)) {
-            $pesan = 'Kelas yang dipilih tidak ditemukan.';
-        } else {
-            $pesan = 'Kuota kelas tersebut sudah habis.';
-        }
-
         $_SESSION['flash'] = [
-            'type'  => 'error',
-            'pesan' => $pesan
+            'type' => 'error',
+            'pesan' => 'Jadwal kelas yang dipilih tidak ditemukan.',
         ];
 
         header('Location: tambah.php');
+
         exit;
     }
 
-    // Simpan data member
-    $stmtMember = $pdo->prepare(
-        "INSERT INTO anggota
-            (nama, no_anggota, cabor, no_hp)
-         VALUES
-            (:nama, :no_anggota, :cabor, :no_hp)"
-    );
 
-    $stmtMember->execute([
-        'nama'       => $nama,
-        'no_anggota' => $no_anggota,
-        'cabor'      => $cabor,
-        'no_hp'      => $no_hp
+    // Hitung member yang terdaftar pada kelas
+    $stmtJumlah = $pdo->prepare("
+        SELECT COUNT(*)
+        FROM public.anggota
+        WHERE jadwal_kelas_id = :id
+    ");
+
+    $stmtJumlah->execute([
+        'id' => (int) $jadwalKelasId,
     ]);
+
+    $jumlahMember = (int) $stmtJumlah->fetchColumn();
+
+
+    // Periksa kapasitas
+    if ($jumlahMember >= (int) $kelas['kapasitas']) {
+
+        $pdo->rollBack();
+
+        $_SESSION['flash'] = [
+            'type' => 'error',
+            'pesan' => 'Kuota kelas '
+                . $kelas['nama_kelas']
+                . ' sudah penuh.',
+        ];
+
+        header('Location: tambah.php');
+
+        exit;
+    }
+
+
+    // Simpan member
+    $stmtInsert = $pdo->prepare("
+        INSERT INTO public.anggota
+            (
+                nomor_member,
+                nama,
+                jadwal_kelas_id,
+                level,
+                nomor_hp
+            )
+        VALUES
+            (
+                :nomor_member,
+                :nama,
+                :jadwal_kelas_id,
+                :level,
+                :nomor_hp
+            )
+    ");
+
+    $stmtInsert->execute([
+        'nomor_member' => $nomorMember,
+        'nama' => $nama,
+        'jadwal_kelas_id' => (int) $jadwalKelasId,
+        'level' => $level,
+        'nomor_hp' => $nomorHp !== '' ? $nomorHp : null,
+    ]);
+
 
     // Simpan transaksi
     $pdo->commit();
 
+
+    // Pesan berhasil
     $_SESSION['flash'] = [
-        'type'  => 'success',
-        'pesan' => 'Member berhasil ditambahkan dan kuota kelas berhasil diperbarui.'
+        'type' => 'success',
+        'pesan' => 'Member berhasil ditambahkan.',
     ];
 
     header('Location: list.php');
+
     exit;
+
 
 } catch (PDOException $e) {
 
-    // Batalkan transaksi jika terjadi kesalahan
+    // Batalkan transaksi jika gagal
     if ($pdo->inTransaction()) {
         $pdo->rollBack();
     }
 
+
+    // Nomor member duplikat
     if ($e->getCode() === '23505') {
 
-        $pesan = 'Nomor anggota sudah digunakan. Gunakan nomor lain.';
+        $pesan = 'Nomor member sudah digunakan. Gunakan nomor lain.';
 
     } else {
 
-        $pesan = 'Data member gagal disimpan. Periksa kembali data dan database.';
+        error_log(
+            'Gagal menambahkan member: ' . $e->getMessage()
+        );
+
+        $pesan = 'Data member gagal disimpan. '
+            . 'Periksa konfigurasi database.';
     }
 
+
     $_SESSION['flash'] = [
-        'type'  => 'error',
-        'pesan' => $pesan
+        'type' => 'error',
+        'pesan' => $pesan,
     ];
 
     header('Location: tambah.php');
+
     exit;
 }
