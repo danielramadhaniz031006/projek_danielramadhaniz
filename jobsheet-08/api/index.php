@@ -1,74 +1,112 @@
 <?php
 
-// =========================================================
-// 1. KONEKSI DATABASE
-// =========================================================
+session_start();
 
-require_once __DIR__ . '/includes/koneksi.php';
+require_once __DIR__ . '/../includes/koneksi.php';
 
+/* =========================================================
+   1. RINGKASAN STATISTIK ELRAM TRAINING CAMP
+   ========================================================= */
 
-// =========================================================
-// 2. DATA RINGKASAN STATISTIK TRAINING CAMP
-// =========================================================
-
-// Total kelas / cabang olahraga
+// Total jadwal kelas
 $totalKelas = (int) $pdo
-    ->query("SELECT COUNT(*) FROM jadwal_kelas")
+    ->query("
+        SELECT COUNT(*)
+        FROM public.jadwal_kelas
+    ")
     ->fetchColumn();
 
 
 // Total member
 $totalAnggota = (int) $pdo
-    ->query("SELECT COUNT(*) FROM anggota")
+    ->query("
+        SELECT COUNT(*)
+        FROM public.anggota
+    ")
     ->fetchColumn();
 
 
 // Total coach unik
 $totalCoach = (int) $pdo
     ->query("
-        SELECT COUNT(DISTINCT pengarang)
-        FROM jadwal_kelas
-        WHERE pengarang IS NOT NULL
-          AND TRIM(pengarang) <> ''
+        SELECT COUNT(DISTINCT nama_coach)
+        FROM public.jadwal_kelas
+        WHERE nama_coach IS NOT NULL
+          AND TRIM(nama_coach) <> ''
     ")
     ->fetchColumn();
 
 
-// Total sisa kuota dari seluruh kelas
-$totalKuota = (int) $pdo
+// Total kapasitas seluruh kelas
+$totalKapasitas = (int) $pdo
     ->query("
-        SELECT COALESCE(SUM(stok), 0)
-        FROM jadwal_kelas
+        SELECT COALESCE(SUM(kapasitas), 0)
+        FROM public.jadwal_kelas
     ")
     ->fetchColumn();
 
 
-// =========================================================
-// 3. DAFTAR COACH DAN CABOR YANG DIPEGANG
-// =========================================================
+// Total sisa kuota berdasarkan kelas
+$stmtKuota = $pdo->query("
+    SELECT COALESCE(
+        SUM(
+            GREATEST(
+                j.kapasitas - COALESCE(m.jumlah_member, 0),
+                0
+            )
+        ),
+        0
+    )
+    FROM public.jadwal_kelas j
+
+    LEFT JOIN (
+        SELECT
+            jadwal_kelas_id,
+            COUNT(*) AS jumlah_member
+        FROM public.anggota
+        GROUP BY jadwal_kelas_id
+    ) m
+        ON m.jadwal_kelas_id = j.id
+");
+
+$totalKuota = (int) $stmtKuota->fetchColumn();
+
+
+/* =========================================================
+   2. DAFTAR COACH DAN KELAS YANG DIPEGANG
+   ========================================================= */
 
 $stmtCoach = $pdo->query("
     SELECT
-        pengarang AS nama_coach,
-        STRING_AGG(judul, ', ' ORDER BY judul) AS daftar_cabor,
+        nama_coach,
+
+        STRING_AGG(
+            nama_kelas,
+            ', ' ORDER BY nama_kelas
+        ) AS daftar_cabor,
+
         COUNT(*) AS total_kelas
-    FROM jadwal_kelas
-    WHERE pengarang IS NOT NULL
-      AND TRIM(pengarang) <> ''
-    GROUP BY pengarang
-    ORDER BY pengarang ASC
+
+    FROM public.jadwal_kelas
+
+    WHERE nama_coach IS NOT NULL
+      AND TRIM(nama_coach) <> ''
+
+    GROUP BY nama_coach
+
+    ORDER BY nama_coach ASC
 ");
 
 $daftarCoach = $stmtCoach->fetchAll(PDO::FETCH_ASSOC);
 
 
-// =========================================================
-// 4. JUDUL HALAMAN DAN HEADER
-// =========================================================
+/* =========================================================
+   3. JUDUL HALAMAN DAN HEADER
+   ========================================================= */
 
 $page_title = "Beranda";
 
-include __DIR__ . '/includes/header.php';
+include __DIR__ . '/../includes/header.php';
 
 ?>
 
@@ -79,7 +117,9 @@ include __DIR__ . '/includes/header.php';
 
 <section class="welcome-section">
 
-    <h2>Selamat Datang di ELRAM Training Camp</h2>
+    <h2>
+        Selamat Datang di ELRAM Training Camp
+    </h2>
 
     <p style="font-weight: bold;">
 
@@ -97,16 +137,23 @@ include __DIR__ . '/includes/header.php';
 
 
 <!-- =========================================================
-     RINGKASAN STATISTIK TRAINING CAMP
+     RINGKASAN STATISTIK
      ========================================================= -->
 
 <section class="summary-section">
 
-    <h2>Ringkasan Statistik Training Camp</h2>
+    <h2>
+        Ringkasan Statistik Training Camp
+    </h2>
+
+
+    <!-- TOTAL KELAS -->
 
     <article class="stat-card">
 
-        <h3>Total Kelas Cabor</h3>
+        <h3>
+            Total Kelas Cabor
+        </h3>
 
         <p>
             <?php echo $totalKelas; ?>
@@ -115,9 +162,13 @@ include __DIR__ . '/includes/header.php';
     </article>
 
 
+    <!-- TOTAL MEMBER -->
+
     <article class="stat-card">
 
-        <h3>Total Member</h3>
+        <h3>
+            Total Member
+        </h3>
 
         <p>
             <?php echo $totalAnggota; ?>
@@ -126,9 +177,13 @@ include __DIR__ . '/includes/header.php';
     </article>
 
 
+    <!-- TOTAL COACH -->
+
     <article class="stat-card">
 
-        <h3>Total Coach</h3>
+        <h3>
+            Total Coach
+        </h3>
 
         <p>
             <?php echo $totalCoach; ?>
@@ -137,9 +192,13 @@ include __DIR__ . '/includes/header.php';
     </article>
 
 
+    <!-- SISA KUOTA -->
+
     <article class="stat-card">
 
-        <h3>Sisa Kuota Slot</h3>
+        <h3>
+            Sisa Kuota Slot
+        </h3>
 
         <p>
             <?php echo $totalKuota; ?>
@@ -151,12 +210,18 @@ include __DIR__ . '/includes/header.php';
 
 
 <!-- =========================================================
-     DAFTAR COACH & PELATIH
+     DAFTAR COACH DAN PELATIH
      ========================================================= -->
 
-<section class="coach-section" style="margin-top: 35px;">
+<section
+    class="coach-section"
+    style="margin-top: 35px;"
+>
 
-    <h2>Tim Coach & Pelatih</h2>
+    <h2>
+        Tim Coach &amp; Pelatih
+    </h2>
+
 
     <div style="
         display: grid;
@@ -165,13 +230,15 @@ include __DIR__ . '/includes/header.php';
         margin-top: 15px;
     ">
 
+
         <?php if (!empty($daftarCoach)): ?>
+
 
             <?php foreach ($daftarCoach as $coach): ?>
 
                 <?php
 
-                // Ambil inisial nama coach untuk avatar
+                // Ambil inisial nama coach
                 $namaAvatar = preg_replace(
                     '/^Coach\s+/i',
                     '',
@@ -184,6 +251,7 @@ include __DIR__ . '/includes/header.php';
 
                 ?>
 
+
                 <div style="
                     background: #1f1f1f;
                     padding: 18px;
@@ -193,7 +261,9 @@ include __DIR__ . '/includes/header.php';
                     flex-direction: column;
                 ">
 
+
                     <!-- INFORMASI COACH -->
+
                     <div style="
                         display: flex;
                         align-items: center;
@@ -201,7 +271,9 @@ include __DIR__ . '/includes/header.php';
                         margin-bottom: 12px;
                     ">
 
-                        <!-- AVATAR COACH -->
+
+                        <!-- AVATAR -->
+
                         <div style="
                             width: 40px;
                             height: 40px;
@@ -216,12 +288,15 @@ include __DIR__ . '/includes/header.php';
                             flex-shrink: 0;
                         ">
 
-                            <?php echo htmlspecialchars($inisial); ?>
+                            <?php
+                            echo htmlspecialchars($inisial);
+                            ?>
 
                         </div>
 
 
-                        <!-- NAMA DAN JUMLAH KELAS -->
+                        <!-- NAMA COACH -->
+
                         <div>
 
                             <h4 style="
@@ -258,7 +333,8 @@ include __DIR__ . '/includes/header.php';
                     </div>
 
 
-                    <!-- CABANG OLAHRAGA YANG DIPEGANG -->
+                    <!-- KELAS YANG DIPEGANG -->
+
                     <p style="
                         color: #bbb;
                         font-size: 0.82rem;
@@ -282,11 +358,15 @@ include __DIR__ . '/includes/header.php';
 
                     </p>
 
+
                 </div>
+
 
             <?php endforeach; ?>
 
+
         <?php else: ?>
+
 
             <p style="color: #888;">
 
@@ -296,7 +376,9 @@ include __DIR__ . '/includes/header.php';
 
             </p>
 
+
         <?php endif; ?>
+
 
     </div>
 
@@ -312,12 +394,15 @@ include __DIR__ . '/includes/header.php';
     style="margin-top: 35px;"
 >
 
-    <h2>Daftar Harga Kelas</h2>
+    <h2>
+        Daftar Harga Kelas
+    </h2>
+
 
     <div class="pricing-banner-wrapper">
 
         <img
-            src="assets/images/harga.png"
+            src="../assets/images/harga.png"
             alt="Daftar Harga Kelas ELRAM Training Camp"
             class="pricing-banner-img"
         >
@@ -329,10 +414,10 @@ include __DIR__ . '/includes/header.php';
 
 <?php
 
-// =========================================================
-// 5. FOOTER
-// =========================================================
+/* =========================================================
+   4. FOOTER
+   ========================================================= */
 
-include __DIR__ . '/includes/footer.php';
+include __DIR__ . '/../includes/footer.php';
 
 ?>
