@@ -1,182 +1,671 @@
-/* ===== Reset & Base ===== */ 
-* {  
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
-} 
- 
-body { 
-    font-family: "Segoe UI", Arial, sans-serif; 
-    color: #2b2b2b; 
-    background-color: #f5f6f8; 
-    line-height: 1.5; 
-} 
- 
-a { 
-    color: #176B3A; 
-    text-decoration: none; 
-} 
- 
-a:hover { 
-    text-decoration: underline; 
-} 
- 
-/* ===== Header & Navbar (Flexbox) ===== */ 
-header { 
-    background-color: #176B3A; 
-    color: #fff; 
-    padding: 1rem 1.5rem; 
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
-    flex-wrap: wrap; 
-} 
- 
-header h1 { 
-    font-size: 1.4rem; 
-} 
- 
-header nav ul { 
-    list-style: none; 
-    display: flex; 
-    gap: 1.25rem; 
-} 
- 
-header nav a { 
-    color: #fff; 
-    font-weight: 500; 
-} 
- 
-/* ===== Main Layout ===== */ 
-main { 
-    max-width: 1000px; 
-    margin: 2rem auto; 
-    padding: 0 1.5rem; 
-} 
- 
-section { 
-    background-color: #fff; 
-    border-radius: 8px; 
-    padding: 1.5rem; 
-    margin-bottom: 1.5rem; 
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08); 
-} 
- 
-section h2 { 
-    margin-bottom: 1rem; 
-    color: #176B3A; 
-} 
- 
-/* ===== Kartu Statistik (CSS Grid) ===== */ 
-main section:nth-of-type(2) { 
-    display: grid; 
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 1rem; 
-} 
- 
-main section:nth-of-type(2) article { 
-    background-color: #eef4fa; 
-    border-radius: 8px; 
-    padding: 1.25rem; 
-    text-align: center; 
-} 
- 
-main section:nth-of-type(2) article h3 { 
-    font-size: 0.95rem; 
-    color: #55677a; 
-    margin-bottom: 0.5rem; 
-} 
- 
-main section:nth-of-type(2) article p { 
-    font-size: 1.8rem; 
-    font-weight: 700; 
-    color: #176B3A; 
-} 
- 
-/* ===== Tabel ===== */ 
-table { 
-    width: 100%; 
-    border-collapse: collapse; 
-} 
- 
-th, td { 
-    text-align: left; 
-    padding: 0.65rem 0.75rem; 
-    border-bottom: 1px solid #e2e6ea; 
-} 
- 
-thead { 
-    background-color: #176B3A; 
-    color: #fff; 
-} 
- 
-tbody tr:nth-child(even) { 
-    background-color: #f7f9fb; 
-} 
- 
-tbody tr:hover { 
-    background-color: #eef4fa; 
-} 
- 
-td button { 
-    padding: 0.35rem 0.7rem; 
-    margin-right: 0.35rem; 
-    border: none; 
-    border-radius: 4px; 
-    cursor: pointer; 
-    font-size: 0.85rem; 
-} 
- 
-td button:first-of-type { 
-    background-color: #f0ad4e; 
-    color: #fff; 
-} 
- 
-td button:last-of-type { 
-    background-color: #d9534f; 
-    color: #fff; 
-} 
- 
-/* ===== Form ===== */ 
-form p { 
-    margin-bottom: 1rem; 
-} 
- 
-form label { 
-    display: block; 
-    margin-bottom: 0.35rem; 
-    font-weight: 600; 
-    color: #444; 
-} 
- 
-form input, 
-form select { 
-    width: 100%; 
-    max-width: 400px; 
-    padding: 0.55rem 0.7rem; 
-    border: 1px solid #cdd4da; 
-    border-radius: 4px; 
-    font-size: 1rem; 
-} 
- 
-form button[type="submit"] { 
-    background-color: #176B3A; 
-    color: #fff; 
-    border: none; 
-    padding: 0.6rem 1.5rem; 
-    border-radius: 4px; 
-    font-size: 1rem; 
-    cursor: pointer; 
-} 
- 
-form button[type="submit"]:hover { 
-    background-color: #164869; 
-} 
- 
-/* ===== Footer ===== */ 
-footer { 
-    text-align: center; 
-    padding: 1.25rem; 
-    color: #7a8794; 
-    font-size: 0.9rem; 
+/* =========================================
+   SIMPUS-MINI
+   Modern Library Dashboard
+   ========================================= */
+
+/* ===== 1. Variabel Warna ===== */
+:root {
+    --primary: #166534;
+    --primary-dark: #14532d;
+    --primary-light: #22c55e;
+
+    --accent: #d4a373;
+    --accent-light: #fef3c7;
+
+    --bg: #f3f6f4;
+    --white: #ffffff;
+
+    --text: #1f2937;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+
+    --success: #15803d;
+    --danger: #dc2626;
+    --warning: #d97706;
+    --info: #2563eb;
+
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 8px 24px rgba(22, 101, 52, 0.08);
+    --shadow-lg: 0 12px 32px rgba(22, 101, 52, 0.12);
+
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+
+    --transition: all 0.25s ease;
+}
+
+/* ===== 2. Reset ===== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+/* ===== 3. Link ===== */
+a {
+    color: var(--primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--primary-light);
+}
+
+/* ===== 4. Header ===== */
+header {
+    background: linear-gradient(
+        135deg,
+        var(--primary-dark),
+        var(--primary)
+    );
+
+    color: var(--white);
+
+    padding: 18px 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+
+    flex-wrap: wrap;
+
+    box-shadow: 0 4px 15px rgba(20, 83, 45, 0.18);
+
+    position: relative;
+    z-index: 10;
+}
+
+/* Judul aplikasi */
+header h1 {
+    font-size: 1.65rem;
+    font-weight: 800;
+    letter-spacing: 0.4px;
+    color: var(--white);
+}
+
+/* ===== 5. Navbar ===== */
+header nav ul {
+    list-style: none;
+
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+header nav li {
+    display: block;
+}
+
+header nav a {
+    display: inline-block;
+
+    color: rgba(255, 255, 255, 0.92);
+
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    padding: 10px 14px;
+    border-radius: var(--radius-sm);
+
+    transition: var(--transition);
+}
+
+header nav a:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.14);
+    text-decoration: none;
+
+    transform: translateY(-1px);
+}
+
+/* ===== 6. Main Layout ===== */
+main {
+    width: 100%;
+    max-width: 1200px;
+
+    margin: 36px auto;
+    padding: 0 24px;
+}
+
+/* ===== 7. Section / Card Utama ===== */
+section {
+    background: var(--white);
+
+    border: 1px solid rgba(229, 231, 235, 0.8);
+    border-radius: var(--radius-lg);
+
+    padding: 28px;
+
+    margin-bottom: 24px;
+
+    box-shadow: var(--shadow-sm);
+
+    transition: box-shadow 0.25s ease;
+}
+
+section:hover {
+    box-shadow: var(--shadow-md);
+}
+
+/* Judul section */
+section h2 {
+    color: var(--primary);
+
+    font-size: 1.55rem;
+    font-weight: 750;
+
+    margin-bottom: 18px;
+}
+
+/* Paragraf */
+section p {
+    color: var(--muted);
+    font-size: 1rem;
+}
+
+/* ===== 8. Kartu Sambutan Beranda ===== */
+main section:first-of-type {
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff 0%,
+            #f0fdf4 100%
+        );
+
+    border-left: 5px solid var(--primary);
+
+    padding: 32px;
+}
+
+main section:first-of-type h2 {
+    color: var(--primary-dark);
+    font-size: 1.7rem;
+    margin-bottom: 14px;
+}
+
+main section:first-of-type p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #4b5563;
+}
+
+/* ===== 9. Dashboard Statistik ===== */
+main section:nth-of-type(2) {
+    display: grid;
+
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+/* Judul Ringkasan */
+main section:nth-of-type(2) > h2 {
+    grid-column: 1 / -1;
+
+    margin-bottom: 0;
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+/* Kartu statistik */
+main section:nth-of-type(2) article {
+    position: relative;
+    overflow: hidden;
+
+    background: linear-gradient(
+        145deg,
+        #f0fdf4,
+        #ecfdf5
+    );
+
+    border: 1px solid #dcfce7;
+    border-radius: var(--radius-md);
+
+    padding: 26px 20px;
+
+    text-align: center;
+
+    transition: var(--transition);
+}
+
+/* Aksen dekoratif */
+main section:nth-of-type(2) article::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 4px;
+
+    background: linear-gradient(
+        90deg,
+        var(--primary),
+        var(--primary-light)
+    );
+}
+
+main section:nth-of-type(2) article:hover {
+    transform: translateY(-5px);
+
+    box-shadow: var(--shadow-md);
+
+    border-color: #86efac;
+}
+
+/* Label statistik */
+main section:nth-of-type(2) article h3 {
+    color: var(--muted);
+
+    font-size: 0.95rem;
+    font-weight: 650;
+
+    margin-bottom: 12px;
+}
+
+/* Angka statistik */
+main section:nth-of-type(2) article p {
+    color: var(--primary);
+
+    font-size: 2.2rem;
+    font-weight: 800;
+
+    line-height: 1.3;
+}
+
+/* ===== 10. Tabel ===== */
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    background: var(--white);
+    border-radius: var(--radius-sm);
+
+    overflow: hidden;
+}
+
+/* Header tabel */
+thead {
+    background: linear-gradient(
+        135deg,
+        var(--primary-dark),
+        var(--primary)
+    );
+
+    color: var(--white);
+}
+
+th {
+    padding: 15px 16px;
+
+    text-align: left;
+
+    font-size: 0.9rem;
+    font-weight: 700;
+
+    white-space: nowrap;
+}
+
+/* Isi tabel */
+td {
+    padding: 14px 16px;
+
+    text-align: left;
+
+    border-bottom: 1px solid var(--border);
+
+    font-size: 0.94rem;
+    vertical-align: middle;
+}
+
+tbody tr {
+    transition: background 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+    background: #f9fafb;
+}
+
+tbody tr:hover {
+    background: #f0fdf4;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* ===== 11. Tombol ===== */
+button,
+input[type="submit"],
+.btn {
+    display: inline-block;
+
+    border: none;
+    border-radius: var(--radius-sm);
+
+    padding: 10px 16px;
+
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 650;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+/* Tombol utama */
+button[type="submit"],
+input[type="submit"],
+.btn-primary {
+    background: var(--primary);
+    color: var(--white);
+}
+
+button[type="submit"]:hover,
+input[type="submit"]:hover,
+.btn-primary:hover {
+    background: var(--primary-dark);
+    color: var(--white);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 5px 12px rgba(22, 101, 52, 0.18);
+}
+
+/* Tombol Edit */
+td button:first-of-type,
+.btn-edit {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+td button:first-of-type:hover,
+.btn-edit:hover {
+    background: #fde68a;
+    color: #78350f;
+}
+
+/* Tombol Hapus */
+td button:last-of-type,
+.btn-delete {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+td button:last-of-type:hover,
+.btn-delete:hover {
+    background: #fecaca;
+    color: #991b1b;
+}
+
+/* Jarak antartombol dalam tabel */
+td button {
+    margin: 3px 4px 3px 0;
+}
+
+/* ===== 12. Form ===== */
+form {
+    width: 100%;
+}
+
+form p {
+    margin-bottom: 20px;
+}
+
+/* Label */
+form label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #374151;
+
+    font-size: 0.95rem;
+    font-weight: 650;
+}
+
+/* Input, select, textarea */
+form input,
+form select,
+form textarea {
+    width: 100%;
+    max-width: 500px;
+
+    padding: 12px 14px;
+
+    border: 1px solid #d1d5db;
+    border-radius: var(--radius-sm);
+
+    background: #ffffff;
+    color: var(--text);
+
+    font-family: inherit;
+    font-size: 0.95rem;
+
+    outline: none;
+
+    transition: var(--transition);
+}
+
+/* Efek saat input dipilih */
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 4px rgba(22, 101, 52, 0.10);
+}
+
+/* Placeholder */
+form input::placeholder,
+form textarea::placeholder {
+    color: #9ca3af;
+}
+
+/* Textarea */
+form textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+/* Tombol form */
+form button[type="submit"] {
+    padding: 12px 24px;
+
+    font-size: 0.95rem;
+}
+
+/* ===== 13. Kotak Pencarian ===== */
+input[type="search"] {
+    width: 100%;
+    max-width: 400px;
+
+    padding: 12px 15px;
+
+    border: 1px solid #d1d5db;
+    border-radius: var(--radius-sm);
+
+    background: var(--white);
+
+    outline: none;
+
+    transition: var(--transition);
+}
+
+input[type="search"]:focus {
+    border-color: var(--primary);
+
+    box-shadow: 0 0 0 4px rgba(22, 101, 52, 0.10);
+}
+
+/* ===== 14. Flash Message ===== */
+.flash-success {
+    background: #dcfce7;
+    color: #166534;
+
+    border: 1px solid #bbf7d0;
+    border-left: 5px solid #16a34a;
+
+    padding: 14px 18px;
+    margin-bottom: 20px;
+
+    border-radius: var(--radius-sm);
+}
+
+.flash-error {
+    background: #fee2e2;
+    color: #991b1b;
+
+    border: 1px solid #fecaca;
+    border-left: 5px solid #dc2626;
+
+    padding: 14px 18px;
+    margin-bottom: 20px;
+
+    border-radius: var(--radius-sm);
+}
+
+/* ===== 15. Footer ===== */
+footer {
+    text-align: center;
+
+    padding: 24px 16px;
+    margin-top: 36px;
+
+    color: #6b7280;
+
+    font-size: 0.9rem;
+}
+
+/* ===== 16. Tampilan Tablet ===== */
+@media (max-width: 900px) {
+    header {
+        padding: 18px 22px;
+    }
+
+    main {
+        max-width: 100%;
+        padding: 0 20px;
+    }
+
+    main section:nth-of-type(2) {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+/* ===== 17. Tampilan HP ===== */
+@media (max-width: 600px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 14px;
+
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 1.45rem;
+    }
+
+    header nav {
+        width: 100%;
+    }
+
+    header nav ul {
+        gap: 6px;
+    }
+
+    header nav a {
+        padding: 9px 10px;
+        font-size: 0.85rem;
+    }
+
+    main {
+        margin: 22px auto;
+        padding: 0 14px;
+    }
+
+    section {
+        padding: 20px;
+        margin-bottom: 18px;
+    }
+
+    section h2 {
+        font-size: 1.3rem;
+    }
+
+    main section:first-of-type {
+        padding: 24px 20px;
+    }
+
+    main section:first-of-type h2 {
+        font-size: 1.4rem;
+    }
+
+    main section:nth-of-type(2) {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    main section:nth-of-type(2) article {
+        padding: 22px 16px;
+    }
+
+    main section:nth-of-type(2) article p {
+        font-size: 2rem;
+    }
+
+    /* Tabel bisa digeser ke samping jika terlalu lebar */
+    table {
+        min-width: 650px;
+    }
+
+    /* Jangan biarkan tabel merusak lebar halaman */
+    section:has(table) {
+        overflow-x: auto;
+    }
+
+    form input,
+    form select,
+    form textarea {
+        max-width: 100%;
+    }
+
+    footer {
+        margin-top: 24px;
+        font-size: 0.85rem;
+    }
+}
+
+/* ===== 18. Mengurangi Animasi Jika Diperlukan ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition: none !important;
+    }
 }
