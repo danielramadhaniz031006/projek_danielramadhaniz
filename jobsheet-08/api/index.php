@@ -3,8 +3,8 @@
 require_once __DIR__ . '/includes/koneksi.php';
 
 /* =========================================================
-   DATA RINGKASAN STATISTIK TRAINING CAMP
-   ========================================================= */
+    DATA RINGKASAN STATISTIK TRAINING CAMP
+    ========================================================= */
 
 // Total Sesi Kelas / Cabor
 $totalKelas = $pdo
@@ -26,12 +26,10 @@ $stokBuku = $pdo
     ->query("SELECT COALESCE(SUM(stok), 0) FROM buku")
     ->fetchColumn();
 
-// Jika SUM(stok) di database belum di-set/masih 0, gunakan Kapasitas Dasar = 70
-// Sehinga saat member = 34, Sisa Kuota awal otomatis bernilai 36 (70 - 34 = 36)
+// Kapasitas Dasar
 $totalKapasitas = ($stokBuku > $totalAnggota) ? (int)$stokBuku : 70;
 
-// KALKULASI DINAMIS SISA KUOTA SLOT:
-// Sisa Kuota = Total Kapasitas - Total Member
+// KALKULASI DINAMIS SISA KUOTA SLOT
 $totalKuota = max(0, $totalKapasitas - (int)$totalAnggota);
 
 // Daftar Coach dan Cabor yang Dipegang
@@ -44,39 +42,52 @@ include __DIR__ . '/includes/header.php';
 ?>
 
 <!-- =========================================================
-     SELAMAT DATANG
+     HERO / SELAMAT DATANG (Modern Athletic Banner)
      ========================================================= -->
 <section class="welcome-section">
-    <h2>Selamat Datang di ELRAM Training Camp</h2>
-    <p style="font-weight: bold;">
-        Selamat datang di ELRAM Training Camp, tempat terbaik untuk menempa fisik, disiplin, dan kemampuan bela diri kamu! Kami menyediakan berbagai cabang olahraga pilihan seperti Muay Thai, Boxing, Kickboxing, BJJ, hingga MMA — terbuka dari tingkat pemula hingga mahir.
+    <div class="welcome-badge">🔥 ELRAM TRAINING CAMP SYSTEM</div>
+    <h2>Pusat Latihan Bela Diri & Kebugaran Premium</h2>
+    <p>
+        Selamat datang di ELRAM Training Camp, tempat terbaik untuk menempa fisik, disiplin, dan kemampuan bela diri kamu! Kami menyediakan berbagai cabang olahraga pilihan seperti <strong>Muay Thai, Boxing, Kickboxing, BJJ, hingga MMA</strong> — terbuka dari tingkat pemula hingga mahir.
     </p>
 </section>
 
 <!-- =========================================================
-     RINGKASAN STATISTIK DARI DATABASE
+     RINGKASAN STATISTIK TRAINING CAMP
      ========================================================= -->
 <section class="summary-section">
     <h2>Ringkasan Statistik Training Camp</h2>
 
     <article class="stat-card">
-        <h3>Total Kelas Cabor</h3>
-        <p><?php echo $totalKelas; ?></p>
+        <div class="stat-icon">🥊</div>
+        <div>
+            <h3>Total Kelas Cabor</h3>
+            <p><?php echo $totalKelas; ?></p>
+        </div>
     </article>
 
     <article class="stat-card">
-        <h3>Total Member</h3>
-        <p><?php echo $totalAnggota; ?></p>
+        <div class="stat-icon">👥</div>
+        <div>
+            <h3>Total Member</h3>
+            <p><?php echo $totalAnggota; ?></p>
+        </div>
     </article>
 
     <article class="stat-card">
-        <h3>Total Coach</h3>
-        <p><?php echo $totalCoach; ?></p>
+        <div class="stat-icon">🏆</div>
+        <div>
+            <h3>Total Coach</h3>
+            <p><?php echo $totalCoach; ?></p>
+        </div>
     </article>
 
     <article class="stat-card">
-        <h3>Sisa Kuota Slot</h3>
-        <p><?php echo $totalKuota; ?></p>
+        <div class="stat-icon">⚡</div>
+        <div>
+            <h3>Sisa Kuota Slot</h3>
+            <p class="highlight-quota"><?php echo $totalKuota; ?></p>
+        </div>
     </article>
 </section>
 
@@ -84,27 +95,29 @@ include __DIR__ . '/includes/header.php';
      DAFTAR COACH & PELATIH
      ========================================================= -->
 <section class="coach-section" style="margin-top: 35px;">
-    <h2>Tim Coach & Pelatih</h2>
+    <h2>Tim Coach & Pelatih Profesional</h2>
+    <p style="color: var(--muted); margin-bottom: 20px; font-size: 0.95rem;">Para ahli berpengalaman yang siap membimbing fisik dan teknik bertarung Anda.</p>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px;">
+    <div class="coach-grid">
         <?php foreach ($daftarCoach as $coach): ?>
-            <div style="background: #1f1f1f; padding: 18px; border-radius: 8px; border: 1px solid #333; display: flex; flex-direction: column;">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #e50914; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; flex-shrink: 0;">
+            <div class="coach-card">
+                <div class="coach-header">
+                    <div class="coach-avatar">
                         <?php echo strtoupper(substr(str_replace('Coach ', '', $coach['nama_coach']), 0, 1)); ?>
                     </div>
                     <div>
-                        <h4 style="color: #fff; margin: 0; font-size: 0.95rem; font-weight: bold;">
+                        <h4 class="coach-name">
                             <?php echo htmlspecialchars($coach['nama_coach']); ?>
                         </h4>
-                        <span style="color: #888; font-size: 0.75rem;">
-                            <?php echo $coach['total_kelas']; ?> Kelas Dipegang
+                        <span class="coach-badge">
+                            🔥 <?php echo $coach['total_kelas']; ?> Kelas Dipegang
                         </span>
                     </div>
                 </div>
-                <p style="color: #bbb; font-size: 0.82rem; margin: 0; line-height: 1.4; background: #141414; padding: 10px; border-radius: 6px; border: 1px solid #2a2a2a;">
-                    <strong style="color: #e50914;">Cabor:</strong> <?php echo htmlspecialchars($coach['daftar_cabor']); ?>
-                </p>
+                <div class="coach-body">
+                    <span class="cabor-label">CABOR KEAHLIAN:</span>
+                    <p class="cabor-text"><?php echo htmlspecialchars($coach['daftar_cabor']); ?></p>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
@@ -112,4 +125,4 @@ include __DIR__ . '/includes/header.php';
 
 <?php 
 include __DIR__ . '/includes/footer.php';
-?> 
+?>
