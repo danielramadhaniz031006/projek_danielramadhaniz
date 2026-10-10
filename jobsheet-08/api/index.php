@@ -136,6 +136,17 @@ include __DIR__ . '/includes/header.php';
     </div>
 </section>
 
+<!-- =========================================================
+     DAFTAR HARGA KELAS (PNG BANNER)
+     ========================================================= -->
+
+<section class="pricing-banner-section" style="margin-top: 35px;">
+    <h2>Daftar Harga Kelas</h2>
+    <div class="pricing-banner-wrapper">
+        <img src="assets/images/harga.png" alt="Daftar Harga Kelas ELRAM Training Camp" class="pricing-banner-img">
+    </div>
+</section>
+
 <?php
 include __DIR__ . '/includes/footer.php';
-?> 
+?>
