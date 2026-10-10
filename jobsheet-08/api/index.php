@@ -28,7 +28,7 @@ $stokBuku = $pdo
 
 // Jika SUM(stok) di database belum di-set/masih 0, gunakan Kapasitas Dasar = 70
 // Sehinga saat member = 34, Sisa Kuota awal otomatis bernilai 36 (70 - 34 = 36)
-$totalKapasitas = ($stokBuku > $totalAnggota) ? (int)$stokBuku : 70;
+$totalKapasitas = ($stokBuku > $totalAnggota) ? (int)$stokBuku : 71;
 
 // KALKULASI DINAMIS SISA KUOTA SLOT:
 // Sisa Kuota = Total Kapasitas - Total Member
