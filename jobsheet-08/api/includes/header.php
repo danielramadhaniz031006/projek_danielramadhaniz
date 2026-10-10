@@ -1,26 +1,14 @@
 <?php
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+// =========================================================
+// HEADER ELRAM TRAINING CAMP
+// =========================================================
 
-// Prefix relatif ke root proyek ini supaya /assets, /index.php, dst
-// tetap benar walau proyek diakses lewat subfolder.
-$__jobsheetRoot = dirname(__DIR__);
-$__scriptDir = dirname($_SERVER['SCRIPT_FILENAME']);
+// Judul halaman default
+$page_title = $page_title ?? 'ELRAM Training Camp';
 
-$__rel = ltrim(
-    str_replace(
-        '\\',
-        '/',
-        substr($__scriptDir, strlen($__jobsheetRoot))
-    ),
-    '/'
-);
-
-$base = $__rel === ''
-    ? ''
-    : str_repeat('../', substr_count($__rel, '/') + 1);
+// Deteksi halaman yang sedang dibuka
+$current_page = basename($_SERVER['PHP_SELF']);
 
 ?>
 
@@ -28,60 +16,102 @@ $base = $__rel === ''
 <html lang="id">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta 
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-    >
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>
-        ELRAM Training Camp<?php
-        echo isset($page_title) ? ' | ' . $page_title : '';
-        ?>
+        <?php echo htmlspecialchars($page_title); ?> | ELRAM Training Camp
     </title>
 
-    <link
-        rel="stylesheet"
-        href="/jobsheet-08/assets/css/style.css"
-    >
+    <!-- CSS UTAMA -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+
 </head>
 
-<body> 
+<body>
 
-    <header>
-        <h1>ELRAM TRAINING CAMP</h1>
+<!-- =========================================================
+     HEADER DAN NAVBAR
+     ========================================================= -->
 
-        <button
-            type="button"
-            id="nav-toggle-btn"
-            class="nav-toggle-label"
-            aria-label="Menu"
-        >
-            &#9776;
-        </button>
+<header class="main-header">
 
-        <nav>
-            <ul>
-                <li>
-                    <a href="<?php echo $base; ?>index.php">
-                        BERANDA
-                    </a>
-                </li>
+    <!-- LOGO / NAMA WEBSITE -->
+    <div class="brand">
 
-                <li>
-                    <a href="<?php echo $base; ?>buku/list.php">
-                        JADWAL KELAS
-                    </a>
-                </li>
+        <a href="/api/index.php" class="brand-link">
 
-                <li>
-                    <a href="<?php echo $base; ?>anggota/list.php">
-                        DAFTAR MEMBER
-                    </a>
-                </li>
+            <span class="brand-icon">E</span>
 
-            </ul>
-        </nav>
-    </header>
+            <span class="brand-text">
+                <strong>ELRAM</strong>
+                <small>TRAINING CAMP</small>
+            </span>
 
-    <main>
+        </a>
+
+    </div>
+
+
+    <!-- NAVIGASI -->
+    <nav class="main-nav">
+
+        <ul>
+
+            <!-- BERANDA -->
+            <li>
+                <a
+                    href="/api/index.php"
+                    class="<?php echo $current_page === 'index.php' ? 'active' : ''; ?>"
+                >
+                    Beranda
+                </a>
+            </li>
+
+
+            <!-- JADWAL KELAS -->
+            <li>
+                <a
+                    href="/api/buku/list.php"
+                    class="<?php echo $current_page === 'list.php' && str_contains($_SERVER['PHP_SELF'], '/buku/') ? 'active' : ''; ?>"
+                >
+                    Jadwal Kelas
+                </a>
+            </li>
+
+
+            <!-- DAFTAR MEMBER -->
+            <li>
+                <a
+                    href="/api/anggota/list.php"
+                    class="<?php echo $current_page === 'list.php' && str_contains($_SERVER['PHP_SELF'], '/anggota/') ? 'active' : ''; ?>"
+                >
+                    Daftar Member
+                </a>
+            </li>
+
+
+            <!-- INFORMASI ELRAM -->
+            <li>
+                <a
+                    href="/api/informasi.php"
+                    class="<?php echo $current_page === 'informasi.php' ? 'active' : ''; ?>"
+                >
+                    Informasi ELRAM
+                </a>
+            </li>
+
+        </ul>
+
+    </nav>
+
+</header>
+
+
+<!-- =========================================================
+     KONTEN UTAMA
+     ========================================================= -->
+
+<main>
