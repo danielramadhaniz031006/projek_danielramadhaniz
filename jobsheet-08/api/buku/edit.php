@@ -169,7 +169,7 @@ include __DIR__ . '/../includes/header.php';
             Batal
         </a>
 
-    </form>
+    </form> 
 </section>
 
 <?php

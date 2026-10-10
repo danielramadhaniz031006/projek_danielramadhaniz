@@ -124,7 +124,7 @@ try {
     $_SESSION['flash'] = [
         'type' => 'error',
         'pesan' => $pesan
-    ];
+    ]; 
 
     header('Location: tambah.php');
     exit;

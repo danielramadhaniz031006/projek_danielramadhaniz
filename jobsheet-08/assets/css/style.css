@@ -564,7 +564,7 @@ main:has(> .welcome-section) > .coach-section > div > div {
     main:has(> .welcome-section) > .coach-section { padding: 14px; }
     main:has(> .welcome-section) > .coach-section > div {
         grid-template-columns: 1fr !important;
-        gap: 10px !important;
+        gap: 10px !important;  
     }
 
     .table-responsive { overflow-x: auto; }

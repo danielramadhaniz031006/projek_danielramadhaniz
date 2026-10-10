@@ -27,7 +27,7 @@ if (!is_numeric($stok) || $stok < 0) {
 
 if (!empty($errors)) {
     $_SESSION['flash'] = ['type' => 'error', 'pesan' => implode(' ', $errors)];
-    header('Location: tambah.php');
+    header('Location: tambah.php');  
     exit;
 }
 

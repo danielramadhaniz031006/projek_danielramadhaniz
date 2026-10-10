@@ -41,7 +41,7 @@ $daftarCoach = $stmtCoach->fetchAll(PDO::FETCH_ASSOC);
 // 2. Set judul halaman lalu panggil header HTML
 $page_title = "Beranda";
 include __DIR__ . '/includes/header.php';
-?>
+?>  
 
 <!-- =========================================================
      SELAMAT DATANG
