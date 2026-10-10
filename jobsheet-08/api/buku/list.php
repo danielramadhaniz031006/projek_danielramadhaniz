@@ -50,7 +50,6 @@ $daftar_kelas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <th style="padding: 12px;">Coach / Pelatih</th>
                     <th style="padding: 12px;">Hari Latihan</th>
                     <th style="padding: 12px;">Jam Latihan</th>
-                    <th style="padding: 12px;">Sisa Kuota</th>
                     <th style="padding: 12px; text-align: center;">Aksi</th>
                 </tr>
             </thead>
@@ -63,7 +62,6 @@ $daftar_kelas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <td style="padding: 12px;"><?php echo htmlspecialchars($kelas['pengarang']); ?></td>
                             <td style="padding: 12px;"><?php echo htmlspecialchars($kelas['kategori']); ?></td>
                             <td style="padding: 12px;"><?php echo htmlspecialchars($kelas['tahun']); ?>:00 WIB</td>
-                            <td style="padding: 12px;"><?php echo htmlspecialchars($kelas['stok']); ?> Orang</td>
                             <td style="padding: 12px; text-align: center;">
                                 <div style="display: flex; gap: 8px; justify-content: center;">
                                     <a href="edit.php?id=<?php echo $kelas['id']; ?>" style="background: #f39c12; color: #fff; padding: 6px 14px; border-radius: 4px; text-decoration: none; font-weight: bold; font-size: 0.85rem;">Edit</a>
@@ -74,7 +72,7 @@ $daftar_kelas = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php endforeach; ?>
                 <?php else: ?>
                     <tr>
-                        <td colspan="7" style="padding: 20px; text-align: center; color: #888;">Tidak ada data kelas yang ditemukan.</td>
+                        <td colspan="6" style="padding: 20px; text-align: center; color: #888;">Tidak ada data kelas yang ditemukan.</td>
                     </tr>
                 <?php endif; ?>
             </tbody>
@@ -82,4 +80,4 @@ $daftar_kelas = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </section>
 
-<?php include __DIR__ . '/../includes/footer.php'; ?> 
+<?php include __DIR__ . '/../includes/footer.php'; ?>
