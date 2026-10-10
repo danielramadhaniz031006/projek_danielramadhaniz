@@ -26,12 +26,10 @@ $stokBuku = $pdo
     ->query("SELECT COALESCE(SUM(stok), 0) FROM buku")
     ->fetchColumn();
 
-// Jika SUM(stok) di database belum di-set/masih 0, gunakan Kapasitas Dasar = 70
-// Sehinga saat member = 34, Sisa Kuota awal otomatis bernilai 36 (70 - 34 = 36)
+// Kapasitas Dasar = 70 jika stok belum di-set
 $totalKapasitas = ($stokBuku > $totalAnggota) ? (int)$stokBuku : 70;
 
-// KALKULASI DINAMIS SISA KUOTA SLOT:
-// Sisa Kuota = Total Kapasitas - Total Member
+// KALKULASI DINAMIS SISA KUOTA SLOT (diperbaiki syntax error-nya)
 $totalKuota = max(0, $totalKapasitas - (int)$totalAnggota);
 
 // Daftar Coach dan Cabor yang Dipegang
@@ -83,27 +81,23 @@ include __DIR__ . '/includes/header.php';
 <!-- =========================================================
      DAFTAR COACH & PELATIH
      ========================================================= -->
-<section class="coach-section" style="margin-top: 35px;">
+<section class="coach-section">
     <h2>Tim Coach & Pelatih</h2>
 
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px;">
+    <div class="coach-grid">
         <?php foreach ($daftarCoach as $coach): ?>
-            <div style="background: #1f1f1f; padding: 18px; border-radius: 8px; border: 1px solid #333; display: flex; flex-direction: column;">
-                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
-                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #e50914; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; flex-shrink: 0;">
+            <div class="coach-card">
+                <div class="coach-header">
+                    <div class="coach-avatar">
                         <?php echo strtoupper(substr(str_replace('Coach ', '', $coach['nama_coach']), 0, 1)); ?>
                     </div>
-                    <div>
-                        <h4 style="color: #fff; margin: 0; font-size: 0.95rem; font-weight: bold;">
-                            <?php echo htmlspecialchars($coach['nama_coach']); ?>
-                        </h4>
-                        <span style="color: #888; font-size: 0.75rem;">
-                            <?php echo $coach['total_kelas']; ?> Kelas Dipegang
-                        </span>
+                    <div class="coach-info">
+                        <h4><?php echo htmlspecialchars($coach['nama_coach']); ?></h4>
+                        <span><?php echo $coach['total_kelas']; ?> Kelas Dipegang</span>
                     </div>
                 </div>
-                <p style="color: #bbb; font-size: 0.82rem; margin: 0; line-height: 1.4; background: #141414; padding: 10px; border-radius: 6px; border: 1px solid #2a2a2a;">
-                    <strong style="color: #e50914;">Cabor:</strong> <?php echo htmlspecialchars($coach['daftar_cabor']); ?>
+                <p class="coach-cabor">
+                    <strong style="color: var(--primary-light);">Cabor:</strong> <?php echo htmlspecialchars($coach['daftar_cabor']); ?>
                 </p>
             </div>
         <?php endforeach; ?>
@@ -112,4 +106,4 @@ include __DIR__ . '/includes/header.php';
 
 <?php 
 include __DIR__ . '/includes/footer.php';
-?> 
+?>
