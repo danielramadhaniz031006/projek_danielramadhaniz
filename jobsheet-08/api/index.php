@@ -1,17 +1,13 @@
 <?php
-// =========================================================
-// 1. KONEKSI DATABASE
-// =========================================================
-
+// 1. Muat koneksi database dan jalankan query terlebih dahulu
 require_once __DIR__ . '/includes/koneksi.php';
 
+/* =========================================================
+   DATA RINGKASAN STATISTIK TRAINING CAMP
+   ========================================================= */
 
-// =========================================================
-// 2. DATA RINGKASAN STATISTIK TRAINING CAMP
-// =========================================================
-
-// Total Kelas / Cabang Olahraga
-$totalKelas = (int) $pdo
+// Total Sesi Kelas / Cabor
+$totalKelas = $pdo
     ->query("SELECT COUNT(*) FROM buku")
     ->fetchColumn();
 
@@ -21,25 +17,21 @@ $totalAnggota = (int) $pdo
     ->fetchColumn();
 
 // Total Coach / Pelatih Unik
-$totalCoach = (int) $pdo
+$totalCoach = $pdo
     ->query("SELECT COUNT(DISTINCT pengarang) FROM buku")
     ->fetchColumn();
 
 // Kapasitas tetap Training Camp
 $totalKapasitas = 70;
 
-// Sisa Kuota Slot
+// Kalkulasi Sisa Kuota Slot
 $totalKuota = max(0, $totalKapasitas - $totalAnggota);
 
-
-// =========================================================
-// 3. DAFTAR COACH DAN CABANG OLAHRAGA
-// =========================================================
-
+// Daftar Coach dan Cabor yang Dipegang
 $stmtCoach = $pdo->query("
     SELECT
         pengarang AS nama_coach,
-        STRING_AGG(judul, ', ' ORDER BY judul) AS daftar_cabor,
+        STRING_AGG(judul, ', ') AS daftar_cabor,
         COUNT(*) AS total_kelas
     FROM buku
     GROUP BY pengarang
@@ -48,187 +40,113 @@ $stmtCoach = $pdo->query("
 
 $daftarCoach = $stmtCoach->fetchAll(PDO::FETCH_ASSOC);
 
-
-// =========================================================
-// 4. HEADER HALAMAN
-// =========================================================
-
+// 2. Set judul halaman lalu panggil header HTML
 $page_title = "Beranda";
-
 include __DIR__ . '/includes/header.php';
 ?>
 
-
 <!-- =========================================================
-     BAGIAN SELAMAT DATANG
-========================================================= -->
+     SELAMAT DATANG
+     ========================================================= -->
 
 <section class="welcome-section">
-
     <h2>Selamat Datang di ELRAM Training Camp</h2>
 
-    <p>
-        Selamat datang di ELRAM Training Camp, tempat terbaik untuk
-        menempa fisik, disiplin, dan kemampuan bela diri kamu!
-        Kami menyediakan berbagai cabang olahraga pilihan seperti
-        Muay Thai, Boxing, Kickboxing, BJJ, hingga MMA —
-        terbuka dari tingkat pemula hingga mahir.
+    <p style="font-weight: bold;">
+        Selamat datang di ELRAM Training Camp, tempat terbaik untuk menempa fisik, disiplin, dan kemampuan bela diri kamu! Kami menyediakan berbagai cabang olahraga pilihan seperti Muay Thai, Boxing, Kickboxing, BJJ, hingga MMA — terbuka dari tingkat pemula hingga mahir.
     </p>
-
 </section>
 
-
 <!-- =========================================================
-     RINGKASAN STATISTIK TRAINING CAMP
-========================================================= -->
+     RINGKASAN STATISTIK DARI DATABASE
+     ========================================================= -->
 
 <section class="summary-section">
-
     <h2>Ringkasan Statistik Training Camp</h2>
 
     <article class="stat-card">
         <h3>Total Kelas Cabor</h3>
-        <p><?= $totalKelas ?></p>
+        <p><?php echo $totalKelas; ?></p>
     </article>
 
     <article class="stat-card">
         <h3>Total Member</h3>
-        <p><?= $totalAnggota ?></p>
+        <p><?php echo $totalAnggota; ?></p>
     </article>
 
     <article class="stat-card">
         <h3>Total Coach</h3>
-        <p><?= $totalCoach ?></p>
+        <p><?php echo $totalCoach; ?></p>
     </article>
 
     <article class="stat-card">
         <h3>Sisa Kuota Slot</h3>
-        <p><?= $totalKuota ?></p>
+        <p><?php echo $totalKuota; ?></p>
     </article>
-
 </section>
 
-
 <!-- =========================================================
-     TIM COACH DAN PELATIH
-========================================================= -->
+     DAFTAR COACH & PELATIH
+     ========================================================= -->
 
-<section class="coach-section">
+<section class="coach-section" style="margin-top: 35px;">
+    <h2>Tim Coach & Pelatih</h2>
 
-    <h2>Tim Coach &amp; Pelatih</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px;">
 
-    <div class="coach-grid">
+        <?php foreach ($daftarCoach as $coach): ?>
 
-        <?php if (!empty($daftarCoach)): ?>
+            <div style="background: #1f1f1f; padding: 18px; border-radius: 8px; border: 1px solid #333; display: flex; flex-direction: column;">
 
-            <?php foreach ($daftarCoach as $coach): ?>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 12px;">
 
-                <article class="coach-card">
-
-                    <!-- INFORMASI COACH -->
-
-                    <div class="coach-info">
-
-                        <div class="coach-avatar">
-                            <?php
-                            $namaCoach = preg_replace(
-                                '/^Coach\s+/i',
-                                '',
-                                $coach['nama_coach']
-                            );
-
-                            echo htmlspecialchars(
-                                strtoupper(substr($namaCoach, 0, 1))
-                            );
-                            ?>
-                        </div>
-
-                        <div class="coach-detail">
-
-                            <h3>
-                                <?= htmlspecialchars($coach['nama_coach']) ?>
-                            </h3>
-
-                            <span>
-                                <?= (int) $coach['total_kelas'] ?>
-                                Kelas Dipegang
-                            </span>
-
-                        </div>
-
+                    <div style="width: 40px; height: 40px; border-radius: 50%; background: #e50914; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 1.1rem; flex-shrink: 0;">
+                        <?php
+                        echo strtoupper(
+                            substr(
+                                str_replace('Coach ', '', $coach['nama_coach']),
+                                0,
+                                1
+                            )
+                        );
+                        ?>
                     </div>
 
+                    <div>
+                        <h4 style="color: #fff; margin: 0; font-size: 0.95rem; font-weight: bold;">
+                            <?php echo htmlspecialchars($coach['nama_coach']); ?>
+                        </h4>
 
-                    <!-- CABANG OLAHRAGA YANG DIPEGANG -->
-
-                    <div class="coach-cabor">
-
-                        <strong>Cabor:</strong>
-
-                        <?= htmlspecialchars(
-                            $coach['daftar_cabor'] ?? ''
-                        ) ?>
-
+                        <span style="color: #888; font-size: 0.75rem;">
+                            <?php echo $coach['total_kelas']; ?> Kelas Dipegang
+                        </span>
                     </div>
 
-                </article>
+                </div>
 
-            <?php endforeach; ?>
+                <p style="color: #bbb; font-size: 0.82rem; margin: 0; line-height: 1.4; background: #141414; padding: 10px; border-radius: 6px; border: 1px solid #2a2a2a;">
+                    <strong style="color: #e50914;">Cabor:</strong>
+                    <?php echo htmlspecialchars($coach['daftar_cabor']); ?>
+                </p>
 
-        <?php else: ?>
+            </div>
 
-            <p>Belum ada data coach dan pelatih.</p>
-
-        <?php endif; ?>
+        <?php endforeach; ?>
 
     </div>
-
 </section>
 
-
 <!-- =========================================================
-     POSTER DAFTAR HARGA KELAS
-========================================================= -->
+     DAFTAR HARGA KELAS (PNG POSTER)
+     ========================================================= -->
 
-<section class="pricing-banner-section">
-
-    <div class="pricing-banner-heading">
-
-        <div>
-            <h2>Daftar Harga Kelas ELRAM</h2>
-
-            <p>
-                Temukan kelas yang sesuai dengan tujuan latihanmu.
-                Pilih cabang olahraga favorit dan mulai berlatih
-                bersama ELRAM Training Camp!
-            </p>
-        </div>
-
-        <span class="pricing-badge">
-            ELRAM TRAINING CAMP
-        </span>
-
-    </div>
-
-
+<section class="pricing-banner-section" style="margin-top: 35px;">
+    <h2>Daftar Harga Kelas</h2>
     <div class="pricing-banner-wrapper">
-
-        <img
-            src="/jobsheet-08/assets/images/daftar-harga.png"
-            alt="Poster Daftar Harga Kelas ELRAM Training Camp"
-            class="pricing-banner-img"
-            loading="lazy"
-        >
-
+        <img src="assets/images/daftar-harga.png" alt="Daftar Harga Kelas ELRAM Training Camp" class="pricing-banner-img">
     </div>
-
 </section>
-
 
 <?php
-// =========================================================
-// 5. FOOTER
-// =========================================================
-
 include __DIR__ . '/includes/footer.php';
 ?>
