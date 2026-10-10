@@ -6,7 +6,7 @@ $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 ?>
 
-<section>
+<section class="form-panel">
     <h2>Tambah Anggota</h2>
 
     <?php if ($flash): ?>

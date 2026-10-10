@@ -7,7 +7,7 @@ unset($_SESSION['flash']);
 $daftarBuku = $_SESSION['buku'] ?? [];
 ?> 
 
-<section>
+<section class="list-panel">
     <h2>Daftar Buku</h2>
 
     <?php if ($flash): ?>
@@ -32,6 +32,8 @@ $daftarBuku = $_SESSION['buku'] ?? [];
         </div>
     </div>
 
+    <p class="table-count">Total buku: <strong><?php echo count($daftarBuku); ?></strong></p>
+
     <div class="table-responsive">
         <table>
             <thead>
@@ -55,10 +57,10 @@ $daftarBuku = $_SESSION['buku'] ?? [];
 
                     <?php foreach ($daftarBuku as $buku): ?>
                         <tr>
-                            <td><?php echo $buku['judul']; ?></td>
-                            <td><?php echo $buku['pengarang']; ?></td>
-                            <td><?php echo $buku['tahun']; ?></td>
-                            <td><?php echo $buku['stok']; ?></td>
+                            <td><?php echo htmlspecialchars((string) ($buku['judul'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars((string) ($buku['pengarang'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars((string) ($buku['tahun'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars((string) ($buku['stok'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></td>
                             <td>
                                 <button type="button">Edit</button>
                                 <button type="button" class="btn-hapus">Hapus</button>

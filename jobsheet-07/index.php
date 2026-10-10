@@ -220,38 +220,44 @@ $bukuTerlambat = 12;
 ?>
 
 
-<section>
+<section class="welcome-panel">
     <h2>Selamat Datang di Sistem Perpustakaan Mini</h2>
 
-    <p>
-        Aplikasi sederhana untuk mengelola data buku dan anggota perpustakaan.
-    </p>
+    <p>Aplikasi sederhana untuk mengelola data buku dan anggota perpustakaan.</p>
 </section>
 
 
-<section>
+<section class="stats-section">
     <h2>Ringkasan</h2>
 
     <article>
-        <h3>Total Buku</h3>
+        <div class="stat-icon" aria-hidden="true">▤</div><h3>Total Buku</h3>
         <p><?php echo $totalBuku; ?></p>
     </article>
 
     <article>
-        <h3>Total Anggota</h3>
+        <div class="stat-icon" aria-hidden="true">♟</div><h3>Total Anggota</h3>
         <p><?php echo $totalAnggota; ?></p>
     </article>
 
     <article>
-        <h3>Sedang Dipinjam</h3>
+        <div class="stat-icon" aria-hidden="true">▥</div><h3>Sedang Dipinjam</h3>
         <p><?php echo $bukuDipinjam; ?></p>
     </article>
 
     <article>
-        <h3>Buku Terlambat</h3>
+        <div class="stat-icon" aria-hidden="true">◷</div><h3>Buku Terlambat</h3>
         <p><?php echo $bukuTerlambat; ?></p>
     </article>
 </section>
 
+<section class="dashboard-tools">
+  <h2>Pengaturan Sesi</h2>
+  <p class="text-secondary">Gunakan fitur ini untuk keperluan pengujian Jobsheet 7.</p>
+  <div class="d-flex flex-wrap gap-2">
+    <a class="btn btn-outline-success" href="debug_session.php">Lihat Debug Session</a>
+    <a class="btn btn-outline-danger" href="reset_session.php" onclick="return confirm('Yakin ingin mereset seluruh data session?')">Reset Data Session</a>
+  </div>
+</section>
 
 <?php include __DIR__ . '/includes/footer.php'; ?>

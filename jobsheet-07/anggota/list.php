@@ -6,7 +6,7 @@ $flash = $_SESSION['flash'] ?? null;
 unset($_SESSION['flash']);
 $daftarAnggota = $_SESSION['anggota'] ?? [];
 ?>
-        <section>
+        <section class="list-panel">
             <h2>Daftar Anggota</h2>
 
             <?php if ($flash): ?>
@@ -18,7 +18,9 @@ $daftarAnggota = $_SESSION['anggota'] ?? [];
                 <input type="text" id="search-input" placeholder="Ketik nama anggota...">
             </div>
 
-            <div class="table-responsive">
+            <p class="table-count">Total anggota: <strong><?php echo count($daftarAnggota); ?></strong></p>
+
+    <div class="table-responsive">
             <table>
                 <thead>
                     <tr>
@@ -37,10 +39,10 @@ $daftarAnggota = $_SESSION['anggota'] ?? [];
                     <?php else: ?>
                         <?php foreach ($daftarAnggota as $anggota): ?>
                         <tr>
-                            <td><?php echo $anggota['no_anggota']; ?></td>
-                            <td><?php echo $anggota['nama']; ?></td>
-                            <td><?php echo $anggota['alamat']; ?></td>
-                            <td><?php echo $anggota['no_hp']; ?></td>
+                            <td><?php echo htmlspecialchars((string) ($anggota['no_anggota'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars((string) ($anggota['nama'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars((string) ($anggota['alamat'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></td>
+                            <td><?php echo htmlspecialchars((string) ($anggota['no_hp'] ?? ''), ENT_QUOTES, 'UTF-8'); ?></td>
                             <td>
                                 <button type="button">Edit</button>
                                 <button type="button" class="btn-hapus">Hapus</button>
