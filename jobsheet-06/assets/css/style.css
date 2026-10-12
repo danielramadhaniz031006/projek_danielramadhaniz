@@ -14,18 +14,84 @@ body {
 }
 a { text-decoration:none; }
 .site-header {
-  background:linear-gradient(120deg,var(--green-950),var(--green-800));
-  box-shadow:0 4px 16px rgba(6,78,59,.18);
+  position:fixed;
+  inset:0 auto 0 0;
+  width:286px;
+  height:100vh;
+  background:linear-gradient(180deg,var(--green-950),var(--green-900));
+  box-shadow:4px 0 18px rgba(6,78,59,.15);
+  z-index:1030;
+  overflow-y:auto;
 }
-.site-header .navbar-brand { color:#fff; font-size:1.45rem; font-weight:800; letter-spacing:.2px; }
+.site-header .navbar {
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+  padding:24px 14px;
+}
+.site-header .navbar > .container-fluid {
+  width:100%;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  justify-content:flex-start;
+  gap:28px;
+  padding-left:0!important;
+  padding-right:0!important;
+}
+.site-header .navbar-brand {
+  display:block;
+  color:#fff;
+  font-size:1.45rem;
+  font-weight:800;
+  letter-spacing:.2px;
+  white-space:nowrap;
+  padding:0 12px;
+  margin-right:0;
+}
+.site-header .navbar-collapse {
+  display:block!important;
+  width:100%;
+  flex-basis:auto;
+}
+.site-header .navbar-nav {
+  display:flex;
+  flex-direction:column!important;
+  align-items:stretch;
+  width:100%;
+  gap:.35rem;
+}
+.site-header .nav-item { width:100%; }
 .site-header .nav-link {
-  color:rgba(255,255,255,.9); font-weight:650; padding:.62rem .8rem!important;
-  border-radius:9px; transition:background .2s ease,color .2s ease;
+  display:block;
+  width:100%;
+  color:rgba(255,255,255,.9);
+  font-weight:650;
+  padding:.78rem .85rem!important;
+  border-radius:9px;
+  transition:background .2s ease,color .2s ease,transform .2s ease;
 }
-.site-header .nav-link:hover,.site-header .nav-link.active { color:#fff; background:rgba(255,255,255,.15); }
-.site-header .navbar-toggler { border-color:rgba(255,255,255,.4); }
+.site-header .nav-link:hover,
+.site-header .nav-link.active {
+  color:#fff;
+  background:rgba(34,197,94,.32);
+}
+.site-header .nav-link:hover { transform:translateX(2px); }
+.site-header .navbar-toggler {
+  display:none;
+  border-color:rgba(255,255,255,.4);
+}
 .site-header .navbar-toggler:focus { box-shadow:0 0 0 .2rem rgba(255,255,255,.16); }
-.page-main { width:min(1200px,100%); margin:2.1rem auto; padding:0 1rem; flex:1; }
+.page-main {
+  width:auto;
+  max-width:none;
+  margin:2.1rem 36px 2rem calc(286px + 36px);
+  padding:0;
+  flex:1;
+}
 .panel {
   background:#fff; border:1px solid rgba(226,232,240,.9); border-radius:var(--radius);
   padding:clamp(1.1rem,2.5vw,1.75rem); box-shadow:var(--shadow); margin-bottom:1.35rem;
@@ -71,13 +137,77 @@ a { text-decoration:none; }
 .form-row { display:grid; grid-template-columns:145px minmax(0,1fr); gap:1rem; align-items:center; margin-bottom:1rem; }
 .form-row .form-label { margin-bottom:0; }
 .form-actions { padding-left:calc(145px + 1rem); display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.45rem; }
-.site-footer { padding:1.2rem 1rem; text-align:center; color:#64748b; font-size:.88rem; }
+.site-footer { margin-left:286px; padding:1.2rem 1rem; text-align:center; color:#64748b; font-size:.88rem; }
 .loading-message { color:var(--muted); padding:.85rem 0; }
 .error-message { color:#b91c1c; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:.75rem 1rem; }
 .empty-message { color:var(--muted); text-align:center; padding:1.2rem!important; }
+/* Tablet: sidebar lebih sempit, konten tetap di sebelah kanan. */
+@media(min-width:701px) and (max-width:991.98px) {
+  .site-header { width:238px; }
+  .site-header .navbar { padding:22px 12px; }
+  .site-header .navbar-brand { font-size:1.3rem; }
+  .page-main { margin-left:262px; margin-right:20px; }
+  .site-footer { margin-left:238px; }
+}
+
+/* Desktop dan tablet: navigasi permanen sebagai sidebar. */
+@media(min-width:701px) {
+  .site-header .navbar-collapse { display:block!important; }
+  .site-header .navbar-toggler { display:none!important; }
+}
+
+/* HP: header pindah ke atas dengan tautan menu yang membungkus bila perlu. */
 @media(max-width:700px) {
-  .page-main { margin:1.2rem auto; padding-inline:.85rem; }
-  .site-header .navbar-brand { font-size:1.28rem; }
+  .site-header {
+    position:relative;
+    inset:auto;
+    width:100%;
+    height:auto;
+    overflow:visible;
+  }
+  .site-header .navbar {
+    height:auto;
+    min-height:0;
+    display:block;
+    padding:.85rem 0;
+  }
+  .site-header .navbar > .container-fluid {
+    height:auto;
+    flex-direction:row;
+    flex-wrap:wrap;
+    align-items:center;
+    gap:.75rem;
+    padding-left:1rem!important;
+    padding-right:1rem!important;
+  }
+  .site-header .navbar-brand {
+    font-size:1.28rem;
+    padding:.2rem 0;
+  }
+  .site-header .navbar-toggler { display:none!important; }
+  .site-header .navbar-collapse {
+    display:block!important;
+    width:100%;
+    flex-basis:100%;
+  }
+  .site-header .navbar-nav {
+    flex-direction:row!important;
+    flex-wrap:wrap;
+    gap:.25rem;
+  }
+  .site-header .nav-item { width:auto; }
+  .site-header .nav-link {
+    width:auto;
+    padding:.55rem .68rem!important;
+    font-size:.9rem;
+  }
+  .page-main {
+    width:100%;
+    max-width:none;
+    margin:1.2rem 0;
+    padding-inline:.85rem;
+  }
+  .site-footer { margin-left:0; }
   .stats-grid { grid-template-columns:1fr; }
   .stat-card { min-height:95px; }
   .toolbar { align-items:stretch; }
