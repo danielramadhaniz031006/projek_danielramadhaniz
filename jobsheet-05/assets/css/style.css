@@ -23,18 +23,98 @@ body {
 }
 a { text-decoration: none; }
 .site-header {
-    background: linear-gradient(120deg, var(--green-950), var(--green-800));
-    box-shadow: 0 4px 16px rgba(6,78,59,.18);
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 286px;
+    height: 100vh;
+    background: linear-gradient(180deg, var(--green-950), var(--green-900));
+    box-shadow: 4px 0 18px rgba(6, 78, 59, .15);
+    z-index: 1030;
+    overflow-y: auto;
 }
-.site-header .navbar-brand { color: #fff; font-size: 1.5rem; font-weight: 800; letter-spacing: .2px; }
+
+.site-header .navbar {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 24px 14px;
+}
+
+.site-header .navbar > .container-fluid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 28px;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+.site-header .navbar-brand {
+    display: block;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: .2px;
+    white-space: nowrap;
+    padding: 0 12px;
+    margin-right: 0;
+}
+
+.site-header .navbar-collapse {
+    display: block !important;
+    width: 100%;
+    flex-basis: auto;
+}
+
+.site-header .navbar-nav {
+    display: flex;
+    flex-direction: column !important;
+    align-items: stretch;
+    width: 100%;
+    gap: .35rem;
+}
+
+.site-header .nav-item { width: 100%; }
+
 .site-header .nav-link {
-    color: rgba(255,255,255,.88); font-weight: 600; padding: .65rem .85rem !important;
-    border-radius: 9px; transition: background .2s ease, color .2s ease;
+    display: block;
+    width: 100%;
+    color: rgba(255,255,255,.9);
+    font-weight: 600;
+    padding: .78rem .9rem !important;
+    border-radius: 9px;
+    transition: background .2s ease, color .2s ease, transform .2s ease;
 }
-.site-header .nav-link:hover, .site-header .nav-link.active { color: #fff; background: rgba(255,255,255,.14); }
-.site-header .navbar-toggler { border-color: rgba(255,255,255,.4); }
-.site-header .navbar-toggler:focus { box-shadow: 0 0 0 .2rem rgba(255,255,255,.16); }
-.page-main { width: min(1200px, 100%); margin: 2.25rem auto; padding: 0 1rem; flex: 1; }
+
+.site-header .nav-link:hover,
+.site-header .nav-link.active {
+    color: #fff;
+    background: rgba(34, 197, 94, .32);
+}
+
+.site-header .nav-link:hover { transform: translateX(2px); }
+
+.site-header .navbar-toggler {
+    display: none;
+    border-color: rgba(255,255,255,.4);
+}
+
+.site-header .navbar-toggler:focus {
+    box-shadow: 0 0 0 .2rem rgba(255,255,255,.16);
+}
+
+.page-main {
+    width: auto;
+    max-width: none;
+    margin: 2.25rem 36px 2rem calc(286px + 36px);
+    padding: 0;
+    flex: 1;
+}
 .panel {
     background: #fff; border: 1px solid rgba(226,232,240,.85); border-radius: var(--radius);
     padding: clamp(1.15rem, 2.5vw, 1.8rem); box-shadow: var(--shadow); margin-bottom: 1.4rem;
@@ -80,10 +160,81 @@ a { text-decoration: none; }
 .form-row { display: grid; grid-template-columns: 145px minmax(0, 1fr); gap: 1rem; align-items: center; margin-bottom: 1rem; }
 .form-row .form-label { margin-bottom: 0; }
 .form-actions { padding-left: calc(145px + 1rem); display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
-.site-footer { padding: 1.3rem 1rem; text-align: center; color: #64748b; font-size: .88rem; }
+.site-footer { margin-left: 286px; padding: 1.3rem 1rem; text-align: center; color: #64748b; font-size: .88rem; }
+/* Tablet: sidebar lebih ramping, konten tetap di sebelah kanan. */
+@media (min-width: 701px) and (max-width: 991.98px) {
+    .site-header { width: 238px; }
+    .site-header .navbar { padding: 22px 12px; }
+    .site-header .navbar-brand { font-size: 1.32rem; }
+    .site-header .navbar-toggler { display: none; }
+    .page-main { margin-left: 262px; margin-right: 20px; }
+    .site-footer { margin-left: 238px; }
+}
+
+/* Desktop dan tablet: navigasi tetap terlihat sebagai sidebar. */
+@media (min-width: 701px) {
+    .site-header .navbar-collapse { display: block !important; }
+    .site-header .navbar-toggler { display: none; }
+}
+
+/* HP: header kembali ke atas, menu tetap terlihat dan bisa membungkus baris. */
 @media (max-width: 700px) {
-    .page-main { margin: 1.25rem auto; padding-inline: .85rem; }
-    .site-header .navbar-brand { font-size: 1.3rem; }
+    .site-header {
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: auto;
+        overflow: visible;
+    }
+
+    .site-header .navbar {
+        height: auto;
+        min-height: 0;
+        display: block;
+        padding: .85rem 0;
+    }
+
+    .site-header .navbar > .container-fluid {
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: .75rem;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+    }
+
+    .site-header .navbar-brand {
+        font-size: 1.3rem;
+        padding: .2rem 0;
+    }
+
+    /* Menu langsung tampil pada HP agar navigasi mudah diakses. */
+    .site-header .navbar-toggler { display: none; }
+
+    .site-header .navbar-collapse {
+        display: block !important;
+        width: 100%;
+        flex-basis: 100%;
+    }
+
+    .site-header .navbar-nav {
+        flex-direction: row !important;
+        flex-wrap: wrap;
+        gap: .25rem;
+    }
+
+    .site-header .nav-item { width: auto; }
+    .site-header .nav-link { width: auto; padding: .55rem .7rem !important; }
+
+    .page-main {
+        width: 100%;
+        max-width: none;
+        margin: 1.25rem 0;
+        padding-inline: .85rem;
+    }
+
+    .site-footer { margin-left: 0; }
     .stats-grid { grid-template-columns: 1fr; }
     .stat-card { min-height: 98px; }
     .toolbar { align-items: stretch; }
