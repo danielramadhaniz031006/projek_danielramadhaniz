@@ -2,55 +2,98 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIMPUS-Mini | Daftar Buku</title>
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
-<body>
-    <div class="app-shell">
-        <aside class="sidebar">
-            <a class="brand" href="../index.html" aria-label="SIMPUS-Mini Beranda">
-                <span class="brand-mark">S</span>
-                <span>SIMPUS<span class="brand-light">-Mini</span></span>
-            </a>
-            <div class="sidebar-label">MENU UTAMA</div>
-            <nav class="sidebar-nav" aria-label="Navigasi utama">
-                <a class="nav-link" href="../index.html"><span class="nav-icon">⌂</span><span>Beranda</span></a>
-                <a class="nav-link active" href="list.html" aria-current="page"><span class="nav-icon">▤</span><span>Daftar Buku</span></a>
-                <a class="nav-link" href="tambah.html"><span class="nav-icon">＋</span><span>Tambah Buku</span></a>
-                <a class="nav-link" href="../anggota/list.html"><span class="nav-icon">♙</span><span>Daftar Anggota</span></a>
-            </nav>
-            <div class="sidebar-bottom"><span class="sidebar-bottom-mark">SM</span><div><strong>SIMPUS-Mini</strong><small>Jobsheet 1 · 2026</small></div></div>
-        </aside>
+<body> 
+    <header>
+        <h1>SIMPUS-Mini</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Beranda</a></li>
+                <li><a href="list.html">Daftar Buku</a></li>
+                <li><a href="tambah.html">Tambah Buku</a></li>
+                <li><a href="../anggota/list.html">Daftar Anggota</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <div class="workspace">
-            <header class="page-topbar">
-                <div><p class="eyebrow">MANAJEMEN KOLEKSI</p><h1>Daftar Buku</h1></div>
-                <a class="button button-primary topbar-action" href="tambah.html"><span class="button-symbol">＋</span> Tambah Buku</a>
-            </header>
+    <main>
+        <section>
+            <h2>Daftar Buku</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Judul</th>
+                        <th>Pengarang</th>
+                        <th>Tahun</th>
+                        <th>Stok</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Laskar Pelangi</td>
+                        <td>Andrea Hirata</td>
+                        <td>2005</td>
+                        <td>4</td>
+                        <td>
+                            <button type="button">Edit</button>
+                            <button type="button">Detail</button>
+                            <button type="button">Hapus</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bumi Manusia</td>
+                        <td>Pramoedya Ananta Toer</td>
+                        <td>1980</td>
+                        <td>2</td>
+                        <td>
+                            <button type="button">Edit</button>
+                            <button type="button">Detail</button>
+                            <button type="button">Hapus</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Negeri 5 Menara</td>
+                        <td>Ahmad Fuadi</td>
+                        <td>2009</td>
+                        <td>0</td>
+                        <td>
+                            <button type="button">Edit</button>
+                            <button type="button">Detail</button>
+                            <button type="button">Hapus</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Filosofi Teras</td>
+                        <td>Henry Manampiring</td>
+                        <td>2018</td>
+                        <td>5</td>
+                        <td>
+                            <button type="button">Edit</button>
+                            <button type="button">Detail</button>
+                            <button type="button">Hapus</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Ronggeng Dukuh Paruk</td>
+                        <td>Ahmad Tohari</td>
+                        <td>1982</td>
+                        <td>1</td>
+                        <td>
+                            <button type="button">Edit</button>
+                            <button type="button">Detail</button>
+                            <button type="button">Hapus</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
 
-            <main class="page-content">
-                <section class="content-card">
-                    <div class="content-card-heading">
-                        <div><p class="eyebrow">DATA PERPUSTAKAAN</p><h2>Daftar Buku</h2></div>
-                    </div>
-                    <div class="table-scroll">
-                        <table>
-                            <thead><tr><th>Judul</th><th>Pengarang</th><th>Tahun</th><th>Stok</th><th>Aksi</th></tr></thead>
-                            <tbody>
-                                <tr><td><span class="book-title">Laskar Pelangi</span></td><td>Andrea Hirata</td><td>2005</td><td><span class="stock-pill stock-available">4</span></td><td><div class="action-group"><button class="button button-edit" type="button">Edit</button><button class="button button-detail" type="button">Detail</button><button class="button button-delete" type="button">Hapus</button></div></td></tr>
-                                <tr><td><span class="book-title">Bumi Manusia</span></td><td>Pramoedya Ananta Toer</td><td>1980</td><td><span class="stock-pill stock-available">2</span></td><td><div class="action-group"><button class="button button-edit" type="button">Edit</button><button class="button button-detail" type="button">Detail</button><button class="button button-delete" type="button">Hapus</button></div></td></tr>
-                                <tr><td><span class="book-title">Negeri 5 Menara</span></td><td>Ahmad Fuadi</td><td>2009</td><td><span class="stock-pill stock-empty">0</span></td><td><div class="action-group"><button class="button button-edit" type="button">Edit</button><button class="button button-detail" type="button">Detail</button><button class="button button-delete" type="button">Hapus</button></div></td></tr>
-                                <tr><td><span class="book-title">Filosofi Teras</span></td><td>Henry Manampiring</td><td>2018</td><td><span class="stock-pill stock-available">5</span></td><td><div class="action-group"><button class="button button-edit" type="button">Edit</button><button class="button button-detail" type="button">Detail</button><button class="button button-delete" type="button">Hapus</button></div></td></tr>
-                                <tr><td><span class="book-title">Ronggeng Dukuh Paruk</span></td><td>Ahmad Tohari</td><td>1982</td><td><span class="stock-pill stock-low">1</span></td><td><div class="action-group"><button class="button button-edit" type="button">Edit</button><button class="button button-detail" type="button">Detail</button><button class="button button-delete" type="button">Hapus</button></div></td></tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-            </main>
-
-            <footer class="page-footer"><p>&copy; 2026 SIMPUS-Mini <span>—</span> Jobsheet 1</p></footer>
-        </div>
-    </div>
+    <footer>
+        <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 1</p>
+    </footer>
 </body>
 </html>

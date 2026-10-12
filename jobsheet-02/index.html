@@ -2,97 +2,52 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SIMPUS-Mini | Beranda</title>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
-    <div class="app-shell">
-        <aside class="sidebar">
-            <a class="brand" href="index.html" aria-label="SIMPUS-Mini Beranda">
-                <span class="brand-mark">S</span>
-                <span>SIMPUS<span class="brand-light">-Mini</span></span>
-            </a>
+<body> 
+    <header>
+        <h1>SIMPUS-Mini</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Beranda</a></li>
+                <li><a href="buku/list.html">Daftar Buku</a></li>
+                <li><a href="buku/tambah.html">Tambah Buku</a></li>
+                <li><a href="anggota/list.html">Daftar Anggota</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <div class="sidebar-label">MENU UTAMA</div>
-            <nav class="sidebar-nav" aria-label="Navigasi utama">
-                <a class="nav-link active" href="index.html" aria-current="page">
-                    <span class="nav-icon">⌂</span><span>Beranda</span>
-                </a>
-                <a class="nav-link" href="buku/list.html">
-                    <span class="nav-icon">▤</span><span>Daftar Buku</span>
-                </a>
-                <a class="nav-link" href="buku/tambah.html">
-                    <span class="nav-icon">＋</span><span>Tambah Buku</span>
-                </a>
-                <a class="nav-link" href="anggota/list.html">
-                    <span class="nav-icon">♙</span><span>Daftar Anggota</span>
-                </a>
-            </nav>
+    <main>
+        <section>
+            <h2>Selamat Datang di Sistem Perpustakaan Mini</h2>
+            <p>Aplikasi sederhana untuk mengelola data buku dan anggota perpustakaan.</p>
+        </section>
 
-            <div class="sidebar-bottom">
-                <span class="sidebar-bottom-mark">SM</span>
-                <div><strong>SIMPUS-Mini</strong><small>Jobsheet 1 · 2026</small></div>
-            </div>
-        </aside>
+        <section>
+            <h2>Ringkasan</h2>
+            <article>
+                <h3>Total Buku</h3>
+                <p>12</p>
+            </article>
+            <article>
+                <h3>Total Anggota</h3>
+                <p>8</p>
+            </article>
+            <article>
+                <h3>Sedang Dipinjam</h3>
+                <p>3</p>
+            </article>
+            <article>
+                <h3>Buku Terlambat</h3>
+                <p>2</p>
+            </article>
+        </section>
+    </main>
 
-        <div class="workspace">
-            <header class="page-topbar">
-                <div>
-                    <p class="eyebrow">SISTEM PERPUSTAKAAN</p>
-                    <h1>Beranda</h1>
-                </div>
-                <div class="topbar-badge"><span class="status-dot"></span> Sistem aktif</div>
-            </header>
-
-            <main class="page-content">
-                <section class="welcome-card">
-                    <div class="welcome-copy">
-                        <p class="eyebrow">SELAMAT DATANG</p>
-                        <h2>Selamat Datang di Sistem Perpustakaan Mini</h2>
-                        <p>Aplikasi sederhana untuk mengelola data buku dan anggota perpustakaan.</p>
-                    </div>
-                    <div class="welcome-art" aria-hidden="true">
-                        <div class="book book-back"></div>
-                        <div class="book book-mid"></div>
-                        <div class="book book-front"><span></span><i></i></div>
-                    </div>
-                </section>
-
-                <section class="stats-section" aria-labelledby="ringkasan-title">
-                    <div class="section-heading">
-                        <div>
-                            <p class="eyebrow">OVERVIEW</p>
-                            <h2 id="ringkasan-title">Ringkasan</h2>
-                        </div>
-                    </div>
-                    <div class="stats-grid">
-                        <article class="stat-card stat-books">
-                            <div class="stat-top"><span class="stat-icon">▤</span><span class="stat-tag">KOLEKSI</span></div>
-                            <p class="stat-label">Total Buku</p>
-                            <p class="stat-value">12</p>
-                        </article>
-                        <article class="stat-card stat-members">
-                            <div class="stat-top"><span class="stat-icon">♙</span><span class="stat-tag">PENGGUNA</span></div>
-                            <p class="stat-label">Total Anggota</p>
-                            <p class="stat-value">8</p>
-                        </article>
-                        <article class="stat-card stat-loans">
-                            <div class="stat-top"><span class="stat-icon">↗</span><span class="stat-tag">PEMINJAMAN</span></div>
-                            <p class="stat-label">Sedang Dipinjam</p>
-                            <p class="stat-value">3</p>
-                        </article>
-                        <article class="stat-card stat-overdue">
-                            <div class="stat-top"><span class="stat-icon">◷</span><span class="stat-tag">PERHATIAN</span></div>
-                            <p class="stat-label">Buku Terlambat</p>
-                            <p class="stat-value">2</p>
-                        </article>
-                    </div>
-                </section>
-            </main>
-
-            <footer class="page-footer"><p>&copy; 2026 SIMPUS-Mini <span>—</span> Jobsheet 1</p></footer>
-        </div>
-    </div>
+    <footer>
+        <p>&copy; 2026 SIMPUS-Mini &mdash; Jobsheet 1</p>
+    </footer>
 </body>
 </html>
+```
