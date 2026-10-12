@@ -65,82 +65,83 @@ a:hover {
     color: var(--primary-light);
 }
 
-/* ===== 4. Header ===== */
+/* ===== 4. Sidebar Header ===== */
 header {
-    background: linear-gradient(
-        135deg,
-        var(--primary-dark),
-        var(--primary)
-    );
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 272px;
+    height: 100vh;
+    min-height: 100vh;
+    background: #211e4d;
     color: var(--white);
-    padding: 18px 32px;
-
+    padding: 24px 13px;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 24px;
-
-    flex-wrap: wrap;
-
-    box-shadow: 0 4px 15px rgba(20, 83, 45, 0.18);
-
-    position: relative;
-    z-index: 10;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: 28px;
+    box-shadow: 4px 0 18px rgba(20, 20, 50, 0.08);
+    z-index: 100;
+    overflow-y: auto;
 }
 
 /* Judul aplikasi */
 header h1 {
-    font-size: 1.65rem;
+    font-size: 1.45rem;
     font-weight: 800;
-    letter-spacing: 0.4px;
+    letter-spacing: 0.2px;
     color: var(--white);
+    padding: 0 13px;
 }
 
-/* ===== 5. Navbar ===== */
+/* ===== 5. Navigasi Vertikal Sidebar ===== */
+header nav {
+    width: 100%;
+    margin-left: 0;
+}
+
 header nav ul {
     list-style: none;
-
     display: flex;
-    align-items: center;
-
-    gap: 8px;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 7px;
+    flex-wrap: nowrap;
+    width: 100%;
 }
 
 header nav li {
     display: block;
+    width: 100%;
 }
 
 header nav a {
-    display: inline-block;
-
-    color: rgba(255, 255, 255, 0.92);
-
-    font-size: 0.95rem;
-    font-weight: 600;
-
-    padding: 10px 14px;
-    border-radius: var(--radius-sm);
-
+    display: block;
+    width: 100%;
+    color: #e5e7ff;
+    font-size: 0.96rem;
+    font-weight: 650;
+    padding: 15px 16px;
+    border-radius: 10px;
     transition: var(--transition);
 }
 
-header nav a:hover {
+header nav a:hover,
+header nav a[aria-current="page"] {
     color: var(--white);
-    background: rgba(255, 255, 255, 0.14);
+    background: #4f50c8;
     text-decoration: none;
-
-    transform: translateY(-1px);
+    transform: translateX(2px);
 }
 
 /* ===== 6. Main Layout ===== */
 main {
-    width: 100%;
-    max-width: 1200px;
-
-    margin: 36px auto;
-    padding: 0 24px;
+    width: auto;
+    max-width: 1500px;
+    margin: 32px 36px 32px calc(272px + 36px);
+    padding: 0;
+    min-height: calc(100vh - 125px);
 }
 
 /* ===== 7. Section / Card Utama ===== */
@@ -564,62 +565,86 @@ input[type="search"]:focus {
 /* ===== 15. Footer ===== */
 footer {
     text-align: center;
-
     padding: 24px 16px;
-    margin-top: 36px;
-
+    margin-top: 30px;
+    margin-left: 272px;
     color: #6b7280;
-
     font-size: 0.9rem;
 }
 
 /* ===== 16. Tampilan Tablet ===== */
 @media (max-width: 900px) {
     header {
-        padding: 18px 22px;
+        width: 230px;
+        padding: 22px 11px;
+    }
+
+    header h1 {
+        font-size: 1.3rem;
     }
 
     main {
-        max-width: 100%;
-        padding: 0 20px;
+        max-width: none;
+        margin: 24px 22px 24px 252px;
+        min-height: calc(100vh - 115px);
     }
 
     main section:nth-of-type(2) {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    footer {
+        margin-left: 230px;
     }
 }
 
 /* ===== 17. Tampilan HP ===== */
 @media (max-width: 600px) {
     header {
-        flex-direction: column;
-        align-items: flex-start;
-
+        position: relative;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 18px 16px;
         gap: 14px;
-
-        padding: 20px;
+        overflow: visible;
     }
 
     header h1 {
-        font-size: 1.45rem;
+        font-size: 1.35rem;
+        padding: 0 4px;
     }
 
     header nav {
         width: 100%;
+        overflow-x: auto;
     }
 
     header nav ul {
+        flex-direction: row;
+        align-items: center;
         gap: 6px;
+        width: max-content;
+        min-width: 100%;
+    }
+
+    header nav li {
+        width: auto;
+        flex: 0 0 auto;
     }
 
     header nav a {
-        padding: 9px 10px;
-        font-size: 0.85rem;
+        width: auto;
+        padding: 10px 12px;
+        font-size: 0.84rem;
+        white-space: nowrap;
     }
 
     main {
-        margin: 22px auto;
-        padding: 0 14px;
+        width: auto;
+        margin: 20px 14px;
+        padding: 0;
+        min-height: calc(100vh - 180px);
     }
 
     section {
@@ -652,12 +677,10 @@ footer {
         font-size: 2rem;
     }
 
-    /* Tabel bisa digeser ke samping jika terlalu lebar */
     table {
         min-width: 650px;
     }
 
-    /* Jangan biarkan tabel merusak lebar halaman */
     section:has(table) {
         overflow-x: auto;
     }
@@ -669,6 +692,7 @@ footer {
     }
 
     footer {
+        margin-left: 0;
         margin-top: 24px;
         font-size: 0.85rem;
     }
