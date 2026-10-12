@@ -1,8 +1,6 @@
-/* ============================================================
-   SIMPUS-Mini Jobsheet 6.
-   ============================================================ */
+/* CSS SIMPUS-Mini Jobsheet 6 */
 
-/* 1. WARNA DAN PENGATURAN DASAR WEBSITE */
+/* Mengatur warna tema website */
 :root {
   --green-950: #064e3b;
   --green-900: #065f46;
@@ -20,17 +18,17 @@
   --radius: 16px;
 }
 
-/* Menghitung ukuran elemen agar padding/border tidak merusak lebar layout. */
+/* Mengatur ukuran seluruh elemen website */
 * {
   box-sizing: border-box;
 }
 
-/* Menghaluskan perpindahan saat pengguna menekan tautan ke bagian halaman. */
+/* Membuat scroll halaman lebih halus */
 html {
   scroll-behavior: smooth;
 }
 
-/* Tampilan umum semua halaman: warna latar, font, dan tinggi minimum layar. */
+/* Mengatur tampilan dasar seluruh halaman */
 body {
   margin: 0;
   min-height: 100vh;
@@ -42,15 +40,12 @@ body {
   line-height: 1.6;
 }
 
+/* Menghilangkan garis bawah pada tautan */
 a {
   text-decoration: none;
 }
 
-/* ============================================================
-   2. SIDEBAR / MENU NAVIGASI DI SISI KIRI
-   Dipakai untuk menu Beranda, Daftar Buku, Tambah Buku,
-   dan Daftar Anggota.
-   ============================================================ */
+/* Mengatur sidebar hijau di sebelah kiri website */
 .site-header {
   position: fixed;
   inset: 0 auto 0 0;
@@ -62,7 +57,7 @@ a {
   overflow-y: auto;
 }
 
-/* Menyusun isi sidebar secara vertikal. */
+/* Mengatur susunan isi sidebar */
 .site-header .navbar {
   height: 100%;
   display: flex;
@@ -72,7 +67,7 @@ a {
   padding: 24px 14px;
 }
 
-/* Wadah logo/nama aplikasi dan daftar menu sidebar. */
+/* Mengatur posisi nama aplikasi dan menu sidebar */
 .site-header .navbar > .container-fluid {
   width: 100%;
   height: 100%;
@@ -85,7 +80,7 @@ a {
   padding-right: 0 !important;
 }
 
-/* Nama/brand aplikasi SIMPUS-Mini di bagian atas sidebar. */
+/* Mengatur tampilan tulisan SIMPUS-Mini */
 .site-header .navbar-brand {
   display: block;
   color: #fff;
@@ -97,14 +92,14 @@ a {
   margin-right: 0;
 }
 
-/* Memastikan menu navigasi tampil di bawah brand pada sidebar desktop. */
+/* Mengatur area daftar menu sidebar */
 .site-header .navbar-collapse {
   display: block !important;
   width: 100%;
   flex-basis: auto;
 }
 
-/* Daftar menu navigasi disusun ke bawah. */
+/* Menyusun menu navigasi secara vertikal */
 .site-header .navbar-nav {
   display: flex;
   flex-direction: column !important;
@@ -113,11 +108,12 @@ a {
   gap: .35rem;
 }
 
+/* Mengatur lebar setiap item menu */
 .site-header .nav-item {
   width: 100%;
 }
 
-/* Bentuk dan warna tautan menu Beranda/Buku/Anggota. */
+/* Mengatur tampilan tulisan dan tombol menu */
 .site-header .nav-link {
   display: block;
   width: 100%;
@@ -128,31 +124,30 @@ a {
   transition: background .2s ease, color .2s ease, transform .2s ease;
 }
 
-/* Menandai menu aktif dan memberi efek saat kursor diarahkan ke menu. */
+/* Memberikan warna pada menu aktif dan menu yang disorot */
 .site-header .nav-link:hover,
 .site-header .nav-link.active {
   color: #fff;
   background: rgba(34, 197, 94, .32);
 }
 
+/* Menggeser menu sedikit saat kursor diarahkan ke sana */
 .site-header .nav-link:hover {
   transform: translateX(2px);
 }
 
-/* Tombol hamburger disembunyikan pada layout desktop. */
+/* Menyembunyikan tombol hamburger pada desktop */
 .site-header .navbar-toggler {
   display: none;
   border-color: rgba(255, 255, 255, .4);
 }
 
+/* Mengatur efek fokus tombol hamburger */
 .site-header .navbar-toggler:focus {
   box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .16);
 }
 
-/* ============================================================
-   3. AREA KONTEN UTAMA
-   Konten digeser ke kanan agar tidak tertutup sidebar.
-   ============================================================ */
+/* Mengatur posisi konten utama di sebelah sidebar */
 .page-main {
   width: auto;
   max-width: none;
@@ -161,8 +156,7 @@ a {
   flex: 1;
 }
 
-/* Kartu/kontainer putih untuk isi halaman, misalnya Ringkasan,
-   Daftar Buku, Daftar Anggota, dan formulir tambah data. */
+/* Mengatur kotak putih untuk membungkus konten website */
 .panel {
   background: #fff;
   border: 1px solid rgba(226, 232, 240, .9);
@@ -172,7 +166,7 @@ a {
   margin-bottom: 1.35rem;
 }
 
-/* Judul halaman/kartu seperti "Daftar Buku" dan "Tambah Anggota". */
+/* Mengatur tampilan judul panel konten */
 .panel-title {
   color: var(--green-950);
   font-size: 1.45rem;
@@ -180,39 +174,33 @@ a {
   margin-bottom: 1.15rem;
 }
 
-/* ============================================================
-   4. BERANDA: PANEL SELAMAT DATANG
-   Mengatur panel pengantar di bagian atas Beranda.
-   ============================================================ */
+/* Memberikan gradasi pada panel Selamat Datang */
 .welcome-panel {
   background: linear-gradient(115deg, #fff 0%, #f0fdf4 100%);
   border-left: 5px solid var(--green-800);
 }
 
+/* Mengatur tulisan penjelasan pada panel Selamat Datang */
 .welcome-panel p {
   color: #475569;
   margin-bottom: 0;
 }
 
-/* Ikon/simbol di sisi kanan panel Selamat Datang. */
+/* Mengatur ukuran dan warna ikon Selamat Datang */
 .welcome-symbol {
   color: var(--green-700);
   font-size: 2.8rem;
   line-height: 1;
 }
 
-/* ============================================================
-   5. BERANDA: KARTU RINGKASAN / STATISTIK
-   Mengatur kartu Total Buku, Total Anggota, Sedang Dipinjam,
-   dan Buku Terlambat yang tampak pada halaman Beranda.
-   ============================================================ */
+/* Menyusun kartu statistik Beranda menjadi dua kolom */
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 1rem;
 }
 
-/* Tampilan satu kartu statistik. */
+/* Mengatur tampilan kotak statistik Beranda */
 .stat-card {
   position: relative;
   min-height: 116px;
@@ -226,7 +214,7 @@ a {
   background: linear-gradient(145deg, #f0fdf4, #ecfdf5);
 }
 
-/* Garis hijau di bagian paling atas tiap kartu statistik. */
+/* Memberikan garis hijau di bagian atas kartu statistik */
 .stat-card::before {
   content: "";
   position: absolute;
@@ -235,7 +223,7 @@ a {
   background: linear-gradient(90deg, var(--green-800), #22c55e);
 }
 
-/* Area ikon pada kartu statistik. */
+/* Mengatur posisi, ukuran, dan warna ikon statistik */
 .stat-icon {
   width: 44px;
   height: 44px;
@@ -246,7 +234,7 @@ a {
   font-size: 1.65rem;
 }
 
-/* Label statistik, misalnya "Total Buku". */
+/* Mengatur tampilan label statistik */
 .stat-label {
   margin: 0 0 .1rem;
   color: var(--muted);
@@ -254,7 +242,7 @@ a {
   font-weight: 700;
 }
 
-/* Angka utama pada kartu statistik. */
+/* Mengatur ukuran dan warna angka statistik */
 .stat-number {
   margin: 0;
   color: var(--green-900);
@@ -263,10 +251,7 @@ a {
   font-weight: 850;
 }
 
-/* ============================================================
-   6. TOOLBAR DAFTAR DATA
-   Menata kolom pencarian dan tombol tambah di halaman daftar.
-   ============================================================ */
+/* Mengatur posisi pencarian dan tombol tambah data */
 .toolbar {
   display: flex;
   flex-wrap: wrap;
@@ -276,8 +261,7 @@ a {
   margin-bottom: 1rem;
 }
 
-/* Form pencarian pada halaman Daftar Buku/Daftar Anggota.
-   CSS ini menata tampilannya; proses pencarian ditangani HTML/JS. */
+/* Mengatur posisi kolom pencarian dan tombol Cari */
 .search-form {
   display: flex;
   gap: .5rem;
@@ -285,14 +269,12 @@ a {
   max-width: 560px;
 }
 
+/* Menyesuaikan lebar input pencarian */
 .search-form .form-control {
   min-width: 0;
 }
 
-/* ============================================================
-   7. INPUT DAN LABEL FORM
-   Dipakai untuk formulir Tambah Buku dan Tambah Anggota.
-   ============================================================ */
+/* Mengatur tampilan kolom input dan pilihan formulir */
 .form-control,
 .form-select {
   border-color: #cbd5e1;
@@ -300,24 +282,20 @@ a {
   min-height: 43px;
 }
 
-/* Efek fokus saat pengguna memilih kolom input atau pilihan kategori. */
+/* Memberikan efek hijau saat kolom formulir dipilih */
 .form-control:focus,
 .form-select:focus {
   border-color: #16a34a;
   box-shadow: 0 0 0 .22rem rgba(22, 163, 74, .12);
 }
 
-/* Label kolom seperti Judul, Pengarang, Tahun Terbit, Nama, dan Alamat. */
+/* Mengatur tampilan label pada formulir */
 .form-label {
   font-weight: 700;
   color: #334155;
 }
 
-/* ============================================================
-   8. TOMBOL AKSI
-   Mengatur tombol umum, Simpan, Cari, Reset, Edit, Hapus,
-   dan tombol Tambah Buku/Tambah Anggota.
-   ============================================================ */
+/* Mengatur bentuk dan ukuran semua tombol */
 .btn {
   border-radius: 8px;
   font-weight: 700;
@@ -325,59 +303,58 @@ a {
   transition: transform .18s ease, box-shadow .18s ease;
 }
 
-/* Efek visual saat kursor berada di atas tombol. */
+/* Memberikan efek bayangan saat kursor diarahkan ke tombol */
 .btn:hover {
   transform: translateY(-1px);
   box-shadow: 0 5px 12px rgba(15, 23, 42, .1);
 }
 
-/* Tombol hijau, biasanya dipakai untuk Simpan, Cari, dan Tambah. */
+/* Memberikan warna hijau pada tombol utama */
 .btn-success {
   background: var(--green-800);
   border-color: var(--green-800);
 }
 
+/* Menggelapkan warna tombol utama saat disorot */
 .btn-success:hover {
   background: var(--green-950);
   border-color: var(--green-950);
 }
 
-/* Tombol Edit berwarna kuning. */
+/* Mengatur tampilan tombol Edit berwarna kuning */
 .btn-edit {
   background: #fbbf24;
   color: #422006;
   border: 1px solid #f59e0b;
 }
 
+/* Mengubah warna tombol Edit saat disorot */
 .btn-edit:hover {
   background: #f59e0b;
   color: #422006;
 }
 
-/* Tombol Hapus berwarna merah. */
+/* Mengatur tampilan tombol Hapus berwarna merah */
 .btn-delete {
   background: #ef4444;
   color: #fff;
   border: 1px solid #dc2626;
 }
 
+/* Menggelapkan warna tombol Hapus saat disorot */
 .btn-delete:hover {
   background: #dc2626;
   color: #fff;
 }
 
-/* Tombol Reset dengan warna abu-abu. */
+/* Mengatur tampilan tombol Reset berwarna abu-abu */
 .btn-reset {
   background: #e2e8f0;
   color: #334155;
   border: 1px solid #cbd5e1;
 }
 
-/* ============================================================
-   9. TABEL DAFTAR BUKU DAN DAFTAR ANGGOTA
-   Mengatur header tabel, baris data, garis, hover, serta scroll
-   horizontal jika kolom tabel terlalu lebar.
-   ============================================================ */
+/* Membungkus tabel dan menyediakan scroll horizontal */
 .table-wrap {
   width: 100%;
   overflow-x: auto;
@@ -385,13 +362,14 @@ a {
   border-radius: 10px;
 }
 
+/* Mengatur ukuran dan posisi isi tabel */
 .table {
   margin-bottom: 0;
   vertical-align: middle;
   min-width: 720px;
 }
 
-/* Header tabel hijau dengan tulisan putih. */
+/* Memberikan latar hijau dan tulisan putih pada judul kolom tabel */
 .table thead th {
   background: var(--green-900);
   color: #fff;
@@ -401,43 +379,42 @@ a {
   font-size: .9rem;
 }
 
-/* Jarak isi sel tabel, termasuk kolom Judul, Pengarang, Tahun, Stok, Aksi. */
+/* Mengatur jarak dan garis pembatas isi tabel */
 .table tbody td {
   padding: .75rem;
   border-color: #e8eef0;
 }
 
-/* Warna selang-seling untuk memudahkan pengguna membaca baris tabel. */
+/* Memberikan warna berbeda pada baris tabel genap */
 .table tbody tr:nth-child(even) td {
   background: #f8fbf9;
 }
 
-/* Warna baris saat kursor diarahkan ke data tabel. */
+/* Mengubah warna baris tabel saat kursor diarahkan ke sana */
 .table tbody tr:hover td {
   background: #f0fdf4;
 }
 
-/* Menyusun tombol Edit dan Hapus berdampingan di kolom Aksi. */
+/* Menyusun tombol Edit dan Hapus dalam tabel */
 .action-buttons {
   display: flex;
   flex-wrap: wrap;
   gap: .35rem;
 }
 
+/* Mengatur ukuran tombol aksi dalam tabel */
 .action-buttons .btn {
   padding: .36rem .55rem;
   font-size: .82rem;
 }
 
-/* ============================================================
-   10. FORM TAMBAH BUKU DAN TAMBAH ANGGOTA
-   Label berada di kolom kiri, sedangkan input berada di kanan.
-   ============================================================ */
+/* Mengatur lebar dan posisi panel formulir */
 .form-panel {
   max-width: 920px;
   margin-inline: auto;
 }
 
+/* Menyusun label dan kolom input formulir secara sejajar */
 .form-row {
   display: grid;
   grid-template-columns: 145px minmax(0, 1fr);
@@ -446,12 +423,12 @@ a {
   margin-bottom: 1rem;
 }
 
-/* Label form tetap rata dengan kolom input. */
+/* Menyesuaikan posisi label formulir */
 .form-row .form-label {
   margin-bottom: 0;
 }
 
-/* Posisi tombol Simpan dan Reset sejajar dengan kolom input. */
+/* Mengatur posisi tombol Simpan dan Reset pada formulir */
 .form-actions {
   padding-left: calc(145px + 1rem);
   display: flex;
@@ -460,11 +437,7 @@ a {
   margin-top: 1.45rem;
 }
 
-/* ============================================================
-   11. FOOTER DAN PESAN STATUS
-   Footer berada di area bawah halaman. Kelas pesan digunakan
-   bila HTML/JavaScript menampilkan status proses atau data kosong.
-   ============================================================ */
+/* Mengatur tampilan footer di bawah konten website */
 .site-footer {
   margin-left: 286px;
   padding: 1.2rem 1rem;
@@ -473,13 +446,13 @@ a {
   font-size: .88rem;
 }
 
-/* Gaya untuk pesan sedang memuat data. */
+/* Mengatur tampilan pesan saat data sedang dimuat */
 .loading-message {
   color: var(--muted);
   padding: .85rem 0;
 }
 
-/* Gaya untuk pesan error. */
+/* Mengatur tampilan pesan kesalahan */
 .error-message {
   color: #b91c1c;
   background: #fef2f2;
@@ -488,17 +461,14 @@ a {
   padding: .75rem 1rem;
 }
 
-/* Gaya untuk pesan ketika tabel belum memiliki data. */
+/* Mengatur tampilan pesan ketika data kosong */
 .empty-message {
   color: var(--muted);
   text-align: center;
   padding: 1.2rem !important;
 }
 
-/* ============================================================
-   12. RESPONSIVE TABLET
-   Sidebar diperkecil supaya konten tetap mendapat ruang cukup.
-   ============================================================ */
+/* Menyesuaikan sidebar dan konten pada layar tablet */
 @media (min-width: 701px) and (max-width: 991.98px) {
   .site-header {
     width: 238px;
@@ -522,10 +492,7 @@ a {
   }
 }
 
-/* ============================================================
-   13. RESPONSIVE DESKTOP/TABLET
-   Sidebar tetap tampil permanen di sisi kiri.
-   ============================================================ */
+/* Mengatur navigasi permanen pada desktop dan tablet */
 @media (min-width: 701px) {
   .site-header .navbar-collapse {
     display: block !important;
@@ -536,13 +503,10 @@ a {
   }
 }
 
-/* ============================================================
-   14. RESPONSIVE HP / LAYAR KECIL
-   Sidebar dipindah ke atas, menu dibuat mendatar dan boleh
-   membungkus ke baris berikutnya. Statistik dan form menjadi
-   satu kolom agar mudah dibaca di layar sempit.
-   ============================================================ */
+/* Mengubah tata letak website agar sesuai dengan layar HP */
 @media (max-width: 700px) {
+
+  /* Memindahkan sidebar ke bagian atas halaman */
   .site-header {
     position: relative;
     inset: auto;
@@ -551,6 +515,7 @@ a {
     overflow: visible;
   }
 
+  /* Menyesuaikan tinggi dan jarak navbar pada HP */
   .site-header .navbar {
     height: auto;
     min-height: 0;
@@ -558,6 +523,7 @@ a {
     padding: .85rem 0;
   }
 
+  /* Menyusun nama aplikasi dan menu agar sesuai dengan layar HP */
   .site-header .navbar > .container-fluid {
     height: auto;
     flex-direction: row;
@@ -568,39 +534,44 @@ a {
     padding-right: 1rem !important;
   }
 
+  /* Memperkecil tulisan nama aplikasi pada HP */
   .site-header .navbar-brand {
     font-size: 1.28rem;
     padding: .2rem 0;
   }
 
+  /* Menyembunyikan tombol hamburger pada HP */
   .site-header .navbar-toggler {
     display: none !important;
   }
 
+  /* Menampilkan area menu dengan lebar penuh pada HP */
   .site-header .navbar-collapse {
     display: block !important;
     width: 100%;
     flex-basis: 100%;
   }
 
-  /* Menu di layar HP berjajar mendatar dan membungkus jika penuh. */
+  /* Menyusun menu navigasi secara mendatar pada HP */
   .site-header .navbar-nav {
     flex-direction: row !important;
     flex-wrap: wrap;
     gap: .25rem;
   }
 
+  /* Membuat lebar item menu menyesuaikan isi */
   .site-header .nav-item {
     width: auto;
   }
 
+  /* Memperkecil ukuran tombol menu pada HP */
   .site-header .nav-link {
     width: auto;
     padding: .55rem .68rem !important;
     font-size: .9rem;
   }
 
-  /* Konten menggunakan hampir seluruh lebar layar HP. */
+  /* Menyesuaikan lebar dan jarak konten utama pada HP */
   .page-main {
     width: 100%;
     max-width: none;
@@ -608,49 +579,55 @@ a {
     padding-inline: .85rem;
   }
 
+  /* Menghilangkan jarak kiri footer pada HP */
   .site-footer {
     margin-left: 0;
   }
 
-  /* Kartu statistik ditumpuk menjadi satu kolom pada HP. */
+  /* Menyusun kartu statistik menjadi satu kolom pada HP */
   .stats-grid {
     grid-template-columns: 1fr;
   }
 
+  /* Mengurangi tinggi minimum kartu statistik pada HP */
   .stat-card {
     min-height: 95px;
   }
 
+  /* Menyesuaikan susunan toolbar pada HP */
   .toolbar {
     align-items: stretch;
   }
 
+  /* Membuat kolom pencarian memenuhi lebar layar HP */
   .search-form {
     max-width: none;
     flex-basis: 100%;
   }
 
+  /* Menempatkan tombol toolbar di awal baris */
   .toolbar > .btn {
     align-self: flex-start;
   }
 
-  /* Label dan input form ditumpuk vertikal pada layar kecil. */
+  /* Menyusun label dan input formulir secara vertikal pada HP */
   .form-row {
     grid-template-columns: 1fr;
     gap: .35rem;
   }
 
+  /* Menghilangkan jarak kiri tombol formulir pada HP */
   .form-actions {
     padding-left: 0;
   }
 
+  /* Memperkecil judul panel pada HP */
   .panel-title {
     font-size: 1.25rem;
   }
 }
 
-/* Mengurangi animasi bila perangkat pengguna mengaktifkan
-   pengaturan aksesibilitas "reduce motion". */
+/* Mengurangi animasi sesuai preferensi aksesibilitas pengguna */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
