@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handbook Jobsheet 1–6 | SIMPUS-Mini</title>
+<style>
+:root{
+  --green-950:#052e22;--green-900:#064e3b;--green-800:#166534;
+  --green-700:#15803d;--green-600:#16a34a;--green-100:#dcfce7;
+  --green-50:#f0fdf4;--ink:#18231d;--muted:#647168;--line:#dce8df;
+  --paper:#fff;--bg:#f3f7f4;--gold:#eab308;--shadow:0 12px 35px rgba(6,78,59,.09);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.7 "Segoe UI",Arial,sans-serif}
+a{color:var(--green-800)}
+.hero{background:linear-gradient(130deg,var(--green-950),var(--green-800));color:#fff;padding:54px 22px 46px}
+.hero-inner{max-width:1120px;margin:auto}
+.eyebrow{text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:800;color:#bbf7d0}
+h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.08;margin:14px 0}
+.hero p{max-width:700px;color:#e2fbe9;font-size:1.08rem}
+.badges{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+.badge{border:1px solid #ffffff45;background:#ffffff12;border-radius:999px;padding:6px 12px;font-size:.86rem}
+.layout{max-width:1120px;margin:28px auto;padding:0 18px;display:grid;grid-template-columns:260px minmax(0,1fr);gap:24px;align-items:start}
+.sidebar{position:sticky;top:18px;background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:20px;box-shadow:var(--shadow)}
+.sidebar h2{font-size:1rem;margin:0 0 12px;color:var(--green-900)}
+.sidebar a{display:block;text-decoration:none;padding:9px 11px;border-radius:9px;color:#34483b;font-size:.94rem}
+.sidebar a:hover{background:var(--green-50);color:var(--green-800)}
+.sidebar .sub{padding-left:25px;font-size:.87rem}
+main{min-width:0}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:18px;padding:clamp(20px,4vw,34px);margin-bottom:22px;box-shadow:var(--shadow)}
+.kicker{display:inline-flex;align-items:center;gap:8px;color:var(--green-800);font-weight:800;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+.kicker:before{content:"";width:22px;height:3px;background:var(--gold);border-radius:4px}
+h2{font-size:1.8rem;line-height:1.2;margin:10px 0 16px;color:var(--green-950)}
+h3{font-size:1.12rem;color:var(--green-900);margin:24px 0 8px}
+p{margin:9px 0 14px}
+.lead{font-size:1.06rem;color:#405348}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:18px 0}
+.tile{background:var(--green-50);border:1px solid var(--line);padding:16px;border-radius:13px}
+.tile strong{display:block;color:var(--green-900);margin-bottom:4px}
+ul,ol{padding-left:23px}
+li{margin:5px 0}
+.note{border-left:4px solid var(--green-600);background:var(--green-50);padding:13px 16px;border-radius:0 10px 10px 0;margin:16px 0}
+.warn{border-left-color:var(--gold);background:#fffbeb}
+.tag{display:inline-block;background:var(--green-100);color:var(--green-900);font-weight:700;font-size:.8rem;padding:3px 9px;border-radius:999px;margin:2px}
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:.94rem}
+th,td{padding:11px 12px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{background:var(--green-900);color:#fff}
+tr:nth-child(even) td{background:#f8fbf8}
+code{background:#edf4ee;border:1px solid #dce8df;border-radius:5px;padding:2px 5px;font-size:.9em;overflow-wrap:anywhere}
+.steps{counter-reset:step;list-style:none;padding:0}
+.steps li{counter-increment:step;position:relative;padding:0 0 15px 43px;margin:12px 0}
+.steps li:before{content:counter(step);position:absolute;left:0;top:0;background:var(--green-800);color:white;border-radius:50%;width:29px;height:29px;display:grid;place-items:center;font-weight:800}
+.footer{max-width:1120px;margin:0 auto;padding:12px 18px 36px;color:var(--muted);font-size:.9rem}
+.toplink{display:inline-block;text-decoration:none;background:var(--green-900);color:#fff;padding:9px 14px;border-radius:9px;font-weight:700}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.sidebar{position:static}.sidebar nav{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2px}.sidebar .sub{padding-left:11px}.grid{grid-template-columns:1fr}}
+@media(max-width:480px){.hero{padding:38px 18px}.sidebar nav{grid-template-columns:1fr}.card{padding:20px 17px}table{font-size:.85rem}th,td{padding:8px}}
+@media print{body{background:#fff;font-size:11pt}.hero{padding:25px;background:#064e3b!important;print-color-adjust:exact}.layout{display:block;margin:12px auto}.sidebar{display:none}.card{box-shadow:none;break-inside:avoid;border:1px solid #ccc;margin-bottom:14px}.toplink{display:none}.footer{padding-bottom:0}a{color:inherit;text-decoration:none}}
+</style>
+</head>
+<body id="top">
+<header class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow">Buku Panduan Praktikum • Pemrograman Web</div>
+    <h1>Handbook<br>Jobsheet 1–6</h1>
+    <p>Panduan ringkas perjalanan pengembangan SIMPUS-Mini, dari struktur HTML, styling CSS, layout responsif, hingga interaksi JavaScript dan pengelolaan data JSON.</p>
+    <div class="badges">
+      <span class="badge">SIMPUS-Mini</span><span class="badge">Desain dan Pemrograman Web</span>
+      <span class="badge">TI – 2D</span><span class="badge">Edisi 2026</span>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+  <h2>Daftar Isi</h2>
+  <nav>
+    <a href="#pengantar">Pengantar</a>
+    <a href="#alur">Peta Perkembangan</a>
+    <a href="#js1">Jobsheet 1 — HTML</a>
+    <a href="#js2">Jobsheet 2 — CSS</a>
+    <a href="#js3">Jobsheet 3 — Responsif</a>
+    <a href="#js4">Jobsheet 4 — Penyempurnaan</a>
+    <a href="#js5">Jobsheet 5 — JavaScript</a>
+    <a href="#js6">Jobsheet 6 — JSON & Data</a>
+    <a href="#struktur">Struktur Proyek</a>
+    <a href="#uji">Checklist Pengujian</a>
+    <a href="#glosarium">Glosarium</a>
+  </nav>
+</aside>
+
+<main>
+<section class="card" id="pengantar">
+  <span class="kicker">Mulai di sini</span>
+  <h2>Pengantar Handbook</h2>
+  <p class="lead">Handbook ini merangkum Jobsheet 1 sampai 6 berdasarkan proyek SIMPUS-Mini yang dikembangkan bertahap. Tujuannya adalah membantu memahami fungsi setiap teknologi dan hubungan antarbagiannya, bukan sekadar menghafal kode.</p>
+  <div class="grid">
+    <div class="tile"><strong>Identitas proyek</strong>SIMPUS-Mini — aplikasi mini perpustakaan untuk menampilkan data buku dan anggota.</div>
+    <div class="tile"><strong>Fokus pembelajaran</strong>HTML, CSS, layout responsif, Bootstrap, JavaScript, DOM, Fetch API, dan JSON.</div>
+    <div class="tile"><strong>Identitas praktikan</strong>Daniel Ramadhani Zulkarnain</div>
+    <div class="tile"><strong>Kelas</strong>TI – 2D</div>
+  </div>
+  <div class="note"><strong>Catatan:</strong> Jobsheet 4 dan sebagian detail Jobsheet 6 tidak memiliki uraian panjang dalam laporan Markdown proyek. Bagian handbook tersebut dirangkum dari struktur proyek dan alur materi yang tampak pada berkas Jobsheet 1–6.</div>
+</section>
+
+<section class="card" id="alur">
+  <span class="kicker">Gambaran umum</span>
+  <h2>Peta Perkembangan Jobsheet</h2>
+  <table>
+    <thead><tr><th>Jobsheet</th><th>Fokus</th><th>Hasil utama</th></tr></thead>
+    <tbody>
+      <tr><td>01</td><td>HTML dasar dan struktur halaman</td><td>Halaman beranda, daftar buku, form buku, dan anggota.</td></tr>
+      <tr><td>02</td><td>CSS dasar dan konsistensi desain</td><td>Tema warna, kartu statistik, tombol, dan navbar yang lebih konsisten.</td></tr>
+      <tr><td>03</td><td>Responsive design</td><td>Breakpoint, tabel responsif, menu hamburger, dan pengujian layar.</td></tr>
+      <tr><td>04</td><td>Penyempurnaan tampilan dan komponen</td><td>Melanjutkan struktur halaman serta pola layout dari jobsheet sebelumnya.</td></tr>
+      <tr><td>05</td><td>Interaksi JavaScript</td><td>Validasi, pencarian tabel, counter baris, dan animasi navigasi.</td></tr>
+      <tr><td>06</td><td>Pengelolaan data di sisi browser</td><td>Data buku/anggota JSON, Fetch API, pencarian, validasi, dan aksi tabel.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section class="card" id="js1">
+  <span class="kicker">Jobsheet 01</span>
+  <h2>Dasar HTML dan Struktur SIMPUS-Mini</h2>
+  <p class="lead">HTML digunakan untuk membentuk kerangka halaman: navigasi, judul, konten, tabel, formulir, dan footer.</p>
+  <h3>Materi utama</h3>
+  <ul>
+    <li>Struktur dokumen HTML dengan <code>&lt;!DOCTYPE html&gt;</code>, <code>&lt;head&gt;</code>, dan <code>&lt;body&gt;</code>.</li>
+    <li>Elemen semantik seperti <code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, dan <code>&lt;footer&gt;</code>.</li>
+    <li>Tabel data menggunakan <code>&lt;table&gt;</code>, <code>&lt;thead&gt;</code>, <code>&lt;th&gt;</code>, <code>&lt;tbody&gt;</code>, dan <code>&lt;td&gt;</code>.</li>
+    <li>Formulir memakai <code>&lt;label&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;select&gt;</code>, dan tombol.</li>
+    <li>Menu navigasi yang konsisten agar halaman buku dan anggota bisa saling dibuka.</li>
+  </ul>
+  <h3>Perubahan yang dikerjakan</h3>
+  <ol>
+    <li>Menambahkan tautan “Daftar Anggota” dan “Tambah Anggota” ke menu navigasi.</li>
+    <li>Menambahkan dua baris data buku dengan menyalin struktur <code>&lt;tr&gt;...&lt;/tr&gt;</code> lalu mengganti nilainya.</li>
+    <li>Menambahkan kolom “Tanggal Bergabung” ke tabel anggota dengan pasangan <code>&lt;th&gt;</code> dan <code>&lt;td&gt;</code>.</li>
+    <li>Menambahkan field Email dengan <code>&lt;input type="email"&gt;</code> agar browser memeriksa format email dasar.</li>
+  </ol>
+  <div class="note"><strong>Inti pembelajaran:</strong> jumlah kolom pada header tabel harus sesuai dengan jumlah sel data pada setiap baris. Periksa juga jalur tautan relatif, terutama ketika file berada di folder <code>buku/</code> atau <code>anggota/</code>.</div>
+</section>
+
+<section class="card" id="js2">
+  <span class="kicker">Jobsheet 02</span>
+  <h2>CSS Dasar dan Konsistensi Desain</h2>
+  <p class="lead">CSS mengatur tampilan HTML, termasuk warna, jarak, ukuran, susunan elemen, dan keadaan interaktif.</p>
+  <h3>Materi utama</h3>
+  <ul>
+    <li>Selector dan deklarasi CSS: selector, property, dan value.</li>
+    <li>Warna tema yang digunakan secara konsisten pada header, judul section, tombol, dan header tabel.</li>
+    <li>Flexbox untuk navigasi serta <code>flex-wrap: wrap</code> agar menu dapat berpindah baris ketika ruang terbatas.</li>
+    <li>CSS Grid untuk kartu statistik.</li>
+    <li>Pseudo-class dan selector berdasarkan posisi, seperti <code>:first-of-type</code> dan <code>:last-of-type</code>.</li>
+  </ul>
+  <h3>Praktik pada proyek</h3>
+  <ol>
+    <li>Mengubah warna biru tema menjadi hijau tua dan mengamati konsistensinya di semua komponen.</li>
+    <li>Menambah kartu statistik keempat dan menyesuaikan grid dari tiga menjadi empat kolom.</li>
+    <li>Menambahkan tombol “Detail” di antara tombol Edit dan Hapus, kemudian memeriksa warna serta selector tombol.</li>
+    <li>Mengecilkan jendela browser untuk melihat perilaku navbar.</li>
+  </ol>
+  <div class="note"><strong>Tips:</strong> simpan warna utama sebagai CSS custom property, misalnya <code>--green-900</code>. Dengan begitu, perubahan tema dapat dilakukan dari satu tempat.</div>
+</section>
+
+<section class="card" id="js3">
+  <span class="kicker">Jobsheet 03</span>
+  <h2>Responsive Design dan Media Query</h2>
+  <p class="lead">Tampilan responsif membuat halaman tetap nyaman dipakai di desktop, tablet, dan ponsel.</p>
+  <h3>Konsep penting</h3>
+  <ul>
+    <li><code>@media</code> digunakan untuk menerapkan aturan CSS pada ukuran layar tertentu.</li>
+    <li><code>max-width</code> biasanya digunakan untuk menyesuaikan tampilan pada layar yang lebih kecil.</li>
+    <li><code>min-width</code> dapat digunakan untuk pendekatan mobile-first: mulai dari tampilan kecil, lalu menambahkan peningkatan untuk layar lebih lebar.</li>
+    <li>Kontainer tabel atau kode panjang perlu dibungkus agar tidak merusak lebar halaman.</li>
+    <li>Menu hamburger perlu memperhatikan urutan elemen HTML dan selector sibling seperti <code>~</code>.</li>
+  </ul>
+  <h3>Praktik pada proyek</h3>
+  <ol>
+    <li>Menambah breakpoint untuk monitor sangat lebar, misalnya <code>@media (min-width: 1400px)</code>.</li>
+    <li>Mengubah breakpoint tablet dari 768px menjadi 900px, lalu mengamati perubahan susunan kartu.</li>
+    <li>Menerapkan pola <code>table-responsive</code> atau pembungkus overflow pada konten yang melebar.</li>
+    <li>Menguji posisi label hamburger dan memastikan selector tetap sesuai struktur HTML.</li>
+    <li>Membandingkan pendekatan desktop-first dengan mobile-first.</li>
+  </ol>
+  <div class="note"><strong>Checklist responsif:</strong> tidak ada konten terpotong, tabel dapat digeser bila terlalu lebar, form tidak keluar dari layar, dan navigasi masih dapat digunakan dengan nyaman.</div>
+</section>
+
+<section class="card" id="js4">
+  <span class="kicker">Jobsheet 04</span>
+  <h2>Penyempurnaan Layout dan Komponen</h2>
+  <p class="lead">Tahap ini meneruskan pola halaman SIMPUS-Mini dan memantapkan konsistensi tampilan antarhalaman.</p>
+  <h3>Bagian yang perlu dijaga</h3>
+  <ul>
+    <li>Header, navigasi, judul halaman, area konten, dan footer mempunyai pola visual yang konsisten.</li>
+    <li>Halaman daftar buku dan daftar anggota menggunakan struktur tabel yang mudah dibaca.</li>
+    <li>Halaman tambah buku dan tambah anggota memiliki label yang jelas serta jarak input yang rapi.</li>
+    <li>Warna tombol aksi dibedakan dengan jelas, tetapi tetap konsisten di semua halaman.</li>
+    <li>Perubahan CSS tidak boleh merusak fungsi tautan, nama field, ID elemen, atau struktur data.</li>
+  </ul>
+  <div class="note warn"><strong>Catatan laporan:</strong> berkas “Laporan Jobsheet 4.md” di arsip hanya memuat identitas praktikan tanpa rincian tugas. Bagian ini adalah rangkuman penghubung berdasarkan struktur proyek Jobsheet 4, bukan daftar klaim perubahan spesifik.</div>
+</section>
+
+<section class="card" id="js5">
+  <span class="kicker">Jobsheet 05</span>
+  <h2>JavaScript untuk Interaksi Halaman</h2>
+  <p class="lead">JavaScript membuat halaman bereaksi terhadap tindakan pengguna tanpa harus menulis ulang seluruh HTML secara manual.</p>
+  <h3>Materi utama</h3>
+  <ul>
+    <li>DOM: memilih dan mengubah elemen HTML melalui JavaScript.</li>
+    <li>Event: merespons input pencarian, klik tombol, dan pengiriman form.</li>
+    <li>Validasi form untuk mendeteksi field wajib yang masih kosong.</li>
+    <li>Filter tabel berdasarkan isi kolom tertentu.</li>
+    <li>Counter yang menampilkan jumlah baris yang terlihat dibanding jumlah awal.</li>
+    <li>Animasi menu navigasi menggunakan class dan CSS transition.</li>
+  </ul>
+  <h3>Perubahan yang tercatat</h3>
+  <ol>
+    <li>Menambahkan validasi ISBN: jika diisi, karakter yang diperbolehkan adalah angka dan tanda hubung.</li>
+    <li>Menambahkan transisi pada menu navigasi agar perubahan buka/tutup terasa lebih halus.</li>
+    <li>Memperluas filter tabel agar pencarian dapat dibatasi pada kolom Judul.</li>
+    <li>Menambahkan counter seperti “Menampilkan 3 dari 5 buku”.</li>
+    <li>Memperbarui counter setelah filter atau penghapusan baris.</li>
+    <li>Merangkum field wajib ke dalam array dan memeriksanya menggunakan <code>forEach()</code>.</li>
+  </ol>
+  <h3>Contoh pola logika</h3>
+  <div class="tile"><code>const fieldWajib = ["judul", "pengarang", "tahun", "stok"];</code><br><br>Daftar field dikelola dalam satu array. Perulangan memeriksa setiap field sehingga validasi lebih ringkas dan mudah dikembangkan.</div>
+  <div class="note"><strong>Perhatian:</strong> validasi JavaScript meningkatkan pengalaman pengguna, tetapi untuk aplikasi yang sudah menggunakan backend, validasi sisi server tetap diperlukan karena validasi browser dapat dilewati.</div>
+</section>
+
+<section class="card" id="js6">
+  <span class="kicker">Jobsheet 06</span>
+  <h2>JSON, Fetch API, dan Data Dinamis</h2>
+  <p class="lead">Data dipisahkan dari tampilan sehingga daftar buku dan anggota dapat dibaca dari berkas JSON, lalu ditampilkan ke halaman dengan JavaScript.</p>
+  <h3>Struktur berkas</h3>
+  <div class="grid">
+    <div class="tile"><strong><code>data/buku.json</code></strong>Menyimpan kumpulan data buku dalam format JSON.</div>
+    <div class="tile"><strong><code>data/anggota.json</code></strong>Menyimpan kumpulan data anggota dalam format JSON.</div>
+    <div class="tile"><strong><code>assets/js/buku.js</code></strong>Logika khusus untuk halaman dan data buku.</div>
+    <div class="tile"><strong><code>assets/js/anggota.js</code></strong>Logika khusus untuk halaman dan data anggota.</div>
+  </div>
+  <h3>Alur kerja</h3>
+  <ol class="steps">
+    <li>Browser membuka halaman HTML.</li>
+    <li>File JavaScript menjalankan <code>fetch()</code> untuk mengambil berkas JSON.</li>
+    <li>Respons dibaca sebagai JSON menggunakan <code>response.json()</code>.</li>
+    <li>JavaScript membuat atau memperbarui baris tabel dari data yang diterima.</li>
+    <li>Fitur pencarian, validasi, konfirmasi hapus, dan tombol aksi menangani interaksi pengguna.</li>
+  </ol>
+  <h3>Hal yang perlu dipahami</h3>
+  <ul>
+    <li>JSON adalah format pertukaran data, bukan database yang otomatis menyimpan perubahan.</li>
+    <li><code>fetch()</code> bekerja secara asinkron; tangani kegagalan jaringan atau respons yang tidak berhasil.</li>
+    <li>Periksa jalur relatif file JSON berdasarkan lokasi halaman yang sedang dibuka.</li>
+    <li>Aksi hapus yang hanya menghilangkan baris dari DOM belum tentu mengubah isi file JSON secara permanen.</li>
+    <li>Untuk penyimpanan permanen, diperlukan backend atau API yang menyediakan operasi baca dan tulis data.</li>
+  </ul>
+  <div class="note warn"><strong>Penting:</strong> berdasarkan struktur proyek, Jobsheet 6 menggunakan data JSON dan JavaScript di browser. Jangan menganggap perubahan data sudah tersimpan permanen hanya karena baris tabel menghilang dari layar.</div>
+</section>
+
+<section class="card" id="struktur">
+  <span class="kicker">Navigasi proyek</span>
+  <h2>Struktur Folder yang Umum</h2>
+  <p>Setiap jobsheet memiliki folder tersendiri agar perkembangan kode bisa dibandingkan dari tahap ke tahap.</p>
+  <div class="tile"><code>projek-danielramadhaniz-main/</code><br>
+  ├── <code>jobsheet-01/</code> — HTML dasar<br>
+  ├── <code>jobsheet-02/</code> — HTML dan CSS<br>
+  ├── <code>jobsheet-03/</code> — responsive design<br>
+  ├── <code>jobsheet-04/</code> — penyempurnaan halaman<br>
+  ├── <code>jobsheet-05/</code> — JavaScript interaktif<br>
+  └── <code>jobsheet-06/</code> — JavaScript dan data JSON</div>
+  <h3>Contoh bagian dalam folder Jobsheet 6</h3>
+  <ul>
+    <li><code>index.html</code> — halaman beranda.</li>
+    <li><code>buku/list.html</code> dan <code>buku/tambah.html</code> — halaman buku.</li>
+    <li><code>anggota/list.html</code> dan <code>anggota/tambah.html</code> — halaman anggota.</li>
+    <li><code>assets/css/style.css</code> — aturan tampilan.</li>
+    <li><code>assets/js/</code> — file JavaScript aplikasi.</li>
+    <li><code>data/</code> — data buku dan anggota dalam format JSON.</li>
+  </ul>
+  <div class="note">Jika tautan atau CSS tidak terbaca setelah folder dipindahkan/diubah nama, periksa kembali jalur relatif seperti <code>../assets/css/style.css</code> dan tujuan tautan menu.</div>
+</section>
+
+<section class="card" id="uji">
+  <span class="kicker">Sebelum dikumpulkan</span>
+  <h2>Checklist Pengujian</h2>
+  <ul>
+    <li>Semua tautan menu membuka halaman yang benar, khususnya Daftar Anggota tidak mengarah ke Daftar Buku.</li>
+    <li>Header, judul, tombol, tabel, dan form memiliki gaya yang konsisten.</li>
+    <li>Jumlah kolom header tabel sesuai dengan sel pada setiap baris.</li>
+    <li>Form memiliki label dan tipe input yang sesuai.</li>
+    <li>Pencarian hanya memfilter data sesuai aturan yang diinginkan.</li>
+    <li>Counter diperbarui setelah pencarian dan penghapusan baris.</li>
+    <li>Menu hamburger dapat dibuka dan ditutup pada layar sempit.</li>
+    <li>Tidak ada horizontal overflow yang tidak disengaja pada tampilan mobile.</li>
+    <li>Fetch JSON tidak menghasilkan error; periksa jalur data dan Console browser.</li>
+    <li>Aksi yang belum menyimpan data secara permanen diberi pemahaman yang tepat.</li>
+  </ul>
+  <h3>Langkah pemeriksaan di browser</h3>
+  <ol class="steps">
+    <li>Jalankan proyek melalui server lokal yang sesuai, terutama saat memakai <code>fetch()</code>.</li>
+    <li>Buka setiap halaman dari menu navigasi, bukan hanya mengetik URL satu halaman.</li>
+    <li>Uji form dengan data valid, field kosong, dan format yang salah.</li>
+    <li>Uji pencarian dengan kata yang cocok dan kata yang tidak cocok.</li>
+    <li>Ubah ukuran browser ke desktop, tablet, lalu ponsel.</li>
+    <li>Buka Developer Tools → Console dan Network jika CSS, JavaScript, atau JSON gagal dimuat.</li>
+  </ol>
+</section>
+
+<section class="card" id="glosarium">
+  <span class="kicker">Referensi cepat</span>
+  <h2>Glosarium</h2>
+  <table>
+    <thead><tr><th>Istilah</th><th>Arti singkat</th></tr></thead>
+    <tbody>
+      <tr><td>HTML</td><td>Bahasa markup untuk menyusun struktur konten halaman.</td></tr>
+      <tr><td>CSS</td><td>Bahasa stylesheet untuk mengatur tampilan dan layout.</td></tr>
+      <tr><td>Responsive</td><td>Desain yang menyesuaikan ukuran dan kondisi layar.</td></tr>
+      <tr><td>Breakpoint</td><td>Batas ukuran layar saat aturan layout berubah.</td></tr>
+      <tr><td>DOM</td><td>Representasi dokumen HTML yang dapat diakses dan diubah melalui JavaScript.</td></tr>
+      <tr><td>Event</td><td>Kejadian seperti klik, input, atau submit yang dapat ditangani program.</td></tr>
+      <tr><td>JSON</td><td>Format teks terstruktur untuk menyimpan atau bertukar data.</td></tr>
+      <tr><td>Fetch API</td><td>API browser untuk meminta data atau resource secara asinkron.</td></tr>
+      <tr><td>Validasi</td><td>Pemeriksaan agar masukan memenuhi aturan yang ditetapkan.</td></tr>
+      <tr><td>DOM manipulation</td><td>Perubahan elemen, atribut, atau isi halaman melalui JavaScript.</td></tr>
+    </tbody>
+  </table>
+  <p><a class="toplink" href="#top">Kembali ke atas ↑</a> <button class="toplink" onclick="window.print()" type="button" style="border:0;cursor:pointer;font:inherit;margin-left:7px">Cetak / Simpan PDF</button></p>
+</section>
+</main>
+</div>
+<footer class="footer">Handbook SIMPUS-Mini • Ringkasan Jobsheet 1–6 • Desain dan Pemrograman Web • 2026</footer>
+</body>
+</html>
