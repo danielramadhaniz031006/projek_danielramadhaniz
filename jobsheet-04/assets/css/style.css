@@ -170,7 +170,21 @@ a { text-decoration: none; }
 .table tbody td { padding: .8rem; border-color: #e8eef0; }
 .table tbody tr:nth-child(even) td { background: #f8fbf9; }
 .table tbody tr:hover td { background: #f0fdf4; }
-.action-buttons { display: flex; flex-wrap: wrap; gap: .35rem; }
+.action-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: .35rem;
+    white-space: nowrap;
+}
+.action-buttons .btn {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+.table thead th:last-child,
+.table tbody td:last-child {
+    min-width: 235px;
+}
 .action-buttons .btn { padding: .38rem .58rem; font-size: .82rem; }
 .form-panel { max-width: 920px; margin-inline: auto; }
 .form-row { display: grid; grid-template-columns: 145px minmax(0, 1fr); gap: 1rem; align-items: center; margin-bottom: 1rem; }
