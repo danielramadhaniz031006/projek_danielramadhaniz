@@ -1,220 +1,661 @@
-/* SIMPUS-Mini Jobsheet 6 — Bootstrap 5 + custom UI/UX */
+/* ============================================================
+   SIMPUS-Mini Jobsheet 6.
+   ============================================================ */
+
+/* 1. WARNA DAN PENGATURAN DASAR WEBSITE */
 :root {
-  --green-950:#064e3b; --green-900:#065f46; --green-800:#166534;
-  --green-700:#15803d; --green-600:#16a34a; --green-50:#f0fdf4;
-  --page-bg:#f3f7f5; --text:#1f2937; --muted:#64748b; --border:#e2e8f0;
-  --shadow:0 8px 24px rgba(6,78,59,.08); --radius:16px;
+  --green-950: #064e3b;
+  --green-900: #065f46;
+  --green-800: #166534;
+  --green-700: #15803d;
+  --green-600: #16a34a;
+  --green-50: #f0fdf4;
+
+  --page-bg: #f3f7f5;
+  --text: #1f2937;
+  --muted: #64748b;
+  --border: #e2e8f0;
+
+  --shadow: 0 8px 24px rgba(6, 78, 59, .08);
+  --radius: 16px;
 }
-* { box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+
+/* Menghitung ukuran elemen agar padding/border tidak merusak lebar layout. */
+* {
+  box-sizing: border-box;
+}
+
+/* Menghaluskan perpindahan saat pengguna menekan tautan ke bagian halaman. */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Tampilan umum semua halaman: warna latar, font, dan tinggi minimum layar. */
 body {
-  margin:0; min-height:100vh; display:flex; flex-direction:column;
-  font-family:"Segoe UI",Arial,sans-serif; color:var(--text);
-  background:var(--page-bg); line-height:1.6;
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: var(--text);
+  background: var(--page-bg);
+  line-height: 1.6;
 }
-a { text-decoration:none; }
+
+a {
+  text-decoration: none;
+}
+
+/* ============================================================
+   2. SIDEBAR / MENU NAVIGASI DI SISI KIRI
+   Dipakai untuk menu Beranda, Daftar Buku, Tambah Buku,
+   dan Daftar Anggota.
+   ============================================================ */
 .site-header {
-  position:fixed;
-  inset:0 auto 0 0;
-  width:286px;
-  height:100vh;
-  background:linear-gradient(180deg,var(--green-950),var(--green-900));
-  box-shadow:4px 0 18px rgba(6,78,59,.15);
-  z-index:1030;
-  overflow-y:auto;
+  position: fixed;
+  inset: 0 auto 0 0;
+  width: 286px;
+  height: 100vh;
+  background: linear-gradient(180deg, var(--green-950), var(--green-900));
+  box-shadow: 4px 0 18px rgba(6, 78, 59, .15);
+  z-index: 1030;
+  overflow-y: auto;
 }
+
+/* Menyusun isi sidebar secara vertikal. */
 .site-header .navbar {
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:stretch;
-  justify-content:flex-start;
-  padding:24px 14px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 24px 14px;
 }
+
+/* Wadah logo/nama aplikasi dan daftar menu sidebar. */
 .site-header .navbar > .container-fluid {
-  width:100%;
-  height:100%;
-  display:flex;
-  flex-direction:column;
-  align-items:stretch;
-  justify-content:flex-start;
-  gap:28px;
-  padding-left:0!important;
-  padding-right:0!important;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 28px;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
+
+/* Nama/brand aplikasi SIMPUS-Mini di bagian atas sidebar. */
 .site-header .navbar-brand {
-  display:block;
-  color:#fff;
-  font-size:1.45rem;
-  font-weight:800;
-  letter-spacing:.2px;
-  white-space:nowrap;
-  padding:0 12px;
-  margin-right:0;
+  display: block;
+  color: #fff;
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: .2px;
+  white-space: nowrap;
+  padding: 0 12px;
+  margin-right: 0;
 }
+
+/* Memastikan menu navigasi tampil di bawah brand pada sidebar desktop. */
 .site-header .navbar-collapse {
-  display:block!important;
-  width:100%;
-  flex-basis:auto;
+  display: block !important;
+  width: 100%;
+  flex-basis: auto;
 }
+
+/* Daftar menu navigasi disusun ke bawah. */
 .site-header .navbar-nav {
-  display:flex;
-  flex-direction:column!important;
-  align-items:stretch;
-  width:100%;
-  gap:.35rem;
+  display: flex;
+  flex-direction: column !important;
+  align-items: stretch;
+  width: 100%;
+  gap: .35rem;
 }
-.site-header .nav-item { width:100%; }
+
+.site-header .nav-item {
+  width: 100%;
+}
+
+/* Bentuk dan warna tautan menu Beranda/Buku/Anggota. */
 .site-header .nav-link {
-  display:block;
-  width:100%;
-  color:rgba(255,255,255,.9);
-  font-weight:650;
-  padding:.78rem .85rem!important;
-  border-radius:9px;
-  transition:background .2s ease,color .2s ease,transform .2s ease;
+  display: block;
+  width: 100%;
+  color: rgba(255, 255, 255, .9);
+  font-weight: 650;
+  padding: .78rem .85rem !important;
+  border-radius: 9px;
+  transition: background .2s ease, color .2s ease, transform .2s ease;
 }
+
+/* Menandai menu aktif dan memberi efek saat kursor diarahkan ke menu. */
 .site-header .nav-link:hover,
 .site-header .nav-link.active {
-  color:#fff;
-  background:rgba(34,197,94,.32);
+  color: #fff;
+  background: rgba(34, 197, 94, .32);
 }
-.site-header .nav-link:hover { transform:translateX(2px); }
+
+.site-header .nav-link:hover {
+  transform: translateX(2px);
+}
+
+/* Tombol hamburger disembunyikan pada layout desktop. */
 .site-header .navbar-toggler {
-  display:none;
-  border-color:rgba(255,255,255,.4);
+  display: none;
+  border-color: rgba(255, 255, 255, .4);
 }
-.site-header .navbar-toggler:focus { box-shadow:0 0 0 .2rem rgba(255,255,255,.16); }
+
+.site-header .navbar-toggler:focus {
+  box-shadow: 0 0 0 .2rem rgba(255, 255, 255, .16);
+}
+
+/* ============================================================
+   3. AREA KONTEN UTAMA
+   Konten digeser ke kanan agar tidak tertutup sidebar.
+   ============================================================ */
 .page-main {
-  width:auto;
-  max-width:none;
-  margin:2.1rem 36px 2rem calc(286px + 36px);
-  padding:0;
-  flex:1;
+  width: auto;
+  max-width: none;
+  margin: 2.1rem 36px 2rem calc(286px + 36px);
+  padding: 0;
+  flex: 1;
 }
+
+/* Kartu/kontainer putih untuk isi halaman, misalnya Ringkasan,
+   Daftar Buku, Daftar Anggota, dan formulir tambah data. */
 .panel {
-  background:#fff; border:1px solid rgba(226,232,240,.9); border-radius:var(--radius);
-  padding:clamp(1.1rem,2.5vw,1.75rem); box-shadow:var(--shadow); margin-bottom:1.35rem;
+  background: #fff;
+  border: 1px solid rgba(226, 232, 240, .9);
+  border-radius: var(--radius);
+  padding: clamp(1.1rem, 2.5vw, 1.75rem);
+  box-shadow: var(--shadow);
+  margin-bottom: 1.35rem;
 }
-.panel-title { color:var(--green-950); font-size:1.45rem; font-weight:800; margin-bottom:1.15rem; }
-.welcome-panel { background:linear-gradient(115deg,#fff 0%,#f0fdf4 100%); border-left:5px solid var(--green-800); }
-.welcome-panel p { color:#475569; margin-bottom:0; }
-.welcome-symbol { color:var(--green-700); font-size:2.8rem; line-height:1; }
-.stats-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:1rem; }
+
+/* Judul halaman/kartu seperti "Daftar Buku" dan "Tambah Anggota". */
+.panel-title {
+  color: var(--green-950);
+  font-size: 1.45rem;
+  font-weight: 800;
+  margin-bottom: 1.15rem;
+}
+
+/* ============================================================
+   4. BERANDA: PANEL SELAMAT DATANG
+   Mengatur panel pengantar di bagian atas Beranda.
+   ============================================================ */
+.welcome-panel {
+  background: linear-gradient(115deg, #fff 0%, #f0fdf4 100%);
+  border-left: 5px solid var(--green-800);
+}
+
+.welcome-panel p {
+  color: #475569;
+  margin-bottom: 0;
+}
+
+/* Ikon/simbol di sisi kanan panel Selamat Datang. */
+.welcome-symbol {
+  color: var(--green-700);
+  font-size: 2.8rem;
+  line-height: 1;
+}
+
+/* ============================================================
+   5. BERANDA: KARTU RINGKASAN / STATISTIK
+   Mengatur kartu Total Buku, Total Anggota, Sedang Dipinjam,
+   dan Buku Terlambat yang tampak pada halaman Beranda.
+   ============================================================ */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+/* Tampilan satu kartu statistik. */
 .stat-card {
-  position:relative; min-height:116px; display:flex; align-items:center; gap:1rem;
-  padding:1.15rem; overflow:hidden; border:1px solid #dcfce7; border-radius:12px;
-  background:linear-gradient(145deg,#f0fdf4,#ecfdf5);
-}
-.stat-card::before { content:""; position:absolute; inset:0 0 auto; height:4px; background:linear-gradient(90deg,var(--green-800),#22c55e); }
-.stat-icon { width:44px; height:44px; display:grid; place-items:center; flex:0 0 auto; color:var(--green-700); font-size:1.65rem; }
-.stat-label { margin:0 0 .1rem; color:var(--muted); font-size:.9rem; font-weight:700; }
-.stat-number { margin:0; color:var(--green-900); font-size:2rem; line-height:1.25; font-weight:850; }
-.toolbar { display:flex; flex-wrap:wrap; gap:.75rem; justify-content:space-between; align-items:center; margin-bottom:1rem; }
-.search-form { display:flex; gap:.5rem; flex:1 1 300px; max-width:560px; }
-.search-form .form-control { min-width:0; }
-.form-control,.form-select { border-color:#cbd5e1; border-radius:8px; min-height:43px; }
-.form-control:focus,.form-select:focus { border-color:#16a34a; box-shadow:0 0 0 .22rem rgba(22,163,74,.12); }
-.form-label { font-weight:700; color:#334155; }
-.btn { border-radius:8px; font-weight:700; padding:.58rem .9rem; transition:transform .18s ease,box-shadow .18s ease; }
-.btn:hover { transform:translateY(-1px); box-shadow:0 5px 12px rgba(15,23,42,.1); }
-.btn-success { background:var(--green-800); border-color:var(--green-800); }
-.btn-success:hover { background:var(--green-950); border-color:var(--green-950); }
-.btn-edit { background:#fbbf24; color:#422006; border:1px solid #f59e0b; }
-.btn-edit:hover { background:#f59e0b; color:#422006; }
-.btn-delete { background:#ef4444; color:#fff; border:1px solid #dc2626; }
-.btn-delete:hover { background:#dc2626; color:#fff; }
-.btn-reset { background:#e2e8f0; color:#334155; border:1px solid #cbd5e1; }
-.table-wrap { width:100%; overflow-x:auto; border:1px solid var(--border); border-radius:10px; }
-.table { margin-bottom:0; vertical-align:middle; min-width:720px; }
-.table thead th { background:var(--green-900); color:#fff; border-color:var(--green-900); padding:.85rem .75rem; white-space:nowrap; font-size:.9rem; }
-.table tbody td { padding:.75rem; border-color:#e8eef0; }
-.table tbody tr:nth-child(even) td { background:#f8fbf9; }
-.table tbody tr:hover td { background:#f0fdf4; }
-.action-buttons { display:flex; flex-wrap:wrap; gap:.35rem; }
-.action-buttons .btn { padding:.36rem .55rem; font-size:.82rem; }
-.form-panel { max-width:920px; margin-inline:auto; }
-.form-row { display:grid; grid-template-columns:145px minmax(0,1fr); gap:1rem; align-items:center; margin-bottom:1rem; }
-.form-row .form-label { margin-bottom:0; }
-.form-actions { padding-left:calc(145px + 1rem); display:flex; flex-wrap:wrap; gap:.6rem; margin-top:1.45rem; }
-.site-footer { margin-left:286px; padding:1.2rem 1rem; text-align:center; color:#64748b; font-size:.88rem; }
-.loading-message { color:var(--muted); padding:.85rem 0; }
-.error-message { color:#b91c1c; background:#fef2f2; border:1px solid #fecaca; border-radius:8px; padding:.75rem 1rem; }
-.empty-message { color:var(--muted); text-align:center; padding:1.2rem!important; }
-/* Tablet: sidebar lebih sempit, konten tetap di sebelah kanan. */
-@media(min-width:701px) and (max-width:991.98px) {
-  .site-header { width:238px; }
-  .site-header .navbar { padding:22px 12px; }
-  .site-header .navbar-brand { font-size:1.3rem; }
-  .page-main { margin-left:262px; margin-right:20px; }
-  .site-footer { margin-left:238px; }
+  position: relative;
+  min-height: 116px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.15rem;
+  overflow: hidden;
+  border: 1px solid #dcfce7;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #f0fdf4, #ecfdf5);
 }
 
-/* Desktop dan tablet: navigasi permanen sebagai sidebar. */
-@media(min-width:701px) {
-  .site-header .navbar-collapse { display:block!important; }
-  .site-header .navbar-toggler { display:none!important; }
+/* Garis hijau di bagian paling atas tiap kartu statistik. */
+.stat-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 4px;
+  background: linear-gradient(90deg, var(--green-800), #22c55e);
 }
 
-/* HP: header pindah ke atas dengan tautan menu yang membungkus bila perlu. */
-@media(max-width:700px) {
+/* Area ikon pada kartu statistik. */
+.stat-icon {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  color: var(--green-700);
+  font-size: 1.65rem;
+}
+
+/* Label statistik, misalnya "Total Buku". */
+.stat-label {
+  margin: 0 0 .1rem;
+  color: var(--muted);
+  font-size: .9rem;
+  font-weight: 700;
+}
+
+/* Angka utama pada kartu statistik. */
+.stat-number {
+  margin: 0;
+  color: var(--green-900);
+  font-size: 2rem;
+  line-height: 1.25;
+  font-weight: 850;
+}
+
+/* ============================================================
+   6. TOOLBAR DAFTAR DATA
+   Menata kolom pencarian dan tombol tambah di halaman daftar.
+   ============================================================ */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .75rem;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Form pencarian pada halaman Daftar Buku/Daftar Anggota.
+   CSS ini menata tampilannya; proses pencarian ditangani HTML/JS. */
+.search-form {
+  display: flex;
+  gap: .5rem;
+  flex: 1 1 300px;
+  max-width: 560px;
+}
+
+.search-form .form-control {
+  min-width: 0;
+}
+
+/* ============================================================
+   7. INPUT DAN LABEL FORM
+   Dipakai untuk formulir Tambah Buku dan Tambah Anggota.
+   ============================================================ */
+.form-control,
+.form-select {
+  border-color: #cbd5e1;
+  border-radius: 8px;
+  min-height: 43px;
+}
+
+/* Efek fokus saat pengguna memilih kolom input atau pilihan kategori. */
+.form-control:focus,
+.form-select:focus {
+  border-color: #16a34a;
+  box-shadow: 0 0 0 .22rem rgba(22, 163, 74, .12);
+}
+
+/* Label kolom seperti Judul, Pengarang, Tahun Terbit, Nama, dan Alamat. */
+.form-label {
+  font-weight: 700;
+  color: #334155;
+}
+
+/* ============================================================
+   8. TOMBOL AKSI
+   Mengatur tombol umum, Simpan, Cari, Reset, Edit, Hapus,
+   dan tombol Tambah Buku/Tambah Anggota.
+   ============================================================ */
+.btn {
+  border-radius: 8px;
+  font-weight: 700;
+  padding: .58rem .9rem;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+
+/* Efek visual saat kursor berada di atas tombol. */
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 5px 12px rgba(15, 23, 42, .1);
+}
+
+/* Tombol hijau, biasanya dipakai untuk Simpan, Cari, dan Tambah. */
+.btn-success {
+  background: var(--green-800);
+  border-color: var(--green-800);
+}
+
+.btn-success:hover {
+  background: var(--green-950);
+  border-color: var(--green-950);
+}
+
+/* Tombol Edit berwarna kuning. */
+.btn-edit {
+  background: #fbbf24;
+  color: #422006;
+  border: 1px solid #f59e0b;
+}
+
+.btn-edit:hover {
+  background: #f59e0b;
+  color: #422006;
+}
+
+/* Tombol Hapus berwarna merah. */
+.btn-delete {
+  background: #ef4444;
+  color: #fff;
+  border: 1px solid #dc2626;
+}
+
+.btn-delete:hover {
+  background: #dc2626;
+  color: #fff;
+}
+
+/* Tombol Reset dengan warna abu-abu. */
+.btn-reset {
+  background: #e2e8f0;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+/* ============================================================
+   9. TABEL DAFTAR BUKU DAN DAFTAR ANGGOTA
+   Mengatur header tabel, baris data, garis, hover, serta scroll
+   horizontal jika kolom tabel terlalu lebar.
+   ============================================================ */
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+.table {
+  margin-bottom: 0;
+  vertical-align: middle;
+  min-width: 720px;
+}
+
+/* Header tabel hijau dengan tulisan putih. */
+.table thead th {
+  background: var(--green-900);
+  color: #fff;
+  border-color: var(--green-900);
+  padding: .85rem .75rem;
+  white-space: nowrap;
+  font-size: .9rem;
+}
+
+/* Jarak isi sel tabel, termasuk kolom Judul, Pengarang, Tahun, Stok, Aksi. */
+.table tbody td {
+  padding: .75rem;
+  border-color: #e8eef0;
+}
+
+/* Warna selang-seling untuk memudahkan pengguna membaca baris tabel. */
+.table tbody tr:nth-child(even) td {
+  background: #f8fbf9;
+}
+
+/* Warna baris saat kursor diarahkan ke data tabel. */
+.table tbody tr:hover td {
+  background: #f0fdf4;
+}
+
+/* Menyusun tombol Edit dan Hapus berdampingan di kolom Aksi. */
+.action-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem;
+}
+
+.action-buttons .btn {
+  padding: .36rem .55rem;
+  font-size: .82rem;
+}
+
+/* ============================================================
+   10. FORM TAMBAH BUKU DAN TAMBAH ANGGOTA
+   Label berada di kolom kiri, sedangkan input berada di kanan.
+   ============================================================ */
+.form-panel {
+  max-width: 920px;
+  margin-inline: auto;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 145px minmax(0, 1fr);
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* Label form tetap rata dengan kolom input. */
+.form-row .form-label {
+  margin-bottom: 0;
+}
+
+/* Posisi tombol Simpan dan Reset sejajar dengan kolom input. */
+.form-actions {
+  padding-left: calc(145px + 1rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: 1.45rem;
+}
+
+/* ============================================================
+   11. FOOTER DAN PESAN STATUS
+   Footer berada di area bawah halaman. Kelas pesan digunakan
+   bila HTML/JavaScript menampilkan status proses atau data kosong.
+   ============================================================ */
+.site-footer {
+  margin-left: 286px;
+  padding: 1.2rem 1rem;
+  text-align: center;
+  color: #64748b;
+  font-size: .88rem;
+}
+
+/* Gaya untuk pesan sedang memuat data. */
+.loading-message {
+  color: var(--muted);
+  padding: .85rem 0;
+}
+
+/* Gaya untuk pesan error. */
+.error-message {
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: .75rem 1rem;
+}
+
+/* Gaya untuk pesan ketika tabel belum memiliki data. */
+.empty-message {
+  color: var(--muted);
+  text-align: center;
+  padding: 1.2rem !important;
+}
+
+/* ============================================================
+   12. RESPONSIVE TABLET
+   Sidebar diperkecil supaya konten tetap mendapat ruang cukup.
+   ============================================================ */
+@media (min-width: 701px) and (max-width: 991.98px) {
   .site-header {
-    position:relative;
-    inset:auto;
-    width:100%;
-    height:auto;
-    overflow:visible;
+    width: 238px;
   }
+
   .site-header .navbar {
-    height:auto;
-    min-height:0;
-    display:block;
-    padding:.85rem 0;
+    padding: 22px 12px;
   }
-  .site-header .navbar > .container-fluid {
-    height:auto;
-    flex-direction:row;
-    flex-wrap:wrap;
-    align-items:center;
-    gap:.75rem;
-    padding-left:1rem!important;
-    padding-right:1rem!important;
-  }
+
   .site-header .navbar-brand {
-    font-size:1.28rem;
-    padding:.2rem 0;
+    font-size: 1.3rem;
   }
-  .site-header .navbar-toggler { display:none!important; }
-  .site-header .navbar-collapse {
-    display:block!important;
-    width:100%;
-    flex-basis:100%;
-  }
-  .site-header .navbar-nav {
-    flex-direction:row!important;
-    flex-wrap:wrap;
-    gap:.25rem;
-  }
-  .site-header .nav-item { width:auto; }
-  .site-header .nav-link {
-    width:auto;
-    padding:.55rem .68rem!important;
-    font-size:.9rem;
-  }
+
   .page-main {
-    width:100%;
-    max-width:none;
-    margin:1.2rem 0;
-    padding-inline:.85rem;
+    margin-left: 262px;
+    margin-right: 20px;
   }
-  .site-footer { margin-left:0; }
-  .stats-grid { grid-template-columns:1fr; }
-  .stat-card { min-height:95px; }
-  .toolbar { align-items:stretch; }
-  .search-form { max-width:none; flex-basis:100%; }
-  .toolbar>.btn { align-self:flex-start; }
-  .form-row { grid-template-columns:1fr; gap:.35rem; }
-  .form-actions { padding-left:0; }
-  .panel-title { font-size:1.25rem; }
+
+  .site-footer {
+    margin-left: 238px;
+  }
 }
-@media(prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
+
+/* ============================================================
+   13. RESPONSIVE DESKTOP/TABLET
+   Sidebar tetap tampil permanen di sisi kiri.
+   ============================================================ */
+@media (min-width: 701px) {
+  .site-header .navbar-collapse {
+    display: block !important;
+  }
+
+  .site-header .navbar-toggler {
+    display: none !important;
+  }
+}
+
+/* ============================================================
+   14. RESPONSIVE HP / LAYAR KECIL
+   Sidebar dipindah ke atas, menu dibuat mendatar dan boleh
+   membungkus ke baris berikutnya. Statistik dan form menjadi
+   satu kolom agar mudah dibaca di layar sempit.
+   ============================================================ */
+@media (max-width: 700px) {
+  .site-header {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    overflow: visible;
+  }
+
+  .site-header .navbar {
+    height: auto;
+    min-height: 0;
+    display: block;
+    padding: .85rem 0;
+  }
+
+  .site-header .navbar > .container-fluid {
+    height: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: .75rem;
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .site-header .navbar-brand {
+    font-size: 1.28rem;
+    padding: .2rem 0;
+  }
+
+  .site-header .navbar-toggler {
+    display: none !important;
+  }
+
+  .site-header .navbar-collapse {
+    display: block !important;
+    width: 100%;
+    flex-basis: 100%;
+  }
+
+  /* Menu di layar HP berjajar mendatar dan membungkus jika penuh. */
+  .site-header .navbar-nav {
+    flex-direction: row !important;
+    flex-wrap: wrap;
+    gap: .25rem;
+  }
+
+  .site-header .nav-item {
+    width: auto;
+  }
+
+  .site-header .nav-link {
+    width: auto;
+    padding: .55rem .68rem !important;
+    font-size: .9rem;
+  }
+
+  /* Konten menggunakan hampir seluruh lebar layar HP. */
+  .page-main {
+    width: 100%;
+    max-width: none;
+    margin: 1.2rem 0;
+    padding-inline: .85rem;
+  }
+
+  .site-footer {
+    margin-left: 0;
+  }
+
+  /* Kartu statistik ditumpuk menjadi satu kolom pada HP. */
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card {
+    min-height: 95px;
+  }
+
+  .toolbar {
+    align-items: stretch;
+  }
+
+  .search-form {
+    max-width: none;
+    flex-basis: 100%;
+  }
+
+  .toolbar > .btn {
+    align-self: flex-start;
+  }
+
+  /* Label dan input form ditumpuk vertikal pada layar kecil. */
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: .35rem;
+  }
+
+  .form-actions {
+    padding-left: 0;
+  }
+
+  .panel-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* Mengurangi animasi bila perangkat pengguna mengaktifkan
+   pengaturan aksesibilitas "reduce motion". */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition: none !important;
+  }
+}
