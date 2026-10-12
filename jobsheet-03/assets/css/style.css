@@ -64,80 +64,116 @@ a:hover {
 }
 
 /* ============================================
-   4. NAVBAR HIJAU GELAP
+   4. HEADER / SIDEBAR HIJAU GELAP
+   Perubahan hanya pada tata letak navigasi
    ============================================ */
 
 header.navbar {
-    background: linear-gradient(
-        135deg,
-        var(--primary-dark),
-        var(--primary)
-    ) !important;
-
-    padding: 16px 0;
-
-    box-shadow: 0 4px 15px rgba(20, 83, 45, 0.18);
+    position: fixed;
+    inset: 0 auto 0 0;
+    width: 286px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 24px 14px;
+    background: linear-gradient(180deg, #14532d 0%, #064e3b 100%) !important;
+    box-shadow: 4px 0 18px rgba(20, 83, 45, 0.12);
+    z-index: 1030;
+    overflow-y: auto;
 }
 
-/* Logo SIMPUS-Mini */
+/* Area logo dan menu di sidebar */
+header.navbar > .container-fluid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    gap: 28px;
+}
+
 .navbar-brand {
     color: var(--white) !important;
-
     font-size: 1.55rem;
     font-weight: 800;
-
     letter-spacing: 0.3px;
+    padding: 0 12px;
+    margin-right: 0;
+    white-space: nowrap;
 }
 
-/* Menu navigasi */
-.navbar .nav-link {
-    color: rgba(255, 255, 255, 0.85) !important;
+/* Menu vertikal pada sidebar desktop/tablet */
+header.navbar .navbar-collapse {
+    display: block !important;
+    flex-basis: auto;
+    width: 100%;
+}
 
+header.navbar .navbar-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    width: 100%;
+    gap: 7px;
+}
+
+header.navbar .nav-item {
+    width: 100%;
+}
+
+.navbar .nav-link {
+    display: block;
+    width: 100%;
+    color: rgba(255, 255, 255, 0.9) !important;
     font-size: 0.95rem;
     font-weight: 600;
-
-    padding: 10px 14px !important;
-
+    padding: 13px 15px !important;
     border-radius: var(--radius-sm);
-
     transition: all 0.25s ease;
 }
 
-/* Hover menu */
 .navbar .nav-link:hover {
     color: var(--white) !important;
-
     background: rgba(255, 255, 255, 0.13);
-
-    transform: translateY(-1px);
+    transform: translateX(2px);
 }
 
-/* Menu aktif */
 .navbar .nav-link.active {
     color: var(--white) !important;
-    background: rgba(255, 255, 255, 0.12);
+    background: #15803d;
 }
 
-/* Tombol menu HP */
-.navbar .navbar-toggler {
+/* Tombol hamburger digunakan pada layar kecil saja */
+header.navbar .navbar-toggler {
+    display: none;
     border-color: rgba(255, 255, 255, 0.35);
     border-radius: var(--radius-sm);
     padding: 8px 12px;
 }
 
-.navbar .navbar-toggler:focus {
+header.navbar .navbar-toggler:focus {
     box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.15);
 }
 
 /* ============================================
    5. LAYOUT UTAMA
+   Konten bergeser ke kanan sidebar
    ============================================ */
 
 main.container {
-    max-width: 1200px;
-
+    max-width: none;
+    width: auto;
     margin-top: 36px !important;
     margin-bottom: 30px !important;
+    margin-left: calc(286px + 36px) !important;
+    margin-right: 36px !important;
+    padding-left: 0;
+    padding-right: 0;
 }
 
 /* ============================================
@@ -537,11 +573,9 @@ form .form-control::placeholder {
 
 footer {
     color: #6b7280 !important;
-
     text-align: center;
-
     padding: 24px 16px !important;
-
+    margin-left: 286px;
     font-size: 0.9rem;
 }
 
@@ -553,14 +587,31 @@ footer p {
    14. RESPONSIVE TABLET
    ============================================ */
 
-@media (max-width: 900px) {
+@media (max-width: 900px) and (min-width: 601px) {
+    header.navbar {
+        width: 240px;
+        padding: 22px 12px;
+    }
+
+    header.navbar > .container-fluid {
+        gap: 24px;
+    }
+
+    .navbar-brand {
+        font-size: 1.35rem;
+    }
+
     main.container {
-        padding-left: 20px;
-        padding-right: 20px;
+        margin-left: 264px !important;
+        margin-right: 20px !important;
     }
 
     main section.card .card-body {
         padding: 24px;
+    }
+
+    footer {
+        margin-left: 240px;
     }
 }
 
@@ -570,23 +621,66 @@ footer p {
 
 @media (max-width: 600px) {
     header.navbar {
-        padding: 12px 0;
+        position: relative;
+        inset: auto;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        padding: 14px 12px;
+        overflow: visible;
+    }
+
+    header.navbar > .container-fluid {
+        height: auto;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 0 4px !important;
+        gap: 12px;
     }
 
     .navbar-brand {
         font-size: 1.35rem;
+        padding-left: 4px;
+    }
+
+    header.navbar .navbar-toggler {
+        display: block;
+        margin-left: auto;
+    }
+
+    header.navbar .navbar-collapse {
+        display: none !important;
+        flex-basis: 100%;
+        width: 100%;
+    }
+
+    header.navbar .navbar-collapse.show,
+    header.navbar .navbar-collapse.collapsing {
+        display: block !important;
+    }
+
+    header.navbar .navbar-nav {
+        flex-direction: column;
+        gap: 4px;
+        padding-top: 6px;
+    }
+
+    header.navbar .nav-item {
+        width: 100%;
     }
 
     .navbar .nav-link {
+        width: 100%;
         padding: 10px 12px !important;
     }
 
     main.container {
-        margin-top: 22px !important;
-        margin-bottom: 22px !important;
-
-        padding-left: 14px;
-        padding-right: 14px;
+        max-width: 100%;
+        width: auto;
+        margin: 22px 14px !important;
+        padding-left: 0;
+        padding-right: 0;
     }
 
     main section.card {
@@ -627,9 +721,16 @@ footer p {
     }
 
     footer {
+        margin-left: 0;
         padding: 20px 12px !important;
-
         font-size: 0.82rem;
+    }
+}
+
+/* Sidebar tampil menetap mulai dari tablet; navbar tetap responsif pada HP */
+@media (min-width: 601px) {
+    header.navbar .navbar-collapse {
+        display: block !important;
     }
 }
 
